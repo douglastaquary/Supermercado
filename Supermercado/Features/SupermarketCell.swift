@@ -13,27 +13,19 @@ struct SupermarketCell: View {
     var supermarket: Supermarket
 
     var body: some View {
-        HStack {
-            SupermarketThumbnail(supermarket: supermarket)
-            VStack(alignment: .leading) {
-                Text(supermarket.name)
-                    .font(.headline)
-                    .foregroundColor(.primary)
+        NavigationLink(destination:
+            SupermarketDetailView(viewModel: SupermarketDetailViewModel(supermarket: supermarket))
+                .environmentObject(self.supermarketService)
+        ) {
+            HStack {
+                SupermarketThumbnail(supermarket: supermarket)
+                VStack(alignment: .leading) {
+                    Text(supermarket.name)
+                        .font(.headline)
+                        .foregroundColor(.primary)
+                }
             }
         }
-//        NavigationLink(destination:
-//            SupermarketDetailView(viewModel: SupermarketDetailViewModel(supermarket: supermarket))
-//                .environmentObject(self.supermarketService)
-//        ) {
-//            HStack {
-//                SupermarketThumbnail(supermarket: supermarket)
-//                VStack(alignment: .leading) {
-//                    Text(supermarket.name)
-//                        .font(.headline)
-//                        .foregroundColor(.primary)
-//                }
-//            }
-//        }
     }
 }
 

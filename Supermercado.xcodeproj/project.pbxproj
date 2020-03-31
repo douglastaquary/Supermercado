@@ -7,12 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E333BE42433FA34005E3AEC /* CartEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E333BE32433FA34005E3AEC /* CartEditView.swift */; };
+		4E333BE62433FE2C005E3AEC /* SupermarketEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E333BE52433FE2C005E3AEC /* SupermarketEditView.swift */; };
 		4EC350B72432E84100245842 /* SupermarketDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC350AC2432E84000245842 /* SupermarketDetailView.swift */; };
 		4EC350B82432E84100245842 /* SupermarketItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC350AD2432E84000245842 /* SupermarketItemCell.swift */; };
 		4EC350B92432E84100245842 /* Supermarket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC350AE2432E84000245842 /* Supermarket.swift */; };
 		4EC350BA2432E84100245842 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC350AF2432E84000245842 /* Model.swift */; };
 		4EC350BB2432E84100245842 /* SupermarketCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC350B02432E84100245842 /* SupermarketCell.swift */; };
-		4EC350BC2432E84100245842 /* SupermarketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC350B12432E84100245842 /* SupermarketView.swift */; };
+		4EC350BC2432E84100245842 /* SupermarketItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC350B12432E84100245842 /* SupermarketItemView.swift */; };
 		4EC350BD2432E84100245842 /* SupermarketViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC350B22432E84100245842 /* SupermarketViewModel.swift */; };
 		4EC350BE2432E84100245842 /* SupermarketDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC350B32432E84100245842 /* SupermarketDetailViewModel.swift */; };
 		4EC350BF2432E84100245842 /* SupermarketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC350B52432E84100245842 /* SupermarketService.swift */; };
@@ -35,12 +37,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4E333BE32433FA34005E3AEC /* CartEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartEditView.swift; sourceTree = "<group>"; };
+		4E333BE52433FE2C005E3AEC /* SupermarketEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupermarketEditView.swift; sourceTree = "<group>"; };
 		4EC350AC2432E84000245842 /* SupermarketDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupermarketDetailView.swift; sourceTree = "<group>"; };
 		4EC350AD2432E84000245842 /* SupermarketItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupermarketItemCell.swift; sourceTree = "<group>"; };
 		4EC350AE2432E84000245842 /* Supermarket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Supermarket.swift; sourceTree = "<group>"; };
 		4EC350AF2432E84000245842 /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		4EC350B02432E84100245842 /* SupermarketCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupermarketCell.swift; sourceTree = "<group>"; };
-		4EC350B12432E84100245842 /* SupermarketView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupermarketView.swift; sourceTree = "<group>"; };
+		4EC350B12432E84100245842 /* SupermarketItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupermarketItemView.swift; sourceTree = "<group>"; };
 		4EC350B22432E84100245842 /* SupermarketViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupermarketViewModel.swift; sourceTree = "<group>"; };
 		4EC350B32432E84100245842 /* SupermarketDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupermarketDetailViewModel.swift; sourceTree = "<group>"; };
 		4EC350B52432E84100245842 /* SupermarketService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupermarketService.swift; sourceTree = "<group>"; };
@@ -88,8 +92,10 @@
 				4EC350B32432E84100245842 /* SupermarketDetailViewModel.swift */,
 				4EC350AD2432E84000245842 /* SupermarketItemCell.swift */,
 				4EC350B62432E84100245842 /* SupermarketsView.swift */,
-				4EC350B12432E84100245842 /* SupermarketView.swift */,
+				4EC350B12432E84100245842 /* SupermarketItemView.swift */,
 				4EC350B22432E84100245842 /* SupermarketViewModel.swift */,
+				4E333BE32433FA34005E3AEC /* CartEditView.swift */,
+				4E333BE52433FE2C005E3AEC /* SupermarketEditView.swift */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -274,16 +280,18 @@
 				4EC350BD2432E84100245842 /* SupermarketViewModel.swift in Sources */,
 				4EC350BE2432E84100245842 /* SupermarketDetailViewModel.swift in Sources */,
 				4EF0705624312E9A006F94B9 /* MoviesAPI.swift in Sources */,
+				4E333BE62433FE2C005E3AEC /* SupermarketEditView.swift in Sources */,
 				4EC350BF2432E84100245842 /* SupermarketService.swift in Sources */,
 				4EF0705424312C48006F94B9 /* Service.swift in Sources */,
 				4EF0704124312BE0006F94B9 /* SceneDelegate.swift in Sources */,
 				4EC350C02432E84100245842 /* SupermarketsView.swift in Sources */,
 				4EC350BA2432E84100245842 /* Model.swift in Sources */,
+				4E333BE42433FA34005E3AEC /* CartEditView.swift in Sources */,
 				4EF0705E24313522006F94B9 /* System.swift in Sources */,
 				4EF0705924313096006F94B9 /* View+Extensions.swift in Sources */,
 				4EC350B72432E84100245842 /* SupermarketDetailView.swift in Sources */,
 				4EF0705C2431329F006F94B9 /* Feedback.swift in Sources */,
-				4EC350BC2432E84100245842 /* SupermarketView.swift in Sources */,
+				4EC350BC2432E84100245842 /* SupermarketItemView.swift in Sources */,
 				4EF0704324312BE0006F94B9 /* ContentView.swift in Sources */,
 				4EC350B92432E84100245842 /* Supermarket.swift in Sources */,
 			);

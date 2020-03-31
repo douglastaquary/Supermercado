@@ -27,25 +27,12 @@ struct SupermarketItemCell: View {
                 }
             }
         }.sheet(isPresented: $showEditView) { // Passing the state to the sheet API
-            SupermarketItemView(supermarketID: self.supermarketID)
+            SupermarketEditView(supermarketID: self.supermarketID, supermarketItem: self.supermarketItem)
                 .environmentObject(self.supermarketService)
         }
-//        NavigationLink(
-//            destination: sheet(item: <#T##Binding<Identifiable?>#>, content: <#T##(Identifiable) -> View#>)
-//            SupermarketItemView(supermarketID: self.supermarketID)
-//                .environmentObject(self.supermarketService)
-//        ) {
-//            HStack {
-//                SupermarketItemThumbnail(supermarketItem: supermarketItem)
-//                VStack(alignment: .leading) {
-//                    Text(supermarketItem.name)
-//                        .font(.headline)
-//                        .foregroundColor(.primary)
-//                }
-//            }
-//        }
     }
 }
+
 struct SupermarketItemCell_Previews: PreviewProvider {
     static var previews: some View {
         SupermarketItemCell(supermarketItem: SupermarketItem(), supermarketID: UUID())

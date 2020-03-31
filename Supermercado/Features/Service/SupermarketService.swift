@@ -44,9 +44,8 @@ public final class SupermarketService: ObservableObject {
         })
     }
     
-    func addNewSupermarket() {
-        let newSupermarket = Supermarket()
-        let change: Value.Change = .insert(try! newSupermarket.encodeValue())
+    func addNewCart(_ cart: Supermarket) {
+        let change: Value.Change = .insert(try! cart.encodeValue())
         try! storeCoordinator.save([change])
         sync()
     }

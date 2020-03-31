@@ -23,39 +23,38 @@ struct SupermarketsView : View {
         }
     }
     
-
     var body: some View {
         NavigationView {
             list(of: supermarketService.supermarkets)
         }
     }
     
-    
     private func list(of supermarkets: [Supermarket]) -> some View {
-        return List(supermarkets) { supermarket in
-            NavigationLink(
-                destination: SupermarketDetailView(viewModel: SupermarketDetailViewModel(supermarket: supermarket)).environmentObject(self.supermarketService),
-                label: { SupermarketCell(supermarket: supermarket).environmentObject(self.supermarketService) }
-            )
-        }
-        .navigationBarTitle(Text("Home"))
-        .navigationBarItems(
-            trailing: Button(
-                action: {
-                    withAnimation {
-                        self.showEditView.toggle()
-                        self.supermarketService.addNewSupermarket()
+        return List {
+                ForEach(supermarkets) { supermarket in
+                    SupermarketCell(supermarket: supermarket).environmentObject(self.supermarketService)
+                }.onDelete { indices in
+                    indices.forEach {
+                        self.supermarketService.deleteSupermarket(withID: self.supermarketService.supermarkets[$0].id)
                     }
                 }
-            ) {
-                Image(systemName: "plus.circle.fill")
-            }.sheet(isPresented: $showEditView) {
-                Text("Edit cart")
-                //CartEditView(viewModel: CartEditViewModel())
             }
-        )
-    
+            .navigationBarTitle(Text("Meus carrinhos"))
+            .navigationBarItems(
+                trailing: Button(
+                    action: {
+                        withAnimation {
+                            self.showEditView.toggle()
+                        }
+                    }
+                ) {
+                    Image(systemName: "plus.circle.fill")
+                }.sheet(isPresented: $showEditView) {
+                    CartEditView().environmentObject(self.supermarketService)
+                }
+            )
     }
+    
 }
 
 struct SupermarketsViewPreview : PreviewProvider {
