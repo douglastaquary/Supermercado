@@ -3,10 +3,23 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4EC350B72432E84100245842 /* SupermarketDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC350AC2432E84000245842 /* SupermarketDetailView.swift */; };
+		4EC350B82432E84100245842 /* SupermarketItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC350AD2432E84000245842 /* SupermarketItemCell.swift */; };
+		4EC350B92432E84100245842 /* Supermarket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC350AE2432E84000245842 /* Supermarket.swift */; };
+		4EC350BA2432E84100245842 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC350AF2432E84000245842 /* Model.swift */; };
+		4EC350BB2432E84100245842 /* SupermarketCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC350B02432E84100245842 /* SupermarketCell.swift */; };
+		4EC350BC2432E84100245842 /* SupermarketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC350B12432E84100245842 /* SupermarketView.swift */; };
+		4EC350BD2432E84100245842 /* SupermarketViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC350B22432E84100245842 /* SupermarketViewModel.swift */; };
+		4EC350BE2432E84100245842 /* SupermarketDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC350B32432E84100245842 /* SupermarketDetailViewModel.swift */; };
+		4EC350BF2432E84100245842 /* SupermarketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC350B52432E84100245842 /* SupermarketService.swift */; };
+		4EC350C02432E84100245842 /* SupermarketsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC350B62432E84100245842 /* SupermarketsView.swift */; };
+		4EC350C32432E89D00245842 /* LLVSCloudKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4EC350C22432E89D00245842 /* LLVSCloudKit */; };
+		4EC350C52432E89D00245842 /* LLVS in Frameworks */ = {isa = PBXBuildFile; productRef = 4EC350C42432E89D00245842 /* LLVS */; };
+		4EC350C92432E8EC00245842 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EC350C82432E8EC00245842 /* CloudKit.framework */; };
 		4EF0703F24312BE0006F94B9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF0703E24312BE0006F94B9 /* AppDelegate.swift */; };
 		4EF0704124312BE0006F94B9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF0704024312BE0006F94B9 /* SceneDelegate.swift */; };
 		4EF0704324312BE0006F94B9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF0704224312BE0006F94B9 /* ContentView.swift */; };
@@ -22,6 +35,18 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4EC350AC2432E84000245842 /* SupermarketDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupermarketDetailView.swift; sourceTree = "<group>"; };
+		4EC350AD2432E84000245842 /* SupermarketItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupermarketItemCell.swift; sourceTree = "<group>"; };
+		4EC350AE2432E84000245842 /* Supermarket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Supermarket.swift; sourceTree = "<group>"; };
+		4EC350AF2432E84000245842 /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		4EC350B02432E84100245842 /* SupermarketCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupermarketCell.swift; sourceTree = "<group>"; };
+		4EC350B12432E84100245842 /* SupermarketView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupermarketView.swift; sourceTree = "<group>"; };
+		4EC350B22432E84100245842 /* SupermarketViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupermarketViewModel.swift; sourceTree = "<group>"; };
+		4EC350B32432E84100245842 /* SupermarketDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupermarketDetailViewModel.swift; sourceTree = "<group>"; };
+		4EC350B52432E84100245842 /* SupermarketService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupermarketService.swift; sourceTree = "<group>"; };
+		4EC350B62432E84100245842 /* SupermarketsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupermarketsView.swift; sourceTree = "<group>"; };
+		4EC350C62432E8E900245842 /* Supermercado.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Supermercado.entitlements; sourceTree = "<group>"; };
+		4EC350C82432E8EC00245842 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		4EF0703B24312BE0006F94B9 /* Supermercado.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Supermercado.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EF0703E24312BE0006F94B9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4EF0704024312BE0006F94B9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -43,17 +68,54 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4EC350C92432E8EC00245842 /* CloudKit.framework in Frameworks */,
+				4EC350C32432E89D00245842 /* LLVSCloudKit in Frameworks */,
+				4EC350C52432E89D00245842 /* LLVS in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4EC350AB2432E80A00245842 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				4EC350AF2432E84000245842 /* Model.swift */,
+				4EC350B42432E84100245842 /* Service */,
+				4EC350AE2432E84000245842 /* Supermarket.swift */,
+				4EC350B02432E84100245842 /* SupermarketCell.swift */,
+				4EC350AC2432E84000245842 /* SupermarketDetailView.swift */,
+				4EC350B32432E84100245842 /* SupermarketDetailViewModel.swift */,
+				4EC350AD2432E84000245842 /* SupermarketItemCell.swift */,
+				4EC350B62432E84100245842 /* SupermarketsView.swift */,
+				4EC350B12432E84100245842 /* SupermarketView.swift */,
+				4EC350B22432E84100245842 /* SupermarketViewModel.swift */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		4EC350B42432E84100245842 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				4EC350B52432E84100245842 /* SupermarketService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		4EC350C72432E8EC00245842 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4EC350C82432E8EC00245842 /* CloudKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		4EF0703224312BE0006F94B9 = {
 			isa = PBXGroup;
 			children = (
 				4EF0703D24312BE0006F94B9 /* Supermercado */,
 				4EF0703C24312BE0006F94B9 /* Products */,
+				4EC350C72432E8EC00245842 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -68,6 +130,8 @@
 		4EF0703D24312BE0006F94B9 /* Supermercado */ = {
 			isa = PBXGroup;
 			children = (
+				4EC350C62432E8E900245842 /* Supermercado.entitlements */,
+				4EC350AB2432E80A00245842 /* Features */,
 				4EF0705F243135C2006F94B9 /* Constrols */,
 				4EF0705A24313244006F94B9 /* Feedback */,
 				4EF0705724313088006F94B9 /* Extensions */,
@@ -141,6 +205,10 @@
 			dependencies = (
 			);
 			name = Supermercado;
+			packageProductDependencies = (
+				4EC350C22432E89D00245842 /* LLVSCloudKit */,
+				4EC350C42432E89D00245842 /* LLVS */,
+			);
 			productName = Supermercado;
 			productReference = 4EF0703B24312BE0006F94B9 /* Supermercado.app */;
 			productType = "com.apple.product-type.application";
@@ -169,6 +237,9 @@
 				Base,
 			);
 			mainGroup = 4EF0703224312BE0006F94B9;
+			packageReferences = (
+				4EC350C12432E89D00245842 /* XCRemoteSwiftPackageReference "LLVS" */,
+			);
 			productRefGroup = 4EF0703C24312BE0006F94B9 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -196,15 +267,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4EC350B82432E84100245842 /* SupermarketItemCell.swift in Sources */,
 				4EF0703F24312BE0006F94B9 /* AppDelegate.swift in Sources */,
 				4EF07061243135D8006F94B9 /* Spinner.swift in Sources */,
+				4EC350BB2432E84100245842 /* SupermarketCell.swift in Sources */,
+				4EC350BD2432E84100245842 /* SupermarketViewModel.swift in Sources */,
+				4EC350BE2432E84100245842 /* SupermarketDetailViewModel.swift in Sources */,
 				4EF0705624312E9A006F94B9 /* MoviesAPI.swift in Sources */,
+				4EC350BF2432E84100245842 /* SupermarketService.swift in Sources */,
 				4EF0705424312C48006F94B9 /* Service.swift in Sources */,
 				4EF0704124312BE0006F94B9 /* SceneDelegate.swift in Sources */,
+				4EC350C02432E84100245842 /* SupermarketsView.swift in Sources */,
+				4EC350BA2432E84100245842 /* Model.swift in Sources */,
 				4EF0705E24313522006F94B9 /* System.swift in Sources */,
 				4EF0705924313096006F94B9 /* View+Extensions.swift in Sources */,
+				4EC350B72432E84100245842 /* SupermarketDetailView.swift in Sources */,
 				4EF0705C2431329F006F94B9 /* Feedback.swift in Sources */,
+				4EC350BC2432E84100245842 /* SupermarketView.swift in Sources */,
 				4EF0704324312BE0006F94B9 /* ContentView.swift in Sources */,
+				4EC350B92432E84100245842 /* Supermarket.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,10 +421,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Supermercado/Supermercado.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Supermercado/Preview Content\"";
+				DEVELOPMENT_TEAM = 6V95FQX348;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Supermercado/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -351,7 +435,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.douglastaquary.Supermercado;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -359,10 +443,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Supermercado/Supermercado.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Supermercado/Preview Content\"";
+				DEVELOPMENT_TEAM = 6V95FQX348;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Supermercado/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -370,7 +457,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.douglastaquary.Supermercado;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -396,6 +483,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4EC350C12432E89D00245842 /* XCRemoteSwiftPackageReference "LLVS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mentalfaculty/LLVS.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.4.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4EC350C22432E89D00245842 /* LLVSCloudKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4EC350C12432E89D00245842 /* XCRemoteSwiftPackageReference "LLVS" */;
+			productName = LLVSCloudKit;
+		};
+		4EC350C42432E89D00245842 /* LLVS */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4EC350C12432E89D00245842 /* XCRemoteSwiftPackageReference "LLVS" */;
+			productName = LLVS;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4EF0703324312BE0006F94B9 /* Project object */;
 }
