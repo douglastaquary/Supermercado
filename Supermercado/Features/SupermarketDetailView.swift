@@ -61,7 +61,7 @@ struct SupermarketDetailView: View {
                 }
             }
         }
-        .navigationBarTitle(Text("Home"))
+        .navigationBarTitle(Text(self.viewModel.supermarket.name))
         .navigationBarItems(
             trailing: Button(
                 action: {
@@ -73,7 +73,6 @@ struct SupermarketDetailView: View {
             ) {
                 Image(systemName: "plus.circle.fill")
             }.sheet(isPresented: $showEditView) {
-                Text("Edit cart")
                 SupermarketItemView(supermarketID: self.viewModel.supermarket.id)
                     .environmentObject(self.supermarketService)
                 //CartEditView(viewModel: CartEditViewModel())

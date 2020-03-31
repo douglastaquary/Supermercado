@@ -26,7 +26,7 @@ struct SupermarketItemView: View {
     
     private func form() -> some View {
         return Form {
-                Section(header: Text("Informações sobre o item de carrinho ")) {
+                Section(header: Text("Informações sobre o item do carrinho ")) {
                     TextField("Nome", text: $supermarketItem.name)
                     TextField("Valor", text: $supermarketItem.price)
                 }
