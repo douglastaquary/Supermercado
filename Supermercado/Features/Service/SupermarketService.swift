@@ -86,6 +86,12 @@ public final class SupermarketService: ObservableObject {
         sync()
     }
     
+    func deleteItem(for id: Supermarket.ID, with content: SupermarketItem) {
+        var supermarket = self.supermarket(withID: id)
+        supermarket.items.removeAll(where: { $0.id == content.id})
+        update(supermarket)
+    }
+    
     // MARK: Syncing
     
     func sync(executingUponCompletion completionHandler: ((Swift.Error?) -> Void)? = nil) {

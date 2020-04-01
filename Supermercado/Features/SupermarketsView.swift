@@ -39,6 +39,7 @@ struct SupermarketsView : View {
                     }
                 }
             }
+            .listStyle(GroupedListStyle())
             .navigationBarTitle(Text("Meus carrinhos"))
             .navigationBarItems(
                 trailing: Button(

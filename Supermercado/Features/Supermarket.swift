@@ -10,6 +10,14 @@ import Foundation
 import LLVS
 import SwiftUI
 
+public struct Medida: Codable, Identifiable, Hashable {
+    public let id = UUID()
+    public let tipo: String
+}
+
+let medidas = [Medida(tipo: "Kilograma"), Medida(tipo: "Ml"), Medida(tipo: "Litros")]
+
+
 struct Supermarket: Model {
     static let storeIdentifierTypeTag = "Supermarket"
     var id: UUID = .init()
@@ -28,11 +36,12 @@ public struct SupermarketItem: Codable, Equatable, Identifiable {
     public var amount: Double = 0.0
     public var discount: String = ""
     public var avatarJPEGData: Data?
+    public var medida: Medida?
     
     public var fullNameOrPlaceholder: String {
         name.isEmpty ? "Novo item" : name
     }
-    
+        
     init(name: String = "", price: String = "", amount: Double = 0.0, discount: String = "") {
         self.name = name
         self.price = price

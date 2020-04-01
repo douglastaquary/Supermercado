@@ -20,11 +20,11 @@ public final class SupermarketDetailViewModel: ObservableObject {
 
     init(supermarket: Supermarket) {
         self.supermarket = supermarket
-        
-        items = supermarketService.fetchItems(for: supermarket.id)
     }
 
-    var items: [SupermarketItem] = []
+    var items: [SupermarketItem] {
+        return supermarketService.fetchItems(for: supermarket.id)
+    }
 
     // MARK: - CRUD
     
@@ -41,8 +41,8 @@ public final class SupermarketDetailViewModel: ObservableObject {
     }
     
     func deleteItem(for id: Supermarket.ID, with content: SupermarketItem) {
-        var item = supermarketService.supermarket(withID: id)
-        item.items.removeAll(where: { $0.id == content.id})
+        var supermarket = supermarketService.supermarket(withID: id)
+        supermarket.items.removeAll(where: { $0.id == content.id})
         supermarketService.sync()
     }
     

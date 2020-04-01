@@ -15,11 +15,20 @@ struct SupermarketItemView: View {
     
     @State var supermarketItem: SupermarketItem = SupermarketItem()
     @State var showEditView = false
+    @State private var selectedColor = 0
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var supermarketID: Supermarket.ID
     
+//    private var currencyFormatter: NumberFormatter = {
+//        let f = NumberFormatter()
+//        // allow no currency symbol, extra digits, etc
+//        f.isLenient = true
+//        f.numberStyle = .currency
+//        return f
+//    }()
+//
     var body: some View {
         NavigationView {
             form()
@@ -30,10 +39,33 @@ struct SupermarketItemView: View {
         return Form {
                 Section(header: Text("Informações sobre o item do carrinho ")) {
                     TextField("Nome", text: $supermarketItem.name)
+                        .font(.largeTitle)
+                        .padding()
+                        .background(Color.white)
+                        .foregroundColor(Color.black)
+                        .multilineTextAlignment(.leading)
                     TextField("Valor", text: $supermarketItem.price)
+                        .font(.largeTitle)
+                        .padding()
+                        .background(Color.white)
+                        .foregroundColor(Color.black)
+                        .multilineTextAlignment(.leading)
                 }
+                .font(.body)
+                Section(header: Text("Medida")) {
+                    Picker(
+                        selection: $supermarketItem.medida,
+                        label: Text("Selecione a unidade de medida"),
+                        content: {
+                            ForEach(0..<medidas.count) { index in
+                                Text(medidas[index].tipo).tag(index)
+                            }
+                        }
+                    )
+                }
+                .font(.body)
             }
-        .navigationBarTitle(Text(supermarketItem.name))
+            .navigationBarTitle(Text(supermarketItem.name))
             .navigationBarItems(
                 leading: Button(action: {
                         withAnimation {
@@ -46,7 +78,7 @@ struct SupermarketItemView: View {
                 trailing:
                     Button(action: {
                         self.supermarketService.addItem(for: self.supermarketID, with: self.supermarketItem)
-                        self.showEditView.toggle()
+                        self.presentationMode.wrappedValue.dismiss()
                     }
                 ) {
                     Text("Salvar")

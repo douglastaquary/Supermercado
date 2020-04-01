@@ -14,7 +14,6 @@ struct SupermarketDetailView: View {
     @State var showEditView = false
     
     @EnvironmentObject var supermarketService: SupermarketService
-    
     var viewModel: SupermarketDetailViewModel
    
     var body: some View {
@@ -23,12 +22,12 @@ struct SupermarketDetailView: View {
     
     private func list(of items: [SupermarketItem]) -> some View {
         return List {
-            ForEach(supermarketService.fetchItems(for: viewModel.supermarket.id)) { item in
+            ForEach(items) { item in
                 SupermarketItemCell(supermarketItem: item, supermarketID: self.viewModel.supermarket.id)
                     .environmentObject(self.supermarketService)
             }.onDelete { indices in
                 indices.forEach {
-                    self.viewModel.deleteItem(for: self.viewModel.supermarket.id, with: self.viewModel.items[$0])
+                    self.supermarketService.deleteItem(for: self.viewModel.supermarket.id, with: self.viewModel.items[$0])
                 }
             }
         }
