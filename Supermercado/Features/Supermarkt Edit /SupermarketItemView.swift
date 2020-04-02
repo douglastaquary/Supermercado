@@ -9,13 +9,29 @@
 import SwiftUI
 import Combine
 
+let categories: [Category] = [
+    Category(tipo: "Cama e mesa"),
+    Category(tipo: "Cama, mesa e banho"),
+    Category(tipo: "Limpeza"),
+    Category(tipo: "Bebidas"),
+    Category(tipo: "Grãos"),
+    Category(tipo: "Outrps")
+]
+
+let medidas = [
+    Medida(tipo: "Kilograma"),
+    Medida(tipo: "Ml"),
+    Medida(tipo: "Litros")
+]
+
 /// Detail view for a Contact
 struct SupermarketItemView: View {
     @EnvironmentObject var supermarketService: SupermarketService
     
     @State var supermarketItem: SupermarketItem = SupermarketItem()
     @State var showEditView = false
-    @State private var selectedColor = 0
+    @State private var selectedCategory = 2
+    @State private var selectedQntd = 0
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
@@ -39,23 +55,41 @@ struct SupermarketItemView: View {
         return Form {
                 Section(header: Text("Informações sobre o item do carrinho ")) {
                     TextField("Nome", text: $supermarketItem.name)
-                        .font(.largeTitle)
+                        .font(.body)
                         .padding()
                         .background(Color.white)
                         .foregroundColor(Color.black)
                         .multilineTextAlignment(.leading)
                     TextField("Valor", text: $supermarketItem.price)
-                        .font(.largeTitle)
+                        .font(.body)
                         .padding()
                         .background(Color.white)
                         .foregroundColor(Color.black)
                         .multilineTextAlignment(.leading)
+//                    TextField("Quantidade", text: $supermarketItem.amount)
+//                        .font(.body)
+//                        .padding()
+//                        .background(Color.white)
+//                        .foregroundColor(Color.black)
+//                        .multilineTextAlignment(.leading)
+                    
                 }
                 .font(.body)
-                Section(header: Text("Medida")) {
+                Section(header: Text("Categoria. Ex.: Limpeza, bebida")) {
                     Picker(
-                        selection: $supermarketItem.medida,
-                        label: Text("Selecione a unidade de medida"),
+                        selection: $selectedCategory,
+                        label: Text("Selecione uma categoria"),
+                        content: {
+                            ForEach(0..<categories.count) { index in
+                                Text(categories[index].tipo).tag(index)
+                            }
+                        }
+                    )
+                }
+                Section(header: Text("Unidade de medida. Ex.: Kg, ml, metro")) {
+                    Picker(
+                        selection: $selectedQntd,
+                        label: Text("Selecione uma medida"),
                         content: {
                             ForEach(0..<medidas.count) { index in
                                 Text(medidas[index].tipo).tag(index)
@@ -63,7 +97,6 @@ struct SupermarketItemView: View {
                         }
                     )
                 }
-                .font(.body)
             }
             .navigationBarTitle(Text(supermarketItem.name))
             .navigationBarItems(
@@ -86,7 +119,6 @@ struct SupermarketItemView: View {
             )
     }
 }
-
 
 
 ///// Detail view for a Contact

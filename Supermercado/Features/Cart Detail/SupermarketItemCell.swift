@@ -12,24 +12,34 @@ struct SupermarketItemCell: View {
     @EnvironmentObject var supermarketService: SupermarketService
     var supermarketItem: SupermarketItem
     var supermarketID: Supermarket.ID
+    var imageName = ""
     
-    @State var showEditView = false
+    @State var isDone = false
 
     var body: some View {
         
-        Button(action: { self.showEditView.toggle() }) { // Button to show the modal view by toggling the state
+        Button(action: {
+            self.isDone.toggle()
+        }) {
             HStack {
                 SupermarketItemThumbnail(supermarketItem: supermarketItem)
                 VStack(alignment: .leading) {
                     Text(supermarketItem.name)
                         .font(.headline)
                         .foregroundColor(.primary)
+                        .padding(8)
+                    Text("R$ \(supermarketItem.price)")
+                        .font(.caption)
+                        .foregroundColor(.primary)
+                         .padding(8)
+                    
                 }
+                Spacer()
+                Image(systemName: self.$isDone.wrappedValue ? "checkmark" : "")
+                
             }
-        }.sheet(isPresented: $showEditView) { // Passing the state to the sheet API
-            SupermarketEditView(supermarketID: self.supermarketID, supermarketItem: self.supermarketItem)
-                .environmentObject(self.supermarketService)
         }
+        .frame(height: 68)
     }
 }
 

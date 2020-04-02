@@ -19,26 +19,10 @@ public struct Medida: Codable, Identifiable, Hashable {
 //    public let id = UUID()
 //}
 
-public enum Category: String, Codable {
-    case clear = "Limpeza"
-    case bedAndTable = "Cama, mesa e banho"
-    case vegetables = "Verduras e Legumes"
-    case canned = "Enlatados"
-    case degrees = "Grãos"
-    case others = "Outros"
+public struct Category: Codable, Identifiable, Hashable {
+    public let id = UUID()
+    public var tipo: String = ""
 }
-
-public enum Name: String {
-    case clear = "Limpeza"
-    case bedAndTable = "Cama, mesa e banho"
-    case vegetables = "Verduras e Legumes"
-    case canned = "Enlatados"
-    case degrees = "Grãos"
-    case others = "Outros"
-}
-
-let medidas = [Medida(tipo: "Kilograma"), Medida(tipo: "Ml"), Medida(tipo: "Litros")]
-
 
 struct Supermarket: Model {
     static let storeIdentifierTypeTag = "Supermarket"

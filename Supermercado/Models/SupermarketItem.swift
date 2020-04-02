@@ -17,17 +17,17 @@ public struct SupermarketItem: Codable, Equatable, Identifiable {
     public var avatarJPEGData: Data?
     public var medida: Medida?
     public var category: Category?
+    public var isDone: Bool? = false
 
-    
     public var fullNameOrPlaceholder: String {
         name.isEmpty ? "Novo item" : name
     }
         
-//    init(name: String = "", price: String = "", amount: Double = 0.0, discount: String = "") {
-//        self.name = name
-//        self.price = price
-//        self.amount = amount
-//        self.discount = discount
-//    }
+    init(name: String = "", price: String = "", amount: Double = 0.0, discount: String = "") {
+        self.name = name
+        self.price = price
+        self.amount = amount
+        self.discount = discount
+    }
 }
 

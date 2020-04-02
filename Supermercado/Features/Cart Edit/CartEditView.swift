@@ -25,7 +25,9 @@ struct CartEditView: View {
         return Form {
                 Section(header: Text("Dê um nome para o seu novo carrinho de compras")) {
                     TextField("Nome", text: $cart.name)
+                        .font(.largeTitle)
                 }
+                .font(.body)
             }
             .navigationBarTitle(Text(cart.name))
             .navigationBarItems(
