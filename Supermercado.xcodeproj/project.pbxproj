@@ -96,6 +96,9 @@
 		4E333BF4243566E3005E3AEC /* Cart List */ = {
 			isa = PBXGroup;
 			children = (
+				4EC350B02432E84100245842 /* SupermarketCell.swift */,
+				4EC350B62432E84100245842 /* SupermarketsView.swift */,
+				4EC350B22432E84100245842 /* SupermarketViewModel.swift */,
 			);
 			path = "Cart List";
 			sourceTree = "<group>";
@@ -103,6 +106,7 @@
 		4E333BF5243566F8005E3AEC /* Cart Edit */ = {
 			isa = PBXGroup;
 			children = (
+				4E333BE32433FA34005E3AEC /* CartEditView.swift */,
 			);
 			path = "Cart Edit";
 			sourceTree = "<group>";
@@ -110,6 +114,9 @@
 		4E333BF624356708005E3AEC /* Cart Detail */ = {
 			isa = PBXGroup;
 			children = (
+				4EC350AC2432E84000245842 /* SupermarketDetailView.swift */,
+				4EC350B32432E84100245842 /* SupermarketDetailViewModel.swift */,
+				4EC350AD2432E84000245842 /* SupermarketItemCell.swift */,
 			);
 			path = "Cart Detail";
 			sourceTree = "<group>";
@@ -117,6 +124,8 @@
 		4E333BF724356711005E3AEC /* Supermarkt Edit  */ = {
 			isa = PBXGroup;
 			children = (
+				4E333BE52433FE2C005E3AEC /* SupermarketEditView.swift */,
+				4EC350B12432E84100245842 /* SupermarketItemView.swift */,
 			);
 			path = "Supermarkt Edit ";
 			sourceTree = "<group>";
@@ -127,6 +136,7 @@
 				4EC350AE2432E84000245842 /* Supermarket.swift */,
 				4E333BF92435674C005E3AEC /* SupermarketItem.swift */,
 				4E333BFB24356764005E3AEC /* Address.swift */,
+				4EC350AF2432E84000245842 /* Model.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -138,17 +148,7 @@
 				4E333BF624356708005E3AEC /* Cart Detail */,
 				4E333BF5243566F8005E3AEC /* Cart Edit */,
 				4E333BF4243566E3005E3AEC /* Cart List */,
-				4EC350AF2432E84000245842 /* Model.swift */,
 				4EC350B42432E84100245842 /* Service */,
-				4EC350B02432E84100245842 /* SupermarketCell.swift */,
-				4EC350AC2432E84000245842 /* SupermarketDetailView.swift */,
-				4EC350B32432E84100245842 /* SupermarketDetailViewModel.swift */,
-				4EC350AD2432E84000245842 /* SupermarketItemCell.swift */,
-				4EC350B62432E84100245842 /* SupermarketsView.swift */,
-				4EC350B12432E84100245842 /* SupermarketItemView.swift */,
-				4EC350B22432E84100245842 /* SupermarketViewModel.swift */,
-				4E333BE32433FA34005E3AEC /* CartEditView.swift */,
-				4E333BE52433FE2C005E3AEC /* SupermarketEditView.swift */,
 			);
 			path = Features;
 			sourceTree = "<group>";
