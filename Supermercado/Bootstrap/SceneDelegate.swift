@@ -18,10 +18,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let scene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: scene)
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            let supermarketsView = SupermarketsView()
-                    .environmentObject(appDelegate.supermarketService)
-                    .accentColor(.green)
-            window.rootViewController = UIHostingController(rootView: supermarketsView)
+//            let supermarketsView = SupermarketsView()
+//                    .environmentObject(appDelegate.supermarketService)
+//                    .accentColor(.green)
+            window.rootViewController = UIHostingController(rootView: HomeView())
             self.window = window
             window.makeKeyAndVisible()
         }

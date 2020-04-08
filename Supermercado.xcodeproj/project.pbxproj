@@ -11,6 +11,10 @@
 		4E333BE62433FE2C005E3AEC /* SupermarketEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E333BE52433FE2C005E3AEC /* SupermarketEditView.swift */; };
 		4E333BFA2435674C005E3AEC /* SupermarketItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E333BF92435674C005E3AEC /* SupermarketItem.swift */; };
 		4E333BFC24356764005E3AEC /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E333BFB24356764005E3AEC /* Address.swift */; };
+		4EB316E5243D62F500CEA706 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB316E4243D62F500CEA706 /* HomeView.swift */; };
+		4EB316E7243D63B900CEA706 /* HomeCardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB316E6243D63B900CEA706 /* HomeCardListView.swift */; };
+		4EB316E9243D768F00CEA706 /* NavigationBarModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB316E8243D768F00CEA706 /* NavigationBarModifier.swift */; };
+		4EB316EB243D778500CEA706 /* Metrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB316EA243D778500CEA706 /* Metrics.swift */; };
 		4EC350B72432E84100245842 /* SupermarketDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC350AC2432E84000245842 /* SupermarketDetailView.swift */; };
 		4EC350B82432E84100245842 /* SupermarketItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC350AD2432E84000245842 /* SupermarketItemCell.swift */; };
 		4EC350B92432E84100245842 /* Supermarket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC350AE2432E84000245842 /* Supermarket.swift */; };
@@ -38,6 +42,10 @@
 		4E333BE52433FE2C005E3AEC /* SupermarketEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupermarketEditView.swift; sourceTree = "<group>"; };
 		4E333BF92435674C005E3AEC /* SupermarketItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupermarketItem.swift; sourceTree = "<group>"; };
 		4E333BFB24356764005E3AEC /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
+		4EB316E4243D62F500CEA706 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		4EB316E6243D63B900CEA706 /* HomeCardListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCardListView.swift; sourceTree = "<group>"; };
+		4EB316E8243D768F00CEA706 /* NavigationBarModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarModifier.swift; sourceTree = "<group>"; };
+		4EB316EA243D778500CEA706 /* Metrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metrics.swift; sourceTree = "<group>"; };
 		4EC350AC2432E84000245842 /* SupermarketDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupermarketDetailView.swift; sourceTree = "<group>"; };
 		4EC350AD2432E84000245842 /* SupermarketItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupermarketItemCell.swift; sourceTree = "<group>"; };
 		4EC350AE2432E84000245842 /* Supermarket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Supermarket.swift; sourceTree = "<group>"; };
@@ -141,14 +149,25 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		4EB316E3243D614200CEA706 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				4EB316E4243D62F500CEA706 /* HomeView.swift */,
+				4EB316E6243D63B900CEA706 /* HomeCardListView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
 		4EC350AB2432E80A00245842 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				4EB316E3243D614200CEA706 /* Home */,
 				4E333BF724356711005E3AEC /* Supermarkt Edit  */,
 				4E333BF624356708005E3AEC /* Cart Detail */,
 				4E333BF5243566F8005E3AEC /* Cart Edit */,
 				4E333BF4243566E3005E3AEC /* Cart List */,
 				4EC350B42432E84100245842 /* Service */,
+				4EB316E8243D768F00CEA706 /* NavigationBarModifier.swift */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -198,6 +217,7 @@
 				4EF0705724313088006F94B9 /* Extensions */,
 				4EF0704624312BE1006F94B9 /* Preview Content */,
 				4EF0704C24312BE1006F94B9 /* Info.plist */,
+				4EB316EA243D778500CEA706 /* Metrics.swift */,
 			);
 			path = Supermercado;
 			sourceTree = "<group>";
@@ -316,12 +336,16 @@
 				4EC350BF2432E84100245842 /* SupermarketService.swift in Sources */,
 				4EF0704124312BE0006F94B9 /* SceneDelegate.swift in Sources */,
 				4EC350C02432E84100245842 /* SupermarketsView.swift in Sources */,
+				4EB316E9243D768F00CEA706 /* NavigationBarModifier.swift in Sources */,
+				4EB316EB243D778500CEA706 /* Metrics.swift in Sources */,
 				4EC350BA2432E84100245842 /* Model.swift in Sources */,
 				4E333BE42433FA34005E3AEC /* CartEditView.swift in Sources */,
 				4EF0705924313096006F94B9 /* View+Extensions.swift in Sources */,
+				4EB316E7243D63B900CEA706 /* HomeCardListView.swift in Sources */,
 				4EC350B72432E84100245842 /* SupermarketDetailView.swift in Sources */,
 				4EC350BC2432E84100245842 /* SupermarketItemView.swift in Sources */,
 				4EC350B92432E84100245842 /* Supermarket.swift in Sources */,
+				4EB316E5243D62F500CEA706 /* HomeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

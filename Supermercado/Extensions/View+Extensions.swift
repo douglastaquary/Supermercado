@@ -10,4 +10,9 @@ import SwiftUI
 
 extension View {
     func eraseToAnyView() -> AnyView { AnyView(self) }
+    
+    func navigationBarColor(_ backgroundColor: UIColor?) -> some View {
+        self.modifier(NavigationBarModifier(backgroundColor: backgroundColor))
+    }
 }
+
