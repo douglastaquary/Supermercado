@@ -95,7 +95,7 @@ struct SupermarketItemView: View {
                                 Text(medidas[index].tipo).tag(index)
                             }
                         }
-                    )
+                    ).pickerStyle(WheelPickerStyle())
                 }
             }
             .navigationBarTitle(Text(supermarketItem.name))

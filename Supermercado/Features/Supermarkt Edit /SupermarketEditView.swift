@@ -34,10 +34,11 @@ struct SupermarketEditView: View {
                         label: Text("Selecione a medida"),
                         content: {
                             ForEach(medidas) { medida in
-                                Text(medida.tipo)//.tag(medida)
+                                Text(medida.tipo).tag(medida)
                             }
                         }
                     )
+                    
                 }
             }
             .navigationBarTitle(Text(supermarketItem.name))
