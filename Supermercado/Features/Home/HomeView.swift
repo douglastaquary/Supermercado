@@ -16,14 +16,25 @@ struct HomeView: View {
     ]
     
     init() {
-        UINavigationBar.appearance().backgroundColor = Metrics.primary
+        //UINavigationBar.appearance().backgroundColor = Metrics.primary
+        UITableView.appearance().separatorColor = .clear
     }
     
     var body: some View {
-        NavigationView {
-            list(of: homeItems)
+        VStack {
+//            HStack {
+//                Text("App")
+//                    .font(.system(size: 28, weight: .bold))
+//                Spacer()
+//                Image("ic_list")
+//            }
+//            .padding(.horizontal)
+            NavigationView {
+                list(of: homeItems)
+            }
+            .accentColor(Color.black)
         }
-        .navigationBarColor(Metrics.primary)
+    
     }
     
     private func list(of items: [HomeItem]) -> some View {
@@ -32,7 +43,7 @@ struct HomeView: View {
                 HomeCardListView(homeItem: item)
             }
         }
-        .listStyle(GroupedListStyle())
+        .buttonStyle(PlainButtonStyle())
     }
         
 }

@@ -10,24 +10,27 @@ import SwiftUI
 
 struct HomeCardListView: View {
     var homeItem: HomeItem
+    
     var body: some View {
-        ZStack {
-            Image(homeItem.imageBackgroung)
-                .resizable()
-                .overlay(
-                    CardImageOverlay(
-                        imageName: homeItem.icon,
-                        text: homeItem.text),
-                        alignment: .leading
-                    )
-                .clipShape(
-                    RoundedRectangle(
-                        cornerRadius:4,
-                        style: .continuous
-                    )
-                )
+        NavigationLink(destination:
+            CartListView(carts: [])
+        ) {
+            ZStack {
+                Image(homeItem.imageBackgroung)
+                    .resizable()
+                    .cornerRadius(4)
+                    .overlay(
+                        CardImageOverlay(
+                            imageName: homeItem.icon,
+                            text: homeItem.text),
+                            alignment: .leading
+                        )
+                    
+            }
+            .frame(height: 104)
+            //.padding()
         }
-        .frame(height: 104)
+    
     }
 }
 
@@ -44,6 +47,8 @@ struct CardImageOverlay: View {
     var body: some View {
         HStack {
             Image(imageName)
+                .renderingMode(.template)
+                .foregroundColor(.white)
             Text(text)
                 .font(Font.system(size: 16))
                 .padding(6)
