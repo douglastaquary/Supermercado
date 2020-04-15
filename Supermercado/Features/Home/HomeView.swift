@@ -18,22 +18,30 @@ struct HomeView: View {
     init() {
         //UINavigationBar.appearance().backgroundColor = Metrics.primary
         UITableView.appearance().separatorColor = .clear
+//        UITableViewCell.AccessoryType.init(rawValue: 5)
+        
     }
     
     var body: some View {
-        VStack {
-//            HStack {
-//                Text("App")
-//                    .font(.system(size: 28, weight: .bold))
-//                Spacer()
-//                Image("ic_list")
-//            }
-//            .padding(.horizontal)
-            NavigationView {
-                list(of: homeItems)
-            }
-            .accentColor(Color.black)
+        NavigationView {
+            list(of: homeItems)
         }
+        .accentColor(Color.black)
+        //.navigationBarTitle(" ", displayMode: .inline)
+//        VStack {
+////            HStack {
+////                Text("App")
+////                    .font(.system(size: 28, weight: .bold))
+////                Spacer()
+////                Image("ic_list")
+////            }
+////            .padding(.horizontal)
+//            NavigationView {
+//                list(of: homeItems)
+//            }
+//            .accentColor(Color.black)
+//            .navigationBarTitle(" ", displayMode: .inline)
+//        }
     
     }
     
@@ -43,7 +51,7 @@ struct HomeView: View {
                 HomeCardListView(homeItem: item)
             }
         }
-        .buttonStyle(PlainButtonStyle())
+        //.buttonStyle(PlainButtonStyle())
     }
         
 }

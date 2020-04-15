@@ -20,12 +20,7 @@ struct CartListView: View {
         Cart(name: "Churrasco do\nbeto", iconName: "churras"),
         Cart(name: "Churrasco do\nbeto", iconName: "churras")
     ]
-    
-    enum Section {
-        case upper
-        case button
-    }
-    
+
     var carts: [Cart]
     
     @State var showAddCartView = false
@@ -34,14 +29,17 @@ struct CartListView: View {
         ZStack {
             Color.white.edgesIgnoringSafeArea([.all])
             VStack {
-                ASCollectionView(data: self.cartData, dataID: \.self) { cart, _ in
-                    CardGridView(cart: cart)
+                ASCollectionView(
+                    data: self.cartData,
+                    dataID: \.self
+                ) { cart, _ in
+                   CardGridView(cart: cart)
                 }
                 .contentInsets(.init(top: 20, left: 0, bottom: 20, right: 0))
                 .layout {
                     .grid(layoutMode: .adaptive(withMinItemSize: 175),
-                          itemSpacing: 16,
-                          lineSpacing: 16,
+                          itemSpacing: 2,
+                          lineSpacing: 8,
                           itemSize: .absolute(198))
                 }
                 
@@ -81,6 +79,18 @@ struct CartListView: View {
             }
         }
     }
+    
+//    func destinationForItem(_ cart: Cart) -> some View
+//    {
+//        ScrollView {
+//            PostView(post: item)
+//                .onAppear {
+//                    ASRemoteImageManager.shared.load(item.url)
+//                    ASRemoteImageManager.shared.load(item.usernamePhotoURL)
+//                }
+//        }
+//        .navigationBarTitle("", displayMode: .inline)
+//    }
 }
 
 struct CartListView_Previews: PreviewProvider {

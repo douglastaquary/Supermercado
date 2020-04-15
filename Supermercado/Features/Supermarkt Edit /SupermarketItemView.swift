@@ -10,18 +10,20 @@ import SwiftUI
 import Combine
 
 let categories: [Category] = [
-    Category(tipo: "Cama e mesa"),
     Category(tipo: "Cama, mesa e banho"),
     Category(tipo: "Limpeza"),
     Category(tipo: "Bebidas"),
     Category(tipo: "Grãos"),
-    Category(tipo: "Outrps")
+    Category(tipo: "Outros")
 ]
 
 let medidas = [
-    Medida(tipo: "Kilograma"),
-    Medida(tipo: "Ml"),
-    Medida(tipo: "Litros")
+    Medida(tipo: "Kilo"),
+    Medida(tipo: "Metro"),
+    Medida(tipo: "Litro"),
+    Medida(tipo: "milímetro"),
+    Medida(tipo: "Centímetro")
+    
 ]
 
 /// Detail view for a Contact
