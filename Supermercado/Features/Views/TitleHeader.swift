@@ -21,7 +21,6 @@ struct TitleHeader: View {
         }
         .padding(.leading, 16)
         .padding(.trailing, 16)
-        .frame(maxWidth: .infinity)
     }
 }
 

@@ -19,25 +19,33 @@ struct SupermarketListView: View {
     }
     
     var body: some View {
+        
         VStack {
-            NavigationView {
-                VStack {
-                    Section(header: InformationHeaderView()) {
-                        Section(header: TitleHeader(title: "Carnes")) {
-                            List {
+            ZStack {
+                ScrollView(showsIndicators: false) {
+                    ZStack {
+                        Rectangle()
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .cornerRadius(4)
+                            .foregroundColor(Color.white)
+                            .shadow(color: Color("DividerColor"),radius: 4, x: 0, y: 4)
+                            .padding()
+                        VStack {
+                            InformationHeaderView()
+                            TitleHeader(title: "Carnes")
+                            
                                 ForEach(0..<2) { item in
                                     SupermarketRow()
                                 }
-                            }
                         }
+                        .padding(32)
                     }
                 }
             }
-            .cornerRadius(4)
-            .shadow(color: Color("DividerColor"),radius: 4, x: 0, y: 4)
-            .padding()
+
             newSupermarketButon()
         }
+
     }
     
     private func list(of items: [SupermarketItem]) -> some View {

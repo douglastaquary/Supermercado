@@ -35,11 +35,12 @@ struct SupermarketRow: View {
                 }
             }
             Rectangle()
-                .frame(maxWidth: .infinity, maxHeight: 1)
                 .foregroundColor(Color("DividerColor"))
-                .padding(.top, 8)
+                .frame(maxWidth: .infinity, maxHeight: 1)
+
 
         }
+        .frame(height: 76)
     }
     
 }

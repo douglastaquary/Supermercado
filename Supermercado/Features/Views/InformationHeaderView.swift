@@ -10,20 +10,14 @@ import SwiftUI
 
 struct InformationHeaderView: View {
     
-
-
-    init() {
-        
-    }
-    
     @State var showEmptyDescription: Bool = false
     
     var body: some View {
         ZStack(alignment: .leading) {
             Rectangle()
-                .cornerRadius(4)
+                //.cornerRadius(4)
                 .foregroundColor(.white)
-                .frame(maxWidth: .infinity, maxHeight: 142)
+                .frame(maxWidth: .infinity, maxHeight: showEmptyDescription ? 148 : 116)
             VStack(alignment: .leading) {
                 HStack {
                     Image("churras")
@@ -56,7 +50,7 @@ struct InformationHeaderView: View {
                 }
 
             }
-            .frame(maxWidth: .infinity, maxHeight: 116)
+            .frame(maxWidth: .infinity, maxHeight: showEmptyDescription ? 148 : 106)
             .padding(.leading, 16)
             .padding(.trailing, 16)
 
