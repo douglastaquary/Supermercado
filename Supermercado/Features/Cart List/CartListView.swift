@@ -21,7 +21,7 @@ struct CartListView: View {
         Cart(name: "Churrasco do\nbeto", iconName: "churras")
     ]
 
-    var carts: [Cart]
+    var carts: [Cart] = []
     
     @State var showAddCartView = false
 

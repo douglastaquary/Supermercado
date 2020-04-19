@@ -8,35 +8,55 @@
 
 import SwiftUI
 
+let homeItems: [HomeItem] = [
+        HomeItem(imageBackgroung: "image_woman", icon: "ic_list", text: "Minhas\nlistas"),
+        HomeItem(imageBackgroung: "image_woman_left", icon: "ic_location", text: "Mercados\npróximos a mim")
+]
+
 struct HomeCardListView: View {
-    var homeItem: HomeItem
     
     var body: some View {
-        NavigationLink(destination:
-            CartListView(carts: [])
-        ) {
-            ZStack {
-                Image(homeItem.imageBackgroung)
-                    .resizable()
-                    .cornerRadius(4)
-                    .overlay(
-                        CardImageOverlay(
-                            imageName: homeItem.icon,
-                            text: homeItem.text),
-                            alignment: .leading
-                        )
-                    
-            }
-            .frame(height: 104)
-            //.padding()
+        ZStack {
+            Image("image_woman")
+                .resizable()
+                .cornerRadius(4)
+                .overlay(
+                    CardImageOverlay(
+                        imageName: "ic_list",
+                        text: "Minhas\nlistas"),
+                        alignment: .leading
+                    )
+                
         }
+        .frame(height: 104)
+    }
+}
+
+
+import SwiftUI
+
+struct NearestMarketCardView: View {
     
+    var body: some View {
+        ZStack {
+            Image("image_woman_left")
+                .resizable()
+                .cornerRadius(4)
+                .overlay(
+                    CardImageOverlay(
+                        imageName: "ic_location",
+                        text: "Mercados\npróximos a mim"),
+                        alignment: .leading
+                    )
+                
+        }
+        .frame(height: 104)
     }
 }
 
 struct HomeCardListView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeCardListView(homeItem: HomeItem(imageBackgroung: "image_woman", icon: "ic_list", text: "Minhas\nlistas"))
+        HomeCardListView()
     }
 }
 

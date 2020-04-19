@@ -15,43 +15,37 @@ struct HomeView: View {
             HomeItem(imageBackgroung: "image_woman_left", icon: "ic_location", text: "Mercados\npróximos a mim")
     ]
     
-    init() {
-        //UINavigationBar.appearance().backgroundColor = Metrics.primary
-        UITableView.appearance().separatorColor = .clear
-//        UITableViewCell.AccessoryType.init(rawValue: 5)
-        
-    }
-    
     var body: some View {
         NavigationView {
-            list(of: homeItems)
-        }
-        .accentColor(Color.black)
-        //.navigationBarTitle(" ", displayMode: .inline)
-//        VStack {
-////            HStack {
-////                Text("App")
-////                    .font(.system(size: 28, weight: .bold))
-////                Spacer()
-////                Image("ic_list")
-////            }
-////            .padding(.horizontal)
-//            NavigationView {
-//                list(of: homeItems)
-//            }
-//            .accentColor(Color.black)
-//            .navigationBarTitle(" ", displayMode: .inline)
-//        }
-    
+            ZStack {
+                VStack {
+                    Rectangle()
+                        .frame(maxWidth: .infinity, maxHeight: 146)
+                        .foregroundColor(Color("primary"))
+                    list()
+                        .padding(.top, -36)
+                }
+            }
+            .edgesIgnoringSafeArea(.all)
+        }.accentColor(Color.primary)
     }
     
-    private func list(of items: [HomeItem]) -> some View {
-        return List {
-            ForEach(items) { item in
-                HomeCardListView(homeItem: item)
+    private func list() -> some View {
+        return ScrollView {
+            NavigationLink(destination: CartListView()) {
+                HomeCardListView()
+                
             }
+            
+            
+            NavigationLink(destination: NearestMarketView()) {
+                NearestMarketCardView()
+                
+            }
+                
         }
-        //.buttonStyle(PlainButtonStyle())
+        .padding(.leading)
+        .padding(.trailing)
     }
         
 }

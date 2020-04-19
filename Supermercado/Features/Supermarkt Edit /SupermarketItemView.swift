@@ -9,23 +9,6 @@
 import SwiftUI
 import Combine
 
-let categories: [Category] = [
-    Category(tipo: "Cama, mesa e banho"),
-    Category(tipo: "Limpeza"),
-    Category(tipo: "Bebidas"),
-    Category(tipo: "Grãos"),
-    Category(tipo: "Outros")
-]
-
-let medidas = [
-    Medida(tipo: "Kilo"),
-    Medida(tipo: "Metro"),
-    Medida(tipo: "Litro"),
-    Medida(tipo: "milímetro"),
-    Medida(tipo: "Centímetro")
-    
-]
-
 /// Detail view for a Contact
 struct SupermarketItemView: View {
     @EnvironmentObject var supermarketService: SupermarketService
@@ -77,28 +60,28 @@ struct SupermarketItemView: View {
                     
                 }
                 .font(.body)
-                Section(header: Text("Categoria. Ex.: Limpeza, bebida")) {
-                    Picker(
-                        selection: $selectedCategory,
-                        label: Text("Selecione uma categoria"),
-                        content: {
-                            ForEach(0..<categories.count) { index in
-                                Text(categories[index].tipo).tag(index)
-                            }
-                        }
-                    )
-                }
-                Section(header: Text("Unidade de medida. Ex.: Kg, ml, metro")) {
-                    Picker(
-                        selection: $selectedQntd,
-                        label: Text("Selecione uma medida"),
-                        content: {
-                            ForEach(0..<medidas.count) { index in
-                                Text(medidas[index].tipo).tag(index)
-                            }
-                        }
-                    ).pickerStyle(WheelPickerStyle())
-                }
+//                Section(header: Text("Categoria. Ex.: Limpeza, bebida")) {
+//                    Picker(
+//                        selection: $selectedCategory,
+//                        label: Text("Selecione uma categoria"),
+//                        content: {
+//                            ForEach(0..<self.categories.count) { index in
+//                                Text(categories[index].tipo).tag(index)
+//                            }
+//                        }
+//                    )
+//                }
+//                Section(header: Text("Unidade de medida. Ex.: Kg, ml, metro")) {
+//                    Picker(
+//                        selection: $selectedQntd,
+//                        label: Text("Selecione uma medida"),
+//                        content: {
+//                            ForEach(0..<medidas.count) { index in
+//                                Text(medidas[index].tipo).tag(index)
+//                            }
+//                        }
+//                    ).pickerStyle(WheelPickerStyle())
+//                }
             }
             .navigationBarTitle(Text(supermarketItem.name))
             .navigationBarItems(

@@ -28,18 +28,18 @@ struct SupermarketEditView: View {
                     TextField("Nome", text: $supermarketItem.name)
                     TextField("Valor", text: $supermarketItem.price)
                 }
-                Section(header: Text("Medida")) {
-                    Picker(
-                        selection: $supermarketItem.price,
-                        label: Text("Selecione a medida"),
-                        content: {
-                            ForEach(medidas) { medida in
-                                Text(medida.tipo).tag(medida)
-                            }
-                        }
-                    )
-                    
-                }
+//                Section(header: Text("Medida")) {
+//                    Picker(
+//                        selection: $supermarketItem.price,
+//                        label: Text("Selecione a medida"),
+//                        content: {
+//                            ForEach(medidas) { medida in
+//                                Text(medida.tipo).tag(medida)
+//                            }
+//                        }
+//                    )
+//                    
+//                }
             }
             .navigationBarTitle(Text(supermarketItem.name))
             .navigationBarItems(
