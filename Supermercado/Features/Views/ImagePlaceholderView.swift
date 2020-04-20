@@ -15,15 +15,15 @@ struct ImagePlaceholderView: View {
     var body: some View {
         VStack {
             Rectangle()
-                .stroke(style: StrokeStyle(lineWidth: 2, dash: [5]))
+                .stroke(style: StrokeStyle(lineWidth: 2, dash: [5])).opacity((self.image != nil) ? 0 : 1)
                 .frame(width: 112, height: 112)
                 .foregroundColor(Color("secondaryText"))
                 .overlay(
                     VStack {
                         if self.image != nil {
                             Image(uiImage: self.image ?? UIImage(named: "")!)
-                            
                                 .resizable()
+                                .aspectRatio(contentMode: .fit)
                                 .frame(width: 112, height: 112)
                         } else {
                             Image("ic_placeholder")

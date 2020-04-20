@@ -14,29 +14,40 @@ struct NearestMarketView: View {
     @State private var centerCoordinate = CLLocationCoordinate2D()
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Text("Locais próximos a você")
-                .font(.caption)
-                .foregroundColor(Color.secondary)
-                .padding(.leading)
-            MapView(centerCoordinate: $centerCoordinate)
-                .frame(maxWidth: .infinity, maxHeight: 196)
-            
-            HStack() {
-                Image("icon_chevron")
-                    .frame(width: 26, height: 24)
-            }.frame(maxWidth: .infinity)
-            
-            Text("06 lugares encontrados")
-                .font(.caption)
-                .foregroundColor(Color.secondary)
-                .padding(.leading)
-            ScrollView {
+        ScrollView {
+            VStack(alignment: .leading) {
+                Text("Locais próximos a você")
+                    .font(.caption)
+                    .foregroundColor(Color.secondary)
+                    .padding(.leading)
+                MapView(centerCoordinate: $centerCoordinate)
+                    .frame(maxWidth: .infinity, maxHeight: 288)
+            }
+
+            VStack(alignment: .leading) {
+                
+                HStack() {
+                    Image("icon_chevron")
+                        .frame(width: 26, height: 24)
+                }.frame(maxWidth: .infinity)
+                
+                Text("06 lugares encontrados")
+                    .font(.caption)
+                    .foregroundColor(Color.secondary)
+                    .padding(.bottom)
                 ForEach(0..<6) { _ in
                     MarketView()
                 }
-            }.padding()
+                //.padding()
+//                ScrollView {
+//                    ForEach(0..<6) { _ in
+//                        MarketView()
+//                    }
+//                }.padding()
+            }
+            .padding()
         }
+
     }
 }
 
