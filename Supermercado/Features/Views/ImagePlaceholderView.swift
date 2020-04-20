@@ -22,6 +22,7 @@ struct ImagePlaceholderView: View {
                     VStack {
                         if self.image != nil {
                             Image(uiImage: self.image ?? UIImage(named: "")!)
+                            
                                 .resizable()
                                 .frame(width: 112, height: 112)
                         } else {

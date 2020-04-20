@@ -16,19 +16,20 @@ let homeItems: [HomeItem] = [
 struct HomeCardListView: View {
     
     var body: some View {
-        ZStack {
+        ZStack(alignment: .leading) {
             Image("image_woman")
                 .resizable()
+                .renderingMode(.original)
                 .cornerRadius(4)
-                .overlay(
-                    CardImageOverlay(
-                        imageName: "ic_list",
-                        text: "Minhas\nlistas"),
-                        alignment: .leading
-                    )
+            Rectangle()
+                .foregroundColor(Color("CardMask1")).opacity(0.3)
+            CardImageOverlay(
+                imageName: "ic_list",
+                text: "Minhas\nlistas"
+            )
                 
         }
-        .frame(height: 104)
+        .frame(height: 124)
     }
 }
 
@@ -38,19 +39,20 @@ import SwiftUI
 struct NearestMarketCardView: View {
     
     var body: some View {
-        ZStack {
+        ZStack(alignment: .leading) {
             Image("image_woman_left")
                 .resizable()
+                .renderingMode(.original)
                 .cornerRadius(4)
-                .overlay(
-                    CardImageOverlay(
-                        imageName: "ic_location",
-                        text: "Mercados\npróximos a mim"),
-                        alignment: .leading
-                    )
+            Rectangle()
+                .foregroundColor(Color("CardMask2")).opacity(0.3)
+            CardImageOverlay(
+                imageName: "ic_location",
+                text: "Mercados\npróximos a mim"
+            )
                 
         }
-        .frame(height: 104)
+        .frame(height: 124)
     }
 }
 
@@ -69,8 +71,10 @@ struct CardImageOverlay: View {
             Image(imageName)
                 .renderingMode(.template)
                 .foregroundColor(.white)
+                .frame(width: 34, height: 44)
             Text(text)
                 .font(Font.system(size: 16))
+                .fontWeight(.medium)
                 .padding(6)
                 .foregroundColor(.white)
         }

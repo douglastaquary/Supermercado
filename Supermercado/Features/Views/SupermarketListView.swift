@@ -34,15 +34,15 @@ struct SupermarketListView: View {
                             InformationHeaderView()
                             TitleHeader(title: "Carnes")
                             
-                                ForEach(0..<2) { item in
-                                    SupermarketRow()
-                                }
+                            ForEach(0..<2) { item in
+                                SupermarketRow()
+                            }
                         }
                         .padding(32)
                     }
                 }
             }
-
+            
             newSupermarketButon()
         }
 

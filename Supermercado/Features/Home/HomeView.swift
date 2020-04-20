@@ -36,6 +36,7 @@ struct HomeView: View {
                 HomeCardListView()
                 
             }
+
             
             
             NavigationLink(destination: NearestMarketView()) {
