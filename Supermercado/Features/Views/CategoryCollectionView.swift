@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+
 struct CategoryCollectionView: View {
     
     
@@ -19,7 +20,7 @@ struct CategoryCollectionView: View {
         ZStack(alignment: .leading) {
             List {
                 ForEach(0..<2) { _ in
-                    HStack(spacing: 24) {
+                    HStack(spacing: 36) {
                         ForEach(0..<3) { _ in
                             CategoryGridView(
                                 iconName: "ic_shopping_cart"
@@ -31,6 +32,7 @@ struct CategoryCollectionView: View {
             }
 
         }
+        .foregroundColor(Color.tertiarySystemBackground)
     }
 }
 
@@ -42,13 +44,14 @@ struct CategoryCollectionView_Previews: PreviewProvider {
 
 struct CategoryGridView: View {
     var iconName: String
+    @State var isTapped: Bool = false
 
     var body: some View {
         ZStack {
             VStack(alignment: .center) {
-                CircleCategoryOverlay(iconName: iconName)
+                CircleCategoryOverlay(iconName: iconName, isTapped: isTapped)
                 Text("Compras\ndo mês")
-                    .foregroundColor(Color("CategoryTextColor"))
+                    .foregroundColor(Color.primary)
                     .font(Font.system(size: 14))
                     .lineLimit(nil)
                     .multilineTextAlignment(.center)
@@ -61,16 +64,29 @@ struct CategoryGridView: View {
 
 struct CircleCategoryOverlay: View {
     var iconName: String
+    @State var isTapped: Bool = false
 
     var body: some View {
         ZStack {
-            Circle()
-                .foregroundColor(Color("categoryOverlay"))
+            if isTapped {
+                Circle()
+                    .stroke(Color("buttonAction"), lineWidth: 1)
+                
+            } else {
+                Circle()
+                    .foregroundColor(Color.secondarySystemBackground)
+            }
+
             HStack {
                 Image(iconName)
                     .resizable()
                     .frame(width: 42, height: 42)
             }
+        }
+        .onTapGesture {
+            haptic(.success)
+            self.isTapped.toggle()
+            
         }
         .frame(width: Metrics.circleOverlayHeight, height: Metrics.circleOverlayHeight, alignment: .center)
     }

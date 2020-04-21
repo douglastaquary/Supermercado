@@ -11,7 +11,8 @@ import Combine
 
 struct SupermarketSetupView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    
+    @ObservedObject private var viewModel = SupermarketSetupViewModel()
+
     @State private var modalPresented: Bool = false
     @State private var nameSujestionText: String = ""
     @State private var amountText: String = ""
@@ -68,8 +69,7 @@ struct SupermarketSetupView: View {
             }
             
             VStack(alignment: .leading, spacing: 16) {
-                CustomTextField(text: nameSujestionText)
-                
+                nameTextField()
                 ImagePlaceholderView(image: self.image)
                     .onTapGesture {
                         self.showSheet = true
@@ -121,13 +121,11 @@ struct SupermarketSetupView: View {
                         self.modalPresented.toggle()
                         self.pickerMode = .measure
                     }, label: {
-                        MeasureTextFieldWithSubtitle(
-                            title: self.medidas[selectedMeasure].tipo,
-                            exampleDecription: "Ex.: 500g, 10 metros"
-                        )
+                        measureTextField()
                             .onTapGesture {
                                 self.isFocused = true
-                        }
+                            }
+
                     })
                     
                 }
@@ -143,7 +141,9 @@ struct SupermarketSetupView: View {
                         .foregroundColor(Color.white)
                         .cornerRadius(4)
                 })
-                    .padding(.top, 64)
+                .disabled(!viewModel.isValid)
+                .opacity(!viewModel.isValid ? 0.6 : 1)
+                .padding(.top, 64)
                 
             }
             .padding()
@@ -163,6 +163,45 @@ struct SupermarketSetupView: View {
             ImagePicker(image: self.$image, isShown: self.$showPhotoOptions, sourceType: self.sourceType)
         }
         
+    }
+    
+    private func nameTextField() -> some View {
+        return VStack(alignment: .leading) {
+            TextField("Qual produto deseja adicionar?", text: $viewModel.supermarketName)
+                .font(.body)
+                .frame(maxWidth: .infinity, maxHeight: 16)
+            
+            Rectangle()
+                .frame(maxWidth: .infinity, maxHeight: 1)
+                .foregroundColor(Color("secondaryText"))
+            Text(self.viewModel.supermarketMessage)
+                .foregroundColor(Color("secondaryText"))
+                .font(.body)
+        }
+    }
+    
+    
+    private func measureTextField() -> some View {
+        return VStack(alignment: .leading) {
+            HStack {
+                TextField("Medida", text: $viewModel.measuresTitle)
+                    .font(.body)
+                    .frame(maxWidth: .infinity, maxHeight: 24)
+                    .disabled(true)
+                    .accentColor(Color.primary)
+                Image("ic_down")
+                    .accentColor(Color.primary)
+                    .frame(width: 28, height: 28)
+            }
+            
+            Rectangle()
+                .frame(maxWidth: .infinity, maxHeight: 1)
+                .foregroundColor(Color("secondaryText"))
+            Text("Ex.: 500g, 10 metros")
+                .font(.body)
+                .foregroundColor(Color("secondaryText"))
+        }
+        .padding(.top, 26)
     }
     
     func hideKeyboard() {
@@ -212,7 +251,7 @@ struct SupermarketSetupView: View {
                         self.modalPresented.toggle()
                         
                     }, label: {
-                        Text("Ok")
+                        Text("Concluído")
                             .foregroundColor(Color("buttonAction"))
                     })
                         .onTapGesture {
@@ -233,7 +272,7 @@ struct SupermarketSetupView: View {
                     .labelsHidden()
                 } else {
                     Picker(selection: $selectedMeasure, label: Text("")) {
-                        ForEach(medidas) { medida in
+                        ForEach(self.viewModel.measures) { medida in
                             Text(medida.tipo).tag(medida)
                         }
                     }
@@ -249,7 +288,7 @@ struct SupermarketSetupView: View {
         .background(Color.white)
         .cornerRadius(20)
         .shadow(color: Color(.sRGBLinear, white: 0, opacity: 0.13), radius: 10.0)
-        .offset(y: self.modalPresented ? 340 : 720)
+        .offset(y: self.modalPresented ? 330 : 720)
         .animation(.spring(response: 0.3, dampingFraction: 0.8, blendDuration: 0))
     }
     

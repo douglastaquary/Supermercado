@@ -27,7 +27,9 @@ struct HomeView: View {
                 }
             }
             .edgesIgnoringSafeArea(.all)
-        }.accentColor(Color.primary)
+        }
+        .accentColor(Color.primary)
+        .foregroundColor(.tertiarySystemBackground)
     }
     
     private func list() -> some View {
@@ -53,7 +55,7 @@ struct HomeView: View {
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
+        HomeView().environment(\.colorScheme, .dark)
     }
 }
 

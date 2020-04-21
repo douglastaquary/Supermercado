@@ -11,6 +11,9 @@
 		4E333BE62433FE2C005E3AEC /* SupermarketEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E333BE52433FE2C005E3AEC /* SupermarketEditView.swift */; };
 		4E333BFA2435674C005E3AEC /* SupermarketItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E333BF92435674C005E3AEC /* SupermarketItem.swift */; };
 		4E333BFC24356764005E3AEC /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E333BFB24356764005E3AEC /* Address.swift */; };
+		4E5FAA9D244E9B3E00E69B1F /* SupermarketSetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5FAA9C244E9B3E00E69B1F /* SupermarketSetupViewModel.swift */; };
+		4E5FAA9F244F55EC00E69B1F /* Views+Haptic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5FAA9E244F55EC00E69B1F /* Views+Haptic.swift */; };
+		4E5FAAA1244F756E00E69B1F /* Colors+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5FAAA0244F756E00E69B1F /* Colors+Extensions.swift */; };
 		4E9B6D9E243E224D002297E8 /* AddCartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9B6D9D243E224D002297E8 /* AddCartView.swift */; };
 		4E9B6DA0243E2298002297E8 /* NavigationBarModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9B6D9F243E2298002297E8 /* NavigationBarModifier.swift */; };
 		4E9B6DA2243E2C18002297E8 /* CategoryCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9B6DA1243E2C18002297E8 /* CategoryCollectionView.swift */; };
@@ -61,6 +64,9 @@
 		4E333BE52433FE2C005E3AEC /* SupermarketEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupermarketEditView.swift; sourceTree = "<group>"; };
 		4E333BF92435674C005E3AEC /* SupermarketItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupermarketItem.swift; sourceTree = "<group>"; };
 		4E333BFB24356764005E3AEC /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
+		4E5FAA9C244E9B3E00E69B1F /* SupermarketSetupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupermarketSetupViewModel.swift; sourceTree = "<group>"; };
+		4E5FAA9E244F55EC00E69B1F /* Views+Haptic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views+Haptic.swift"; sourceTree = "<group>"; };
+		4E5FAAA0244F756E00E69B1F /* Colors+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Colors+Extensions.swift"; sourceTree = "<group>"; };
 		4E9B6D9D243E224D002297E8 /* AddCartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCartView.swift; sourceTree = "<group>"; };
 		4E9B6D9F243E2298002297E8 /* NavigationBarModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationBarModifier.swift; sourceTree = "<group>"; };
 		4E9B6DA1243E2C18002297E8 /* CategoryCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionView.swift; sourceTree = "<group>"; };
@@ -264,6 +270,7 @@
 			isa = PBXGroup;
 			children = (
 				4ECD972C244E8FBF00F4C6DA /* CartFormViewModel.swift */,
+				4E5FAA9C244E9B3E00E69B1F /* SupermarketSetupViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -314,6 +321,8 @@
 			isa = PBXGroup;
 			children = (
 				4EF0705824313096006F94B9 /* View+Extensions.swift */,
+				4E5FAA9E244F55EC00E69B1F /* Views+Haptic.swift */,
+				4E5FAAA0244F756E00E69B1F /* Colors+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -422,15 +431,18 @@
 				4EC350BF2432E84100245842 /* SupermarketService.swift in Sources */,
 				4EB316ED243D7F0400CEA706 /* CartListView.swift in Sources */,
 				4E9B6DCB2447E815002297E8 /* MapView.swift in Sources */,
+				4E5FAAA1244F756E00E69B1F /* Colors+Extensions.swift in Sources */,
 				4E9B6DA0243E2298002297E8 /* NavigationBarModifier.swift in Sources */,
 				4EF0704124312BE0006F94B9 /* SceneDelegate.swift in Sources */,
 				4E9B6DA2243E2C18002297E8 /* CategoryCollectionView.swift in Sources */,
+				4E5FAA9F244F55EC00E69B1F /* Views+Haptic.swift in Sources */,
 				4E9B6DB2243FC364002297E8 /* Cart.swift in Sources */,
 				4E9B6DCD2447F27E002297E8 /* MarketView.swift in Sources */,
 				4EC350C02432E84100245842 /* SupermarketsView.swift in Sources */,
 				4E9B6DB4243FE1FC002297E8 /* InformationHeaderView.swift in Sources */,
 				4E9B6DC724454796002297E8 /* ImagePicker.swift in Sources */,
 				4EB316F1243D8D4B00CEA706 /* TextButtonOverlay.swift in Sources */,
+				4E5FAA9D244E9B3E00E69B1F /* SupermarketSetupViewModel.swift in Sources */,
 				4E9B6DBE244118F9002297E8 /* ImagePlaceholderView.swift in Sources */,
 				4EB316EB243D778500CEA706 /* Metrics.swift in Sources */,
 				4EC350BA2432E84100245842 /* Model.swift in Sources */,

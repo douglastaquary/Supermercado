@@ -17,7 +17,7 @@ struct AddCartView: View {
     @State var showAddCartView = false
 
     init() {
-        UINavigationBar.appearance().backgroundColor = .white
+        UINavigationBar.appearance().backgroundColor = UIColor.systemBackground
     }
     
     var body: some View {
@@ -38,10 +38,12 @@ struct AddCartView: View {
                             .foregroundColor(Color.white)
                             .cornerRadius(4)
                     })
-                        .disabled(!self.viewModel.isValid).opacity(!self.viewModel.isValid ? 0.6 : 1)
+                    .disabled(!self.viewModel.isValid)
+                    .opacity(!self.viewModel.isValid ? 0.6 : 1)
                     .padding()
                 }
             }
+                
             .navigationBarItems(
                 leading: Button(action: {
                         withAnimation {
@@ -61,8 +63,9 @@ struct AddCartView: View {
                         .foregroundColor(Color("buttonAction"))
                 }
             )
-            .navigationBarTitle(Text("Criar lista"), displayMode: .inline)
-        }.accentColor(.black)
+                .navigationBarTitle(Text("Criar lista"), displayMode: .inline)
+        }
+        .accentColor(.black)
     }
     
     private func cartTextField() -> some View {
@@ -85,7 +88,7 @@ struct AddCartView: View {
 
 struct AddCartView_Previews: PreviewProvider {
     static var previews: some View {
-        AddCartView()
+        AddCartView().environment(\.colorScheme, .dark)
     }
 }
 

@@ -48,12 +48,13 @@ struct NearestMarketView: View {
             }
             .padding()
         }
+        .foregroundColor(.systemBackground)
 
     }
 }
 
 struct NearestMarketView_Previews: PreviewProvider {
     static var previews: some View {
-        NearestMarketView()
+        NearestMarketView().environment(\.colorScheme, .dark)
     }
 }
