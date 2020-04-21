@@ -16,17 +16,21 @@ struct CategoryCollectionView: View {
     }
     
     var body: some View {
-        List {
-            ForEach(0..<2) { _ in
-                HStack(alignment: .center) {
-                    ForEach(0..<3) { _ in
-                        CategoryGridView(iconName: "ic_shopping_cart")
-                            .padding()
+        ZStack(alignment: .leading) {
+            List {
+                ForEach(0..<2) { _ in
+                    HStack(spacing: 24) {
+                        ForEach(0..<3) { _ in
+                            CategoryGridView(
+                                iconName: "ic_shopping_cart"
+                            )
+                        }
                     }
+                    .frame(maxWidth: .infinity)
                 }
             }
+
         }
-//        .listStyle(GroupedListStyle())
     }
 }
 
@@ -41,13 +45,14 @@ struct CategoryGridView: View {
 
     var body: some View {
         ZStack {
-            VStack {
+            VStack(alignment: .center) {
                 CircleCategoryOverlay(iconName: iconName)
                 Text("Compras\ndo mês")
-                .foregroundColor(Color("secondaryText"))
+                    .foregroundColor(Color("CategoryTextColor"))
                     .font(Font.system(size: 14))
                     .lineLimit(nil)
                     .multilineTextAlignment(.center)
+                    .frame(height: 42)
             }
         }
     }
@@ -63,9 +68,10 @@ struct CircleCategoryOverlay: View {
                 .foregroundColor(Color("categoryOverlay"))
             HStack {
                 Image(iconName)
+                    .resizable()
+                    .frame(width: 42, height: 42)
             }
         }
-            
         .frame(width: Metrics.circleOverlayHeight, height: Metrics.circleOverlayHeight, alignment: .center)
     }
 }

@@ -21,8 +21,9 @@ struct NearestMarketView: View {
                     .foregroundColor(Color.secondary)
                     .padding(.leading)
                 MapView(centerCoordinate: $centerCoordinate)
-                    .frame(maxWidth: .infinity, maxHeight: 288)
+                    
             }
+            .frame(height: 196)
 
             VStack(alignment: .leading) {
                 

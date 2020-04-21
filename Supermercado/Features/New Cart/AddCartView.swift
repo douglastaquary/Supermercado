@@ -7,13 +7,15 @@
 //
 
 import SwiftUI
+import Combine
 
 struct AddCartView: View {
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @ObservedObject private var viewModel = CartFormViewModel()
     
     @State var showAddCartView = false
-    
+
     init() {
         UINavigationBar.appearance().backgroundColor = .white
     }
@@ -23,7 +25,7 @@ struct AddCartView: View {
             ZStack {
                 VStack(alignment: .leading) {
                     Spacer()
-                    CartTextField(text: "")
+                    cartTextField()
                     SectionTextView(title: "Escolha a categoria")
                     CategoryCollectionView()
                     Button(action: {
@@ -36,6 +38,7 @@ struct AddCartView: View {
                             .foregroundColor(Color.white)
                             .cornerRadius(4)
                     })
+                        .disabled(!self.viewModel.isValid).opacity(!self.viewModel.isValid ? 0.6 : 1)
                     .padding()
                 }
             }
@@ -61,6 +64,23 @@ struct AddCartView: View {
             .navigationBarTitle(Text("Criar lista"), displayMode: .inline)
         }.accentColor(.black)
     }
+    
+    private func cartTextField() -> some View {
+        return ZStack {
+            VStack(alignment: .leading) {
+                TextField("Digite o nome da lista", text: $viewModel.cartname)
+                    .font(.body)
+                    .frame(maxWidth: .infinity, maxHeight: 38)
+                Rectangle()
+                    .frame(maxWidth: .infinity, maxHeight: 1)
+                    .foregroundColor(Color("secondaryText"))
+                Text(self.viewModel.cartMessage)
+                    .foregroundColor(Color("secondaryText"))
+                    .font(.body)
+            }
+        }
+        .padding()
+    }
 }
 
 struct AddCartView_Previews: PreviewProvider {
@@ -72,13 +92,13 @@ struct AddCartView_Previews: PreviewProvider {
 struct CartTextField: View {
     
     @State var text: String
+    @State var errorMessage: String?
     
         var body: some View {
         ZStack {
             VStack(alignment: .leading) {
                 TextField("Digite o nome da lista", text: $text)
                     .font(.body)
-                    .foregroundColor(Color("secondaryText"))
                     .frame(maxWidth: .infinity, maxHeight: 38)
                 Rectangle()
                     .frame(maxWidth: .infinity, maxHeight: 1)
@@ -109,3 +129,20 @@ struct SectionTextView: View {
 }
 
 
+struct Validation<Value>: ViewModifier {
+    var value: Value
+    var validator: (Value) -> Bool
+
+    func body(content: Content) -> some View {
+        // Here we use Group to perform type erasure, to give our
+        // method a single return type, as applying the 'border'
+        // modifier causes a different type to be returned:
+        Group {
+            if validator(value) {
+                content.border(Color.green)
+            } else {
+                content
+            }
+        }
+    }
+}
