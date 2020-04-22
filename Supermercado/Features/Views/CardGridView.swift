@@ -43,6 +43,6 @@ struct CardGridView: View {
 
 struct CardGridView_Previews: PreviewProvider {
     static var previews: some View {
-        CardGridView(cart: Cart(name: "Churrasco do\nBeto", iconName: "churras"))
+        CardGridView(cart: Cart(name: "Churrasco do\nBeto", iconName: "ic_compras_rapidas"))
     }
 }

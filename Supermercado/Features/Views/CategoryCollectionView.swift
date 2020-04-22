@@ -11,7 +11,6 @@ import SwiftUI
 
 struct CategoryCollectionView: View {
     
-    
     init() {
         UITableView.appearance().separatorColor = .clear
     }

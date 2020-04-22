@@ -20,7 +20,7 @@ struct InformationHeaderView: View {
                 .frame(maxWidth: .infinity, maxHeight: showEmptyDescription ? 148 : 116)
             VStack(alignment: .leading) {
                 HStack {
-                    Image("churras")
+                    Image("festas")
                         .resizable()
                         .frame(width: 48, height: 48, alignment: .center)
                     VStack(alignment: .leading, spacing: 8) {

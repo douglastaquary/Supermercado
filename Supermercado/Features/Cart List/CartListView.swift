@@ -12,13 +12,13 @@ import ASCollectionView
 struct CartListView: View {
     
     var cartData: [Cart] = [
-        Cart(name: "Churrasco do\nbeto", iconName: "churras"),
-        Cart(name: "Churrasco do\nbeto", iconName: "churras"),
-        Cart(name: "Churrasco do\nbeto", iconName: "churras"),
-        Cart(name: "Churrasco do\nbeto", iconName: "churras"),
-        Cart(name: "Churrasco do\nbeto", iconName: "churras"),
-        Cart(name: "Churrasco do\nbeto", iconName: "churras"),
-        Cart(name: "Churrasco do\nbeto", iconName: "churras")
+        Cart(name: "Churrasco do\nbeto", iconName: "festas"),
+        Cart(name: "Churrasco do\nbeto", iconName: "festas"),
+        Cart(name: "Churrasco do\nbeto", iconName: "festas"),
+        Cart(name: "Churrasco do\nbeto", iconName: "festas"),
+        Cart(name: "Churrasco do\nbeto", iconName: "festas"),
+        Cart(name: "Churrasco do\nbeto", iconName: "festas"),
+        Cart(name: "Churrasco do\nbeto", iconName: "festas")
     ]
 
     var carts: [Cart] = []
@@ -68,29 +68,6 @@ struct CartListView: View {
         .navigationBarColor(.white)
     }
 
-    private func list(of carts: [Cart]) -> some View {
-        return List {
-            ForEach(0..<carts.count/2) { _ in
-                HStack(alignment: .center) {
-                    ForEach(carts) { cart in
-                        CardGridView(cart: cart)
-                    }
-                }
-            }
-        }
-    }
-    
-//    func destinationForItem(_ cart: Cart) -> some View
-//    {
-//        ScrollView {
-//            PostView(post: item)
-//                .onAppear {
-//                    ASRemoteImageManager.shared.load(item.url)
-//                    ASRemoteImageManager.shared.load(item.usernamePhotoURL)
-//                }
-//        }
-//        .navigationBarTitle("", displayMode: .inline)
-//    }
 }
 
 struct CartListView_Previews: PreviewProvider {

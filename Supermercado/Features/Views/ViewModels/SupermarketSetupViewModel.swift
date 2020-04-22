@@ -18,12 +18,14 @@ class SupermarketSetupViewModel: ObservableObject {
     @Published var supermarketMessage = "0 a 60"
     @Published var measuresTitle = ""
     @Published var isValid = false
+    
     @Published var measures: [Medida] = [
-    Medida(tipo: "Kilo"),
-    Medida(tipo: "Metro"),
-    Medida(tipo: "Litro"),
-    Medida(tipo: "Milímetro"),
-    Medida(tipo: "Centímetro")]
+        Medida(tipo: "Kilo"),
+        Medida(tipo: "Metro"),
+        Medida(tipo: "Litro"),
+        Medida(tipo: "Milímetro"),
+        Medida(tipo: "Centímetro")
+    ]
     
     private var cancellableSet: Set<AnyCancellable> = []
     

@@ -12,7 +12,7 @@ import Combine
 struct AddCartView: View {
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @ObservedObject private var viewModel = CartFormViewModel()
+    @ObservedObject private var viewModel = NewCartViewModel()
     
     @State var showAddCartView = false
 
@@ -88,7 +88,7 @@ struct AddCartView: View {
 
 struct AddCartView_Previews: PreviewProvider {
     static var previews: some View {
-        AddCartView().environment(\.colorScheme, .dark)
+        AddCartView()//.environment(\.colorScheme, .dark)
     }
 }
 
@@ -128,24 +128,5 @@ struct SectionTextView: View {
             }
         }
         .padding()
-    }
-}
-
-
-struct Validation<Value>: ViewModifier {
-    var value: Value
-    var validator: (Value) -> Bool
-
-    func body(content: Content) -> some View {
-        // Here we use Group to perform type erasure, to give our
-        // method a single return type, as applying the 'border'
-        // modifier causes a different type to be returned:
-        Group {
-            if validator(value) {
-                content.border(Color.green)
-            } else {
-                content
-            }
-        }
     }
 }

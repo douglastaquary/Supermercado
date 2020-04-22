@@ -34,4 +34,9 @@ struct Supermarket: Model {
 }
 
 
-
+public struct CartCategory: Codable, Identifiable, Hashable {
+    public var id : Int = 0
+    public var isSelected: Bool = false
+    public var iconName: String = ""
+    public var categotyTitle: String = ""
+}
