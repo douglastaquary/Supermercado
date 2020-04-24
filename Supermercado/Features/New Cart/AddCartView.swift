@@ -13,7 +13,8 @@ struct AddCartView: View {
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @ObservedObject private var viewModel = NewCartViewModel()
-    
+
+
     @State var showAddCartView = false
 
     init() {
@@ -27,7 +28,9 @@ struct AddCartView: View {
                     Spacer()
                     cartTextField()
                     SectionTextView(title: "Escolha a categoria")
-                    CategoryCollectionView()
+                    CategoryCollectionView(
+                        viewModel: viewModel.categories
+                    )
                     Button(action: {
                         self.showAddCartView.toggle()
                     }, label: {

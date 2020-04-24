@@ -11,19 +11,16 @@ import SwiftUI
 import Foundation
 
 class NewCartViewModel: ObservableObject {
-    
     // input
     @Published var cartname = ""
     @Published var categorySelected: Int = 0
     // output
     @Published var isValid = false
     @Published var cartMessage = "Ex: Compras para o escritório"
-    
-    var gridCategories: [[CartCategory]] = [[]]
 
     @Published var categories: [CartCategory] = [
-        CartCategory(id: 0, iconName: "ic_shopping_cart", categotyTitle: "Compras do mês"),
-        CartCategory(id: 1, iconName: "ic_compras_rapidas", categotyTitle: "Compras rápidas"),
+        CartCategory(id: 0, iconName: "ic_shopping_cart", categotyTitle: "Compras\ndo mês"),
+        CartCategory(id: 1, iconName: "ic_compras_rapidas", categotyTitle: "Compras\nrápidas"),
         CartCategory(id: 2, iconName: "carnes", categotyTitle: "Carnes"),
         CartCategory(id: 3, iconName: "festas", categotyTitle: "Festa"),
         CartCategory(id: 4, iconName: "legumes", categotyTitle: "Fitness"),
@@ -44,7 +41,7 @@ class NewCartViewModel: ObservableObject {
     
     private var sortedCategoriesValidPublisher: AnyPublisher<[CartCategory], Never> {
       $categorySelected
-        .debounce(for: 0.3, scheduler: RunLoop.main)
+        .debounce(for: 0.1, scheduler: RunLoop.main)
         .removeDuplicates()
         .map { index -> [CartCategory] in
             for i in 0..<self.categories.count {
@@ -57,11 +54,6 @@ class NewCartViewModel: ObservableObject {
     }
 
     init() {
-        
-        _ = categories.publisher
-            .collect(3)
-            .collect()
-            .sink(receiveValue: { self.gridCategories = $0 })
         
         sortedCategoriesValidPublisher
             .receive(on: RunLoop.main)

@@ -39,8 +39,6 @@ struct HomeView: View {
                 
             }
 
-            
-            
             NavigationLink(destination: NearestMarketView()) {
                 NearestMarketCardView()
                 
