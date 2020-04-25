@@ -14,10 +14,10 @@ struct CardGridView: View {
     
     var body: some View {
         NavigationLink(destination: SupermarketListView()) {
-                    ZStack {
+            ZStack {
                 Rectangle()
                     .cornerRadius(4)
-                    .foregroundColor(.white)
+                    .foregroundColor(.tertiarySystemBackground)
                     .frame(width: 156, height: 186, alignment: .center)
                     .shadow(radius: 5, x: 0, y: 5).opacity(0.4)
                 VStack(alignment: .center) {
@@ -28,11 +28,11 @@ struct CardGridView: View {
                     Text(cart.name)
                         .font(.body)
                         .fontWeight(.medium)
-                        .foregroundColor(.primary)
+                        .foregroundColor(.label)
                         .multilineTextAlignment(.center)
                     Text("0 item adicionados")
                         .font(.caption)
-                        .foregroundColor(Color("secondaryText"))
+                        .foregroundColor(.secondary)
                         .multilineTextAlignment(.center)
                         .padding(8)
                 }
@@ -44,5 +44,6 @@ struct CardGridView: View {
 struct CardGridView_Previews: PreviewProvider {
     static var previews: some View {
         CardGridView(cart: Cart(name: "Churrasco do\nBeto", iconName: "ic_compras_rapidas"))
+        .environment(\.colorScheme, .dark)
     }
 }

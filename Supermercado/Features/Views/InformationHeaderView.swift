@@ -15,8 +15,7 @@ struct InformationHeaderView: View {
     var body: some View {
         ZStack(alignment: .leading) {
             Rectangle()
-                //.cornerRadius(4)
-                .foregroundColor(.white)
+                .foregroundColor(.tertiarySystemBackground)
                 .frame(maxWidth: .infinity, maxHeight: showEmptyDescription ? 148 : 116)
             VStack(alignment: .leading) {
                 HStack {
@@ -28,9 +27,10 @@ struct InformationHeaderView: View {
                             .font(.body)
                             .fontWeight(.medium)
                             .multilineTextAlignment(.center)
+                            .foregroundColor(.label)
                         Text("0 item adicionados")
                             .font(.caption)
-                            .foregroundColor(Color("secondaryText"))
+                            .foregroundColor(.secondary)
                             .multilineTextAlignment(.center)
                     }
                     .padding(12)

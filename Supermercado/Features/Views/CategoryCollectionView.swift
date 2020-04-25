@@ -12,7 +12,7 @@ import ASCollectionView
 struct CategoryCollectionView: View {
     
     var viewModel: [CartCategory] = []
-    public var tapCategory: ((CartCategory) -> Void)?
+    fileprivate var tapCategory: ((CartCategory) -> Void)?
     
     init(viewModel: [CartCategory]) {
         self.viewModel = viewModel
@@ -99,9 +99,10 @@ struct CircleCategoryOverlay: View {
             }
         }
         .onTapGesture {
-            print("\nDEBUG: tap on `CircleCategoryOverlay` with ID: \(self.category.id)")
+            print("\nDEBUG: tap on CircleCategoryOverlay`category with ID: \(self.category.id)")
             haptic(.success)
             self.isTapped.toggle()
+            self
             
         }
         .frame(width: Metrics.circleOverlayHeight, height: Metrics.circleOverlayHeight, alignment: .center)

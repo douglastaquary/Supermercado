@@ -16,6 +16,7 @@ struct TitleHeader: View {
             Text(title)
                 .fontWeight(.bold)
                 .font(.system(size: 18))
+                .foregroundColor(.label)
             Spacer()
 
         }

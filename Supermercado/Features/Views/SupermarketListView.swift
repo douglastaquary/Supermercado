@@ -13,22 +13,22 @@ struct SupermarketListView: View {
     var supermarkets: [SupermarketItem] = []
     var rows: [SupermarketRow] = []
     
-    init() {
-        UINavigationBar.appearance().backgroundColor = .white
-        UITableView.appearance().separatorColor = .clear
-    }
+//    init() {
+//        UINavigationBar.appearance().backgroundColor = .white
+//    }
     
     var body: some View {
         
         VStack {
             ZStack {
+                Color.systemBackground.edgesIgnoringSafeArea([.all])
                 ScrollView(showsIndicators: false) {
                     ZStack {
                         Rectangle()
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .cornerRadius(4)
-                            .foregroundColor(Color.white)
-                            .shadow(color: Color("DividerColor"),radius: 4, x: 0, y: 4)
+                            .foregroundColor(.tertiarySystemBackground)
+                            .shadow(color: .secondarySystemBackground, radius: 4, x: 0, y: 4)
                             .padding()
                         VStack {
                             InformationHeaderView()
@@ -45,6 +45,13 @@ struct SupermarketListView: View {
             
             newSupermarketButon()
         }
+        .onAppear {
+            UINavigationBar.appearance().backgroundColor = .white
+        }
+        .navigationBarTitle(Text("Churrasco do beto"), displayMode: .inline)
+        .accentColor(.black)
+            
+        .navigationBarColor(.systemBackground)
 
     }
     
@@ -71,26 +78,13 @@ struct SupermarketListView: View {
                 .foregroundColor(Color.white)
                 .cornerRadius(4)
         }
-//
-//
-//
-//
-//            Button(action: {
-//            self.showAddCartView.toggle()
-//        }, label: {
-//            Text("Nova lista")
-//                .frame(maxWidth: .infinity)
-//                .padding()
-//                .background(Color("primary"))
-//                .foregroundColor(Color.white)
-//                .cornerRadius(4)
-//        })
+            
         .padding()
     }
 }
 
 struct SupermarketListView_Previews: PreviewProvider {
     static var previews: some View {
-        SupermarketListView()
+        SupermarketListView()//.environment(\.colorScheme, .dark)
     }
 }

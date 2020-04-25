@@ -27,7 +27,7 @@ struct CartListView: View {
 
     var body: some View {
         ZStack {
-            Color.white.edgesIgnoringSafeArea([.all])
+            Color.systemBackground.edgesIgnoringSafeArea([.all])
             VStack {
                 ASCollectionView(
                     data: self.cartData,
@@ -42,6 +42,7 @@ struct CartListView: View {
                           lineSpacing: 8,
                           itemSize: .absolute(198))
                 }
+                
                 
                 Button(action: {
                     self.showAddCartView.toggle()
@@ -61,18 +62,17 @@ struct CartListView: View {
         }
         .onAppear {
             UINavigationBar.appearance().backgroundColor = .white
-            UITableView.appearance().separatorColor = .clear
         }
         .navigationBarTitle(Text("Minhas listas"), displayMode: .inline)
         .accentColor(.black)
-        .navigationBarColor(.white)
+        .navigationBarColor(.systemBackground)
     }
 
 }
 
 struct CartListView_Previews: PreviewProvider {
     static var previews: some View {
-        CartListView(carts: [])
+        CartListView(carts: []).environment(\.colorScheme, .dark)
   
     }
 }

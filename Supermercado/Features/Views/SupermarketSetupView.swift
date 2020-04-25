@@ -54,6 +54,7 @@ struct SupermarketSetupView: View {
     
     var body: some View {
         ZStack {
+            Color.systemBackground.edgesIgnoringSafeArea([.all])
             Rectangle()
                 .frame(
                     width: UIScreen.main.bounds.width,
@@ -162,6 +163,12 @@ struct SupermarketSetupView: View {
         .sheet(isPresented: $showPhotoOptions) {
             ImagePicker(image: self.$image, isShown: self.$showPhotoOptions, sourceType: self.sourceType)
         }
+        .onAppear {
+            UINavigationBar.appearance().backgroundColor = .white
+        }
+        .navigationBarTitle(Text("Adicionar item"), displayMode: .inline)
+        .accentColor(.black)
+        .navigationBarColor(.systemBackground)
         
     }
     

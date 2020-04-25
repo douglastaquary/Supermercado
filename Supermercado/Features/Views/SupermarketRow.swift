@@ -17,12 +17,15 @@ struct SupermarketRow: View {
                     .frame(width: 56, height: 56)
                 VStack(alignment: .leading) {
                     Text("Picanha Maturatta Friboi - 2kg")
+                        .foregroundColor(.label)
                         .font(.body)
                     HStack {
                         HStack {
                             Text("Qnt:")
+                                .foregroundColor(.label)
                                 .font(.body)
                             Text("2")
+                                .foregroundColor(.label)
                                 .font(.body)
                                 .fontWeight(.bold)
                         }
@@ -33,13 +36,15 @@ struct SupermarketRow: View {
                     }
                     .padding(.top, 8)
                 }
+                
             }
+            
             Rectangle()
-                .foregroundColor(Color("DividerColor"))
+                .foregroundColor(.secondary)
                 .frame(maxWidth: .infinity, maxHeight: 1)
 
-
         }
+        .foregroundColor(.tertiarySystemBackground)
         .frame(height: 76)
     }
     

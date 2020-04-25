@@ -48,6 +48,7 @@ class NewCartViewModel: ObservableObject {
                 self.categories[i].isSelected = false
             }
             self.categories[index].isSelected = true
+            print("\n\(self.categories[index]) \nindex: \(index)")
             return self.categories
         }
         .eraseToAnyPublisher()

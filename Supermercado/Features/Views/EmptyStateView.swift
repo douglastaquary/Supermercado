@@ -35,11 +35,12 @@ struct EmptyStateView: View {
             }
             .padding()
         }
+        
     }
 }
 
 struct EmptyStateView_Previews: PreviewProvider {
     static var previews: some View {
-        EmptyStateView()
+        EmptyStateView()//.environment(\.colorScheme, .dark)
     }
 }

@@ -46,7 +46,6 @@ struct AddCartView: View {
                     .padding()
                 }
             }
-                
             .navigationBarItems(
                 leading: Button(action: {
                         withAnimation {
@@ -87,6 +86,7 @@ struct AddCartView: View {
         }
         .padding()
     }
+    
 }
 
 struct AddCartView_Previews: PreviewProvider {

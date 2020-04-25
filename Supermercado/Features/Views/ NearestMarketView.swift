@@ -23,6 +23,7 @@ struct NearestMarketView: View {
                 MapView(centerCoordinate: $centerCoordinate)
                     
             }
+            .padding(.top, 24)
             .frame(height: 196)
 
             VStack(alignment: .leading) {
@@ -39,16 +40,16 @@ struct NearestMarketView: View {
                 ForEach(0..<6) { _ in
                     MarketView()
                 }
-                //.padding()
-//                ScrollView {
-//                    ForEach(0..<6) { _ in
-//                        MarketView()
-//                    }
-//                }.padding()
             }
             .padding()
         }
         .foregroundColor(.systemBackground)
+        .onAppear {
+            UINavigationBar.appearance().backgroundColor = .white
+        }
+        .navigationBarTitle(Text("Mercados próximos"), displayMode: .inline)
+        .accentColor(.black)
+        .navigationBarColor(.white)
 
     }
 }
