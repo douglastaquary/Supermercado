@@ -15,6 +15,7 @@ struct CardGridView: View {
     var body: some View {
         NavigationLink(destination: SupermarketListView()) {
             ZStack {
+                Color.systemBackground.edgesIgnoringSafeArea([.all])
                 Rectangle()
                     .cornerRadius(4)
                     .foregroundColor(.tertiarySystemBackground)
@@ -30,7 +31,7 @@ struct CardGridView: View {
                         .fontWeight(.medium)
                         .foregroundColor(.label)
                         .multilineTextAlignment(.center)
-                    Text("0 item adicionados")
+                    Text("0 itens adicionados")
                         .font(.caption)
                         .foregroundColor(.secondary)
                         .multilineTextAlignment(.center)

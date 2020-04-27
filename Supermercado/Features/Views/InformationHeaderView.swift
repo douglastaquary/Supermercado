@@ -14,9 +14,12 @@ struct InformationHeaderView: View {
     
     var body: some View {
         ZStack(alignment: .leading) {
+            Color.systemBackground.edgesIgnoringSafeArea([.all])
             Rectangle()
-                .foregroundColor(.tertiarySystemBackground)
                 .frame(maxWidth: .infinity, maxHeight: showEmptyDescription ? 148 : 116)
+                .foregroundColor(.tertiarySystemBackground)
+                .shadow(radius: 0, x: 0, y: 0).opacity(0.4)
+
             VStack(alignment: .leading) {
                 HStack {
                     Image("festas")
@@ -35,13 +38,15 @@ struct InformationHeaderView: View {
                     }
                     .padding(12)
                 }
+                //.foregroundColor(.tertiarySystemBackground)
+
                 Rectangle()
                     .cornerRadius(4)
                     .foregroundColor(Color("buttonAction"))
                     .frame(maxWidth: .infinity, maxHeight: 1)
                 
                 if self.showEmptyDescription {
-                    Text("Para adicionar produtos em sua lista clique no botão adicionar item.")
+                    Text("Para adicionar produtos em sua lista clique no botão `Adicionar item`.")
                         .font(.caption)
                         .lineLimit(nil)
                         .foregroundColor(Color("secondaryText"))
@@ -50,16 +55,19 @@ struct InformationHeaderView: View {
                 }
 
             }
+            //.foregroundColor(.tertiarySystemBackground)
             .frame(maxWidth: .infinity, maxHeight: showEmptyDescription ? 148 : 106)
             .padding(.leading, 16)
             .padding(.trailing, 16)
 
         }
+        //.foregroundColor(.tertiarySystemBackground)
+
     }
 }
 
 struct InformationHeaderView_Previews: PreviewProvider {
     static var previews: some View {
-        InformationHeaderView()
+        InformationHeaderView().environment(\.colorScheme, .dark)
     }
 }

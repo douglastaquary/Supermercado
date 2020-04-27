@@ -31,7 +31,7 @@ struct ImagePlaceholderView: View {
                             Text("Adicione uma foto do produto")
                                 .font(.system(size: 14))
                                 .multilineTextAlignment(.center)
-                                .foregroundColor(.primary)
+                                .foregroundColor(.label)
                         }
 
                     }
