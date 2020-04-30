@@ -11,10 +11,9 @@ import Combine
 
 struct AddCartView: View {
     
+    @EnvironmentObject var supermarketService: SupermarketService
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @ObservedObject private var viewModel = NewCartViewModel()
-
-
     @State var showAddCartView = false
 
     init() {
@@ -32,6 +31,7 @@ struct AddCartView: View {
                         viewModel: viewModel.categories
                     )
                     Button(action: {
+                        self.supermarketService.addNewCart(self.viewModel.cart)
                         self.showAddCartView.toggle()
                     }, label: {
                         Text("Salvar")
@@ -58,7 +58,7 @@ struct AddCartView: View {
                 },
                 trailing:
                     Button(action: {
-                        self.presentationMode.wrappedValue.dismiss()
+                        self.viewModel.cart.name = ""
                     }
                 ) {
                     Text("Limpar")
@@ -73,7 +73,7 @@ struct AddCartView: View {
     private func cartTextField() -> some View {
         return ZStack {
             VStack(alignment: .leading) {
-                TextField("Digite o nome da lista", text: $viewModel.cartname)
+                TextField("Digite o nome da lista", text: $viewModel.cart.name)
                     .font(.body)
                     .frame(maxWidth: .infinity, maxHeight: 38)
                 Rectangle()
@@ -95,41 +95,4 @@ struct AddCartView_Previews: PreviewProvider {
     }
 }
 
-struct CartTextField: View {
-    
-    @State var text: String
-    @State var errorMessage: String?
-    
-        var body: some View {
-        ZStack {
-            VStack(alignment: .leading) {
-                TextField("Digite o nome da lista", text: $text)
-                    .font(.body)
-                    .frame(maxWidth: .infinity, maxHeight: 38)
-                Rectangle()
-                    .frame(maxWidth: .infinity, maxHeight: 1)
-                    .foregroundColor(Color("secondaryText"))
-                Text("Ex: Compras para o escritório")
-                    .foregroundColor(Color("secondaryText"))
-                    .font(.body)
-            }
-        }
-        .padding()
-    }
-}
 
-struct SectionTextView: View {
-    
-    var title: String
-    
-        var body: some View {
-        ZStack {
-            VStack(alignment: .leading) {
-                Text(title)
-                    .fontWeight(.medium)
-                    .font(Font.system(size: 16))
-            }
-        }
-        .padding()
-    }
-}

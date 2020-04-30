@@ -10,42 +10,49 @@ import SwiftUI
 
 struct InformationHeaderView: View {
     
-    @State var showEmptyDescription: Bool = false
+    @State var titleHeader: String = ""
+    @State var countItems: Int = 0
+    @State var imageName: String = ""
     
     var body: some View {
         ZStack(alignment: .leading) {
             Color.systemBackground.edgesIgnoringSafeArea([.all])
-            Rectangle()
-                .frame(maxWidth: .infinity, maxHeight: showEmptyDescription ? 148 : 116)
-                .foregroundColor(.tertiarySystemBackground)
-                .shadow(radius: 0, x: 0, y: 0).opacity(0.4)
+            if countItems == 0 {
+                Rectangle()
+                    .frame(maxWidth: .infinity, maxHeight:148)
+                    .foregroundColor(.tertiarySystemBackground)
+                    .shadow(radius: 0, x: 0, y: 0).opacity(0.4)
+            } else {
+                Rectangle()
+                    .frame(maxWidth: .infinity, maxHeight: 116)
+                    .foregroundColor(.tertiarySystemBackground)
+                    .shadow(radius: 0, x: 0, y: 0).opacity(0.4)
+            }
 
             VStack(alignment: .leading) {
                 HStack {
-                    Image("festas")
+                    Image(imageName)
                         .resizable()
                         .frame(width: 48, height: 48, alignment: .center)
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Churrasco do beto")
+                        Text(titleHeader)
                             .font(.body)
                             .fontWeight(.medium)
                             .multilineTextAlignment(.center)
                             .foregroundColor(.label)
-                        Text("0 item adicionados")
+                        Text("\(countItems) itens adicionados")
                             .font(.caption)
                             .foregroundColor(.secondary)
                             .multilineTextAlignment(.center)
                     }
                     .padding(12)
                 }
-                //.foregroundColor(.tertiarySystemBackground)
-
                 Rectangle()
                     .cornerRadius(4)
                     .foregroundColor(Color("buttonAction"))
                     .frame(maxWidth: .infinity, maxHeight: 1)
                 
-                if self.showEmptyDescription {
+                if countItems == 0 {
                     Text("Para adicionar produtos em sua lista clique no botão `Adicionar item`.")
                         .font(.caption)
                         .lineLimit(nil)
@@ -55,13 +62,12 @@ struct InformationHeaderView: View {
                 }
 
             }
-            //.foregroundColor(.tertiarySystemBackground)
-            .frame(maxWidth: .infinity, maxHeight: showEmptyDescription ? 148 : 106)
+                
+            .frame(maxWidth: .infinity, maxHeight: countItems == 0 ? 148 : 106)
             .padding(.leading, 16)
             .padding(.trailing, 16)
 
         }
-        //.foregroundColor(.tertiarySystemBackground)
 
     }
 }

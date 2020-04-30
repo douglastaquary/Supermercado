@@ -20,7 +20,7 @@ struct SupermarketItemView: View {
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
-    var supermarketID: Supermarket.ID
+    var supermarketID: Cart.ID
     
 //    private var currencyFormatter: NumberFormatter = {
 //        let f = NumberFormatter()

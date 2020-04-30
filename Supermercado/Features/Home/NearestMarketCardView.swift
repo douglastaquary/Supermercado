@@ -1,27 +1,27 @@
 //
-//  HomeCardView.swift
+//  NearestMarketCardView.swift
 //  Supermercado
 //
-//  Created by Douglas Taquary on 07/04/20.
+//  Created by Douglas Taquary on 27/04/20.
 //  Copyright © 2020 Douglas Taquary. All rights reserved.
 //
 
+
 import SwiftUI
 
-
-struct HomeCardListView: View {
+struct NearestMarketCardView: View {
     
     var body: some View {
         ZStack(alignment: .leading) {
-            Image("image_woman")
+            Image("image_woman_left")
                 .resizable()
                 .renderingMode(.original)
                 .cornerRadius(4)
             Rectangle()
-                .foregroundColor(Color("CardMask1")).opacity(0.3)
+                .foregroundColor(Color("CardMask2")).opacity(0.3)
             CardImageOverlay(
-                imageName: "ic_list",
-                text: "Minhas\nlistas"
+                imageName: "ic_location",
+                text: "Mercados\npróximos a mim"
             )
                 
         }
@@ -30,9 +30,8 @@ struct HomeCardListView: View {
 }
 
 
-struct HomeCardListView_Previews: PreviewProvider {
+struct NearestMarketCardView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeCardListView()
+        NearestMarketCardView()
     }
 }
-

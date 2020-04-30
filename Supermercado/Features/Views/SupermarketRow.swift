@@ -9,14 +9,24 @@
 import SwiftUI
 
 struct SupermarketRow: View {
+    @EnvironmentObject var supermarketService: SupermarketService
+    
+    var supermarketItem: SupermarketItem
+    var cartID: Cart.ID
+    var imageName = ""
+    
+    
     var body: some View {
         VStack {
             HStack {
-                Image("picanha")
-                    .resizable()
-                    .frame(width: 56, height: 56)
+                if self.supermarketItem.avatarJPEGData != nil {
+                    Image(uiImage: UIImage(data:self.supermarketItem.avatarJPEGData!)!)
+                        .resizable()
+                        .frame(width: 56, height: 56)
+                }
+
                 VStack(alignment: .leading) {
-                    Text("Picanha Maturatta Friboi - 2kg")
+                    Text(supermarketItem.name)
                         .foregroundColor(.label)
                         .font(.body)
                     HStack {
@@ -24,13 +34,13 @@ struct SupermarketRow: View {
                             Text("Qnt:")
                                 .foregroundColor(.label)
                                 .font(.body)
-                            Text("2")
+                            Text(supermarketItem.amount)
                                 .foregroundColor(.label)
                                 .font(.body)
                                 .fontWeight(.bold)
                         }
                         Spacer()
-                        Text("R$ 97,80")
+                        Text("R$ \(supermarketItem.price)")
                             .fontWeight(.semibold)
                             .foregroundColor(Color("buttonAction"))
                     }
@@ -52,6 +62,6 @@ struct SupermarketRow: View {
 
 struct SupermarketRow_Previews: PreviewProvider {
     static var previews: some View {
-        SupermarketRow()
+        SupermarketRow(supermarketItem: SupermarketItem(), cartID: UUID())
     }
 }

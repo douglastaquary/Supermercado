@@ -9,11 +9,15 @@
 import SwiftUI
 
 struct CardGridView: View {
-    
+    @EnvironmentObject var supermarketService: SupermarketService
     var cart: Cart
     
     var body: some View {
-        NavigationLink(destination: SupermarketListView()) {
+        NavigationLink(destination:
+            SupermarketListView(
+                viewModel: SupermarketListViewModel(cart: cart)
+            ).environmentObject(self.supermarketService)
+        ) {
             ZStack {
                 Color.systemBackground.edgesIgnoringSafeArea([.all])
                 Rectangle()

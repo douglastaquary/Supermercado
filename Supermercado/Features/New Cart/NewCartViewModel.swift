@@ -14,6 +14,7 @@ class NewCartViewModel: ObservableObject {
     // input
     @Published var cartname = ""
     @Published var categorySelected: Int = 0
+    @Published var cart: Cart = Cart()
     // output
     @Published var isValid = false
     @Published var cartMessage = "Ex: Compras para o escritório"

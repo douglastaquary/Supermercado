@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import  SwiftUI
+import SwiftUI
 import LLVS
 
 private let encoder = JSONEncoder()
@@ -18,7 +18,7 @@ private let decoder = JSONDecoder()
 /// store, by appending the type string. This is used to identify data types when fetching.
 /// Note that only structs that form the top of a encoded data blob should conform to
 /// this. If a struct is just embedded in another struct, it can just conform to Codable.
-protocol Model: Codable, Identifiable, Equatable {
+protocol Model: Codable, Identifiable, Hashable {
     
     var storeValueId: Value.Identifier { get }
     static var storeIdentifierTypeTag: String { get }
@@ -53,6 +53,10 @@ extension Model {
         return storeValueId.hasSuffix(".\(storeIdentifierTypeTag)")
     }
     
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
 }
 
 extension Model where ID == UUID {
@@ -62,6 +66,8 @@ extension Model where ID == UUID {
     }
     
 }
+
+
 
 extension Model {
     

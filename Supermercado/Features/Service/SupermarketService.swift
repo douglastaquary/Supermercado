@@ -13,7 +13,7 @@ import Combine
 
 public final class SupermarketService: ObservableObject {
     
-    static let identifier = "iCloud.com.douglastaquary.supermarketui"
+    static let identifier = "iCloud.com.douglastaquary.mercado"
     static let mainZone = "MainZone"
     static let mainStore = "MainStore"
     
@@ -27,69 +27,75 @@ public final class SupermarketService: ObservableObject {
         return coordinator
     }()
     
-    private var supermarketSubscriber: AnyCancellable?
+    private var cartSubscriber: AnyCancellable?
     
     public init() {
-        supermarketSubscriber = storeCoordinator.currentVersionSubject
+        cartSubscriber = storeCoordinator.currentVersionSubject
             .receive(on: DispatchQueue.main)
-            .map( { self.fetchedSupermarkets(at: $0) })
-            .assign(to: \.supermarkets, on: self)
+            .map( { self.performCarts(at: $0) })
+            .assign(to: \.carts, on: self)
     }
     
-    @Published var supermarkets: [Supermarket] = []
+    @Published var carts: [Cart] = []
 
-    private func fetchedSupermarkets(at version: Version.Identifier) -> [Supermarket] {
-        return try! Supermarket.all(in: storeCoordinator, at: version).sorted(by: {
+    private func performCarts(at version: Version.Identifier) -> [Cart] {
+        return try! Cart.all(in: storeCoordinator, at: version).sorted(by: {
             (($0.name, $0.id.uuidString) < ($1.name, $1.id.uuidString))
         })
     }
     
-    func addNewCart(_ cart: Supermarket) {
+    // MARK: - Cart Store Manager
+    
+    func addNewCart(_ cart: Cart) {
         let change: Value.Change = .insert(try! cart.encodeValue())
         try! storeCoordinator.save([change])
         sync()
     }
     
-    func update(_ supermarket: Supermarket) {
-        let change: Value.Change = .update(try! supermarket.encodeValue())
+    func updateCart(_ cart: Cart) {
+        let change: Value.Change = .update(try! cart.encodeValue())
         try! storeCoordinator.save([change])
         sync()
     }
     
-    func deleteSupermarket(withID id: Supermarket.ID) {
-        let change: Value.Change = .remove(Supermarket.storeValueId(for: id))
+    func deleteCart(withID id: Cart.ID) {
+        let change: Value.Change = .remove(Cart.storeValueId(for: id))
         try! storeCoordinator.save([change])
         sync()
 
     }
     
-    func fetchSupermarketItem(for id: Supermarket.ID, with uuid: UUID) -> SupermarketItem {
-        let superMark = supermarket(withID: id)
-        return superMark.items.first(where: { $0.id == uuid }) ?? SupermarketItem()
+    func cart(withID id: Cart.ID) -> Cart {
+        return carts.first(where: { $0.id == id }) ?? Cart()
     }
     
-    func supermarket(withID id: Supermarket.ID) -> Supermarket {
-        return supermarkets.first(where: { $0.id == id }) ?? Supermarket()
+    //MARK: SupermarketItems Store Manager
+    
+    func fetchSupermarketItem(for id: Cart.ID, with uuid: UUID) -> SupermarketItem {
+        let cart = self.cart(withID: id)
+        return cart.items.first(where: { $0.id == uuid }) ?? SupermarketItem()
     }
     
-    func fetchItems(for id: Supermarket.ID) -> [SupermarketItem] {
+
+    
+    func fetchItems(for id: Cart.ID) -> [SupermarketItem] {
         
-        let superMark = supermarket(withID: id)
+        let cart = self.cart(withID: id)
         
-        return superMark.items
+        return cart.items
     }
     
-    func addItem(for id: Supermarket.ID, with content: SupermarketItem) {
-        var item = supermarket(withID: id)
-        item.items.append(content)
-        update(item)
+    func addItem(for id: Cart.ID, with content: SupermarketItem) {
+        var cart = self.cart(withID: id)
+        cart.items.append(content)
+        updateCart(cart)
         sync()
     }
     
-    func deleteItem(for id: Supermarket.ID, with content: SupermarketItem) {
-        var supermarket = self.supermarket(withID: id)
-        supermarket.items.removeAll(where: { $0.id == content.id})
-        update(supermarket)
+    func deleteItem(for id: Cart.ID, with content: SupermarketItem) {
+        var cart = self.cart(withID: id)
+        cart.items.removeAll(where: { $0.id == content.id})
+        updateCart(cart)
     }
     
     // MARK: Syncing

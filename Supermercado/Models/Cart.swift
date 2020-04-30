@@ -8,17 +8,22 @@
 
 import Foundation
 
-struct Cart: Identifiable, Hashable {
-    let id = UUID()
-    let name: String
-    let iconName:String
+struct Cart: Model {
     
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
-
+    static let storeIdentifierTypeTag = "Cart"
+    var id: UUID = .init()
+    var items: [SupermarketItem] = []
+    var name: String = ""
+    var iconName: String = ""
+    var categoryTitle: String = ""
+    var address: Address = .init()
+    var avatarJPEGData: Data?
+    var lastShopping: Supermarket?
+    
     static func == (lhs: Cart, rhs: Cart) -> Bool {
-        return lhs.id == rhs.id
+        return lhs.id == lhs.id
     }
+    
 }
+
 

@@ -13,19 +13,15 @@ import Foundation
 class SupermarketSetupViewModel: ObservableObject {
     // input
     @Published var supermarketName = ""
+    @Published var categoryName = ""
     @Published var measureIndex: Int = 0
+    @Published var cartID: Cart.ID
+    @Published var supermarketItem: SupermarketItem
     // output
     @Published var supermarketMessage = "0 a 60"
     @Published var measuresTitle = ""
     @Published var isValid = false
-    
-    @Published var measures: [Medida] = [
-        Medida(tipo: "Kilo"),
-        Medida(tipo: "Metro"),
-        Medida(tipo: "Litro"),
-        Medida(tipo: "Milímetro"),
-        Medida(tipo: "Centímetro")
-    ]
+    @Published var isCategoryValid = false
     
     private var cancellableSet: Set<AnyCancellable> = []
     
@@ -34,7 +30,19 @@ class SupermarketSetupViewModel: ObservableObject {
         .debounce(for: 0.3, scheduler: RunLoop.main)
         .removeDuplicates()
         .map { input in
-          return input.count >= 3
+            self.supermarketItem.name = self.supermarketName
+            return input.count >= 3
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    private var isCategoryNameValidPublisher: AnyPublisher<Bool, Never> {
+      $categoryName
+        .debounce(for: 0.3, scheduler: RunLoop.main)
+        .removeDuplicates()
+        .map { input in
+            self.supermarketItem.measure = self.categoryName
+            return input.count > 0
         }
         .eraseToAnyPublisher()
     }
@@ -43,13 +51,16 @@ class SupermarketSetupViewModel: ObservableObject {
       $measureIndex
         .debounce(for: 0.3, scheduler: RunLoop.main)
         .map { index -> String in
-            print("\(self.measures[index].tipo)")
-            return self.measures[index].tipo
+            print("\(Mock.Setup.measures[index].tipo)")
+            return Mock.Setup.measures[index].tipo
         }
         .eraseToAnyPublisher()
     }
     
-    init() {
+    init(cartID: UUID, supermarketItem: SupermarketItem) {
+        self.cartID = cartID
+        self.supermarketItem = supermarketItem
+        
         isSupermarketNameValidPublisher
             .receive(on: RunLoop.main)
             .map { valid in
@@ -58,40 +69,16 @@ class SupermarketSetupViewModel: ObservableObject {
             .assign(to: \.supermarketMessage, on: self)
             .store(in: &cancellableSet)
         
-        
         isSupermarketNameValidPublisher
             .receive(on: RunLoop.main)
             .assign(to: \.isValid, on: self)
             .store(in: &cancellableSet)
         
-//        pickerMeasureValuePublisher
-//            .receive(on: RunLoop.main)
-//            .assign(to: \.measuresTitle, on: self)
-//            .store(in: &cancellableSet)
-        
-//        pickerMeasureValuePublisher
-//            .receive(on: RunLoop.main)
-//            .assign(to: \.measuresTitle, on: self)
-//            .store(in: &cancellableSet)
+        isCategoryNameValidPublisher
+            .receive(on: RunLoop.main)
+            .assign(to: \.isCategoryValid, on: self)
+            .store(in: &cancellableSet)
     }
-    
-    var medidas = [
-            Medida(tipo: "Kilo"),
-            Medida(tipo: "Metro"),
-            Medida(tipo: "Litro"),
-            Medida(tipo: "Milímetro"),
-            Medida(tipo: "Centímetro")
-    ]
-    
-    var categories: [Category] = [
-            Category(tipo: "Cama, mesa e banho"),
-            Category(tipo: "Limpeza"),
-            Category(tipo: "Bebidas"),
-            Category(tipo: "Grãos"),
-            Category(tipo: "Legumes e verduras"),
-            Category(tipo: "Carnes"),
-            Category(tipo: "Outros")
-    ]
 
 }
 

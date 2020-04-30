@@ -10,40 +10,33 @@ import SwiftUI
 import ASCollectionView
 
 struct CartListView: View {
-    
-    var cartData: [Cart] = [
-        Cart(name: "Churrasco do\nbeto", iconName: "festas"),
-        Cart(name: "Churrasco do\nbeto", iconName: "festas"),
-        Cart(name: "Churrasco do\nbeto", iconName: "festas"),
-        Cart(name: "Churrasco do\nbeto", iconName: "festas"),
-        Cart(name: "Churrasco do\nbeto", iconName: "festas"),
-        Cart(name: "Churrasco do\nbeto", iconName: "festas"),
-        Cart(name: "Churrasco do\nbeto", iconName: "festas")
-    ]
+    @EnvironmentObject var supermarketService: SupermarketService
 
-    var carts: [Cart] = []
-    
     @State var showAddCartView = false
 
     var body: some View {
         ZStack {
             Color.systemBackground.edgesIgnoringSafeArea([.all])
             VStack {
-                ASCollectionView(
-                    data: self.cartData,
-                    dataID: \.self
-                ) { cart, _ in
-                   CardGridView(cart: cart)
-                }
-                .contentInsets(.init(top: 20, left: 0, bottom: 20, right: 0))
-                .layout {
-                    .grid(layoutMode: .adaptive(withMinItemSize: 175),
-                          itemSpacing: 2,
-                          lineSpacing: 8,
-                          itemSize: .absolute(198))
-                }
                 
-                
+                if self.supermarketService.carts.isEmpty {
+                    EmptyStateView()
+                } else {
+                    ASCollectionView(
+                        data: self.supermarketService.carts,
+                        dataID: \.self
+                    ) { cart, _ in
+                       CardGridView(cart: cart)
+                    }
+                    .contentInsets(.init(top: 20, left: 0, bottom: 20, right: 0))
+                    .layout {
+                        .grid(layoutMode: .adaptive(withMinItemSize: 175),
+                              itemSpacing: 2,
+                              lineSpacing: 8,
+                              itemSize: .absolute(198))
+                    }
+                }
+
                 Button(action: {
                     self.showAddCartView.toggle()
                 }, label: {
@@ -72,7 +65,7 @@ struct CartListView: View {
 
 struct CartListView_Previews: PreviewProvider {
     static var previews: some View {
-        CartListView(carts: []).environment(\.colorScheme, .dark)
+        CartListView().environment(\.colorScheme, .dark)
   
     }
 }

@@ -12,7 +12,7 @@ struct SupermarketEditView: View {
     
     @EnvironmentObject var supermarketService: SupermarketService
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    var supermarketID: Supermarket.ID
+    var supermarketID: Cart.ID
     @State var supermarketItem: SupermarketItem
     @State var showEditView = false
     
