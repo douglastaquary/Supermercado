@@ -11,6 +11,7 @@ import Combine
 
 struct SupermarketSetupView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var supermarketService: SupermarketService
     @ObservedObject var viewModel: SupermarketSetupViewModel
 
@@ -176,7 +177,6 @@ struct SupermarketSetupView: View {
 
     }
     
-    
     private func amountTextField() -> some View {
         return VStack {
             HStack {
@@ -294,8 +294,6 @@ struct SupermarketSetupView: View {
     private func presentSheet() -> some View {
         // The Sheet View
         return VStack(spacing: 0) {
-            // This is the little rounded bar (handler) on top of the sheet
-            
             VStack {
                 RoundedRectangle(cornerRadius: CGFloat(5.0) / 2.0)
                     .frame(width: 40, height: 4)
@@ -311,23 +309,23 @@ struct SupermarketSetupView: View {
                         self.modalPresented.toggle()
                     }, label: {
                         Text("Cancelar")
+                            .frame(height: 24)
                             .foregroundColor(Color("buttonAction"))
                     })
                         .onTapGesture {
                             self.isFocused = true
                             self.hideKeyboard()
                     }
-                    
                     Spacer()
-                    
                     Button(action: {
                         if self.pickerMode == .category {
-                            self.viewModel.categoryName =   Mock.Setup.categories[self.selectedCategory].tipo
+                            self.viewModel.categoryName = Mock.Setup.categories[self.selectedCategory].tipo
                         }
                         self.modalPresented.toggle()
                         
                     }, label: {
                         Text("Concluído")
+                            .frame(height: 24)
                             .foregroundColor(Color("buttonAction"))
                     })
                         .onTapGesture {
@@ -365,8 +363,7 @@ struct SupermarketSetupView: View {
         }
             
         .frame(width: UIScreen.main.bounds.width, height: 444)
-        //.background(Color.label)
-        .foregroundColor(.systemBackground)
+        .background(colorScheme == .light ?  Color.white : Color.black)
         .cornerRadius(20)
         .shadow(color: Color(.sRGBLinear, white: 0, opacity: 0.13), radius: 10.0)
         .offset(y: self.modalPresented ? 330 : 720)
@@ -377,7 +374,7 @@ struct SupermarketSetupView: View {
 
 struct SupermarketSetupView_Previews: PreviewProvider {
     static var previews: some View {
-        SupermarketSetupView(viewModel: SupermarketSetupViewModel(cartID: UUID(), supermarketItem: SupermarketItem()))
+        SupermarketSetupView(viewModel: SupermarketSetupViewModel(cartID: UUID(), supermarketItem: SupermarketItem())).environment(\.colorScheme, .dark)
     }
 }
 

@@ -12,7 +12,7 @@ struct InformationHeaderView: View {
     
     @State var titleHeader: String = ""
     @State var countItems: Int = 0
-    @State var imageName: String = ""
+    @State var imageName: String = "carnes"
     
     var body: some View {
         ZStack(alignment: .leading) {
@@ -33,6 +33,8 @@ struct InformationHeaderView: View {
                 HStack {
                     Image(imageName)
                         .resizable()
+                        .renderingMode(.template)
+                        .foregroundColor(Color("buttonAction"))
                         .frame(width: 48, height: 48, alignment: .center)
                     VStack(alignment: .leading, spacing: 8) {
                         Text(titleHeader)
@@ -64,8 +66,6 @@ struct InformationHeaderView: View {
             }
                 
             .frame(maxWidth: .infinity, maxHeight: countItems == 0 ? 148 : 106)
-            .padding(.leading, 16)
-            .padding(.trailing, 16)
 
         }
 

@@ -8,6 +8,8 @@
 
 import SwiftUI
 import Combine
+import ASCollectionView
+
 
 struct AddCartView: View {
     
@@ -15,7 +17,10 @@ struct AddCartView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @ObservedObject private var viewModel = NewCartViewModel()
     
+    @State var tapCategory: ((String) -> Void)?
     @State var showAddCartView = false
+    
+    @State var iconName: IconName = .undefined
 
     init() {
         UINavigationBar.appearance().backgroundColor = UIColor.systemBackground
@@ -28,9 +33,62 @@ struct AddCartView: View {
                     Spacer()
                     cartTextField()
                     SectionTextView(title: "Escolha a categoria")
-                    CategoryCollectionView(
-                        viewModel: viewModel.categories
-                    )
+                    ZStack(alignment: .leading) {
+                        ASCollectionView(
+                            data: viewModel.categories,
+                            dataID: \.self
+                        ) { category, index in
+                            
+                            ZStack {
+                                Button(action: {
+                                    self.iconName = category.iconName
+                                    self.viewModel.categorySelected(on: category)
+                                }, label: {
+                                    VStack(alignment: .center) {
+                                        ZStack {
+                                            if category.isSelected {
+                                                Circle()
+                                                    .stroke(Color("buttonAction"), lineWidth: 1)
+                                                
+                                            } else {
+                                                Circle()
+                                                    .foregroundColor(Color.secondarySystemBackground)
+                                            }
+
+                                            HStack {
+                                                Image(category.iconName.rawValue)
+                                                    .resizable()
+                                                    .renderingMode(.template)
+                                                    .foregroundColor(Color("buttonAction"))
+                                                    .frame(width: 42, height: 42)
+                                            }
+                                        }
+                                        .onTapGesture {
+                                            haptic(.warning)
+                                            self.viewModel.categorySelected(on: category)
+                                        }
+                                        .frame(width: Metrics.circleOverlayHeight, height: Metrics.circleOverlayHeight, alignment: .center)
+                                        Text(category.categotyTitle)
+                                            .foregroundColor(Color.primary)
+                                            .font(Font.system(size: 14))
+                                            .lineLimit(nil)
+                                            .multilineTextAlignment(.center)
+                                            .frame(height: 42)
+                                    }
+                                }).buttonStyle(PlainButtonStyle())
+                            }
+                        }
+                        .contentInsets(.init(top: 24, left: 0, bottom: 24, right: 0))
+                        .layout {
+                            .grid(layoutMode: .adaptive(withMinItemSize: 112),
+                                  itemSpacing: 24,
+                                  lineSpacing: 60,
+                                  itemSize: .absolute(100))
+                        }
+
+                    }
+                    .foregroundColor(Color.tertiarySystemBackground)
+
                     Button(action: {
                         self.supermarketService.addNewCart(self.viewModel.cart)
                         self.presentationMode.wrappedValue.dismiss()

@@ -13,21 +13,20 @@ import Foundation
 class NewCartViewModel: ObservableObject {
     // input
     @Published var cartname = ""
-    @Published var categorySelected: Int = 0
-    @Published var cart: Cart = Cart()
+    @Published var cartIcon = IconName.undefined
+    @Published var cart: Cart = Cart(name: "", iconName: .shopping)
     // output
     @Published var isValid = false
     @Published var cartMessage = "Ex: Compras para o escritório"
 
     @Published var categories: [CartCategory] = [
-        CartCategory(id: 0, iconName: "ic_shopping_cart", categotyTitle: "Compras\ndo mês"),
-        CartCategory(id: 1, iconName: "ic_compras_rapidas", categotyTitle: "Compras\nrápidas"),
-        CartCategory(id: 2, iconName: "carnes", categotyTitle: "Carnes"),
-        CartCategory(id: 3, iconName: "festas", categotyTitle: "Festa"),
-        CartCategory(id: 4, iconName: "legumes", categotyTitle: "Fitness"),
-        CartCategory(id: 5, iconName: "ic_pet", categotyTitle: "Pet"),
+        CartCategory(id: 0, iconName: .shopping, categotyTitle: "Compras\ndo mês"),
+        CartCategory(id: 1, iconName: .fastShopping, categotyTitle: "Compras\nrápidas"),
+        CartCategory(id: 2, iconName: .beef, categotyTitle: "Carnes"),
+        CartCategory(id: 3, iconName: .party, categotyTitle: "Festa"),
+        CartCategory(id: 4, iconName: .vegetables, categotyTitle: "Fitness"),
+        CartCategory(id: 5, iconName: .pet, categotyTitle: "Pet"),
     ]
-    
     private var cancellableSet: Set<AnyCancellable> = []
     
     private var isCartNameValidPublisher: AnyPublisher<Bool, Never> {
@@ -41,27 +40,30 @@ class NewCartViewModel: ObservableObject {
         .eraseToAnyPublisher()
     }
     
-    private var sortedCategoriesValidPublisher: AnyPublisher<[CartCategory], Never> {
-      $categorySelected
+    private var isCartIconValidPublisher: AnyPublisher<[CartCategory], Never> {
+      $cartIcon
         .debounce(for: 0.1, scheduler: RunLoop.main)
         .removeDuplicates()
-        .map { index -> [CartCategory] in
+        .map { iconName in
+            self.cart.iconName = self.cartIcon
             for i in 0..<self.categories.count {
-                self.categories[i].isSelected = false
+                if self.categories[i].iconName == iconName {
+                    self.categories[i].isSelected = true
+                } else {
+                    self.categories[i].isSelected = false
+                }
             }
-            self.categories[index].isSelected = true
-            print("\n\(self.categories[index]) \nindex: \(index)")
+
             return self.categories
         }
         .eraseToAnyPublisher()
     }
-
+    
+    public func categorySelected(on category: CartCategory) {
+        self.cartIcon = category.iconName
+    }
+    
     init() {
-        
-        sortedCategoriesValidPublisher
-            .receive(on: RunLoop.main)
-            .assign(to: \.categories, on: self)
-            .store(in: &cancellableSet)
         
         isCartNameValidPublisher
             .receive(on: RunLoop.main)
@@ -74,6 +76,11 @@ class NewCartViewModel: ObservableObject {
         isCartNameValidPublisher
             .receive(on: RunLoop.main)
             .assign(to: \.isValid, on: self)
+            .store(in: &cancellableSet)
+        
+        isCartIconValidPublisher
+            .receive(on: RunLoop.main)
+            .assign(to: \.categories, on: self)
             .store(in: &cancellableSet)
     }
 

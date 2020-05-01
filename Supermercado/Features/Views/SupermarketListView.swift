@@ -11,6 +11,8 @@ import SwiftUI
 struct SupermarketListView: View {
     @EnvironmentObject var supermarketService: SupermarketService
     @ObservedObject var viewModel: SupermarketListViewModel
+    
+    
 
     var body: some View {
         VStack {
@@ -27,16 +29,20 @@ struct SupermarketListView: View {
                         VStack {
                             InformationHeaderView(
                                 titleHeader: self.viewModel.cart.name,
-                                countItems: self.viewModel.count,
-                                imageName: self.viewModel.cart.iconName
+                                countItems: self.viewModel.cart.items.count,
+                                imageName: self.viewModel.cart.iconName.rawValue
                             )
-                            TitleHeader(title: "Carnes")
                             
-                            ForEach(viewModel.items) { item in
-                                SupermarketRow(
-                                    supermarketItem: item,
-                                    cartID: self.viewModel.cart.id
-                                )
+                            ForEach(self.viewModel.updateSections(items: supermarketService.fetchItems(for: viewModel.cart.id)))
+                            { section in
+                                TitleHeader(title: section.name)
+                                
+                                ForEach(section.items) { item in
+                                    SupermarketRow(
+                                        supermarketItem: item,
+                                        cartID: self.viewModel.cart.id
+                                    )
+                                }
                             }
                         }
                         .padding(32)
@@ -54,21 +60,7 @@ struct SupermarketListView: View {
         .navigationBarColor(.systemBackground)
 
     }
-    
-//    private func list(of items: [SupermarketItem]) -> some View {
-//        return List {
-//            ForEach(0..<2) { item in
-//                SupermarketRow(supermarketItem: item, cartID: viewModel.cart.id)
-//            }
-//        }
-//        .cornerRadius(4)
-//        .foregroundColor(.white)
-//        .colorMultiply(.clear)
-//        .frame(maxWidth: .infinity, maxHeight: .infinity)
-//        .shadow(radius: 4, x: 0, y: 3).opacity(0.4)
-//        .padding()
-//    }
-//
+
     private func newSupermarketButon() -> some View {
         return NavigationLink(destination: SupermarketSetupView(viewModel: SupermarketSetupViewModel(cartID: self.viewModel.cart.id, supermarketItem: SupermarketItem()))) {
             Text("Adicionar item")
@@ -84,6 +76,6 @@ struct SupermarketListView: View {
 
 struct SupermarketListView_Previews: PreviewProvider {
     static var previews: some View {
-        SupermarketListView(viewModel: SupermarketListViewModel(cart: Cart())).environment(\.colorScheme, .dark)
+        SupermarketListView(viewModel: SupermarketListViewModel(cart: Cart(name: "List View", iconName: .beef))).environment(\.colorScheme, .dark)
     }
 }

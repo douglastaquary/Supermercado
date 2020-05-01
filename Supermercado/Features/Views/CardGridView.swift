@@ -26,7 +26,7 @@ struct CardGridView: View {
                     .frame(width: 156, height: 186, alignment: .center)
                     .shadow(radius: 5, x: 0, y: 5).opacity(0.4)
                 VStack(alignment: .center) {
-                    Image(cart.iconName)
+                    Image(cart.iconName.rawValue)
                         .resizable()
                         .foregroundColor(Color("buttonAction"))
                         .frame(width: 48, height: 48, alignment: .center)
@@ -35,11 +35,15 @@ struct CardGridView: View {
                         .fontWeight(.medium)
                         .foregroundColor(.label)
                         .multilineTextAlignment(.center)
-                    Text("0 itens adicionados")
+                        .padding(.leading, 16)
+                        .padding(.trailing, 16)
+                    Text("\(cart.items.count) itens adicionados")
                         .font(.caption)
                         .foregroundColor(.secondary)
                         .multilineTextAlignment(.center)
                         .padding(8)
+                        .padding(.leading, 8)
+                        .padding(.trailing, 8)
                 }
             }
         }
@@ -48,7 +52,7 @@ struct CardGridView: View {
 
 struct CardGridView_Previews: PreviewProvider {
     static var previews: some View {
-        CardGridView(cart: Cart(name: "Churrasco do\nBeto", iconName: "ic_compras_rapidas"))
+        CardGridView(cart: Cart(name: "Churrasco do\nBeto", iconName: .party))
         .environment(\.colorScheme, .dark)
     }
 }

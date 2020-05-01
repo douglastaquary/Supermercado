@@ -12,12 +12,12 @@ import ASCollectionView
 struct CategoryCollectionView: View {
     
     var viewModel: [CartCategory] = []
-    fileprivate var tapCategory: ((CartCategory) -> Void)?
-    
-    init(viewModel: [CartCategory]) {
-        self.viewModel = viewModel
-        UITableView.appearance().separatorColor = .clear
-    }
+//
+//    init(viewModel: [CartCategory], tapCategory: ((CartCategory) -> Void)?) {
+//        self.viewModel = viewModel
+//        self.tapCategory = tapCategory
+//        UITableView.appearance().separatorColor = .clear
+//    }
 
     var body: some View {
         ZStack(alignment: .leading) {
@@ -25,9 +25,14 @@ struct CategoryCollectionView: View {
                 data: self.viewModel,
                 dataID: \.self
             ) { category, index in
-                CategoryGridView(
-                    category: category
-                )
+                Button(action: {
+                    //self.tapCategory?(category)
+                }, label: {
+                    CategoryGridView(
+                        category: category
+                    )
+                })
+                .buttonStyle(PlainButtonStyle())
             }
             .contentInsets(.init(top: 24, left: 0, bottom: 24, right: 0))
             .layout {
@@ -38,11 +43,15 @@ struct CategoryCollectionView: View {
             }
 
         }
+        .onAppear {
+            UITableView.appearance().separatorColor = .clear
+        }
         .foregroundColor(Color.tertiarySystemBackground)
     }
 }
 
 struct CategoryCollectionView_Previews: PreviewProvider {
+        
     static var previews: some View {
         CategoryCollectionView(viewModel: [])
     }
@@ -56,10 +65,11 @@ struct CategoryGridView: View {
     var body: some View {
         ZStack {
             Button(action: {
+                
                 print("DEBUG: tap on category with ID: \(self.category.id)")
             }, label: {
                 VStack(alignment: .center) {
-                    CircleCategoryOverlay(category: category)
+                    //CircleCategoryOverlay(category: category, isTapped: self.isTapped)
                     Text(category.categotyTitle)
                         .foregroundColor(Color.primary)
                         .font(Font.system(size: 14))
@@ -76,8 +86,7 @@ struct CategoryGridView: View {
 struct CircleCategoryOverlay: View {
     
     var category: CartCategory
-    
-    @State var isTapped: Bool = false
+    @State var isTapped: Bool
 
     var body: some View {
         ZStack {
@@ -91,7 +100,7 @@ struct CircleCategoryOverlay: View {
             }
 
             HStack {
-                Image(category.iconName)
+                Image(category.iconName.rawValue)
                     .resizable()
                     .renderingMode(.template)
                     .foregroundColor(Color("buttonAction"))
@@ -100,10 +109,8 @@ struct CircleCategoryOverlay: View {
         }
         .onTapGesture {
             print("\nDEBUG: tap on CircleCategoryOverlay`category with ID: \(self.category.id)")
-            haptic(.success)
+            haptic(.warning)
             self.isTapped.toggle()
-            self
-            
         }
         .frame(width: Metrics.circleOverlayHeight, height: Metrics.circleOverlayHeight, alignment: .center)
     }

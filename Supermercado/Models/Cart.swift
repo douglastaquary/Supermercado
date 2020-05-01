@@ -13,8 +13,8 @@ struct Cart: Model {
     static let storeIdentifierTypeTag = "Cart"
     var id: UUID = .init()
     var items: [SupermarketItem] = []
-    var name: String = ""
-    var iconName: String = ""
+    var name: String
+    var iconName: IconName
     var categoryTitle: String = ""
     var address: Address = .init()
     var avatarJPEGData: Data?

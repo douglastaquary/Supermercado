@@ -11,6 +11,6 @@ import Foundation
 public struct CartCategory: Codable, Identifiable, Hashable {
     public var id : Int = .init()
     public var isSelected: Bool = false
-    public var iconName: String = ""
+    public var iconName: IconName = .undefined
     public var categotyTitle: String = ""
 }

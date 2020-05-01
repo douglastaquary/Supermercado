@@ -66,7 +66,7 @@ public final class SupermarketService: ObservableObject {
     }
     
     func cart(withID id: Cart.ID) -> Cart {
-        return carts.first(where: { $0.id == id }) ?? Cart()
+        return carts.first(where: { $0.id == id }) ?? Cart(name: "", iconName: .undefined)
     }
     
     //MARK: SupermarketItems Store Manager

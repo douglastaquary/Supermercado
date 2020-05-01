@@ -21,13 +21,13 @@ struct Mock {
     
     struct CartList {
         static let carts: [Cart] = [
-            Cart(name: "Churrasco do\nbeto", iconName: "festas"),
-            Cart(name: "Churrasco do\nbeto", iconName: "festas"),
-            Cart(name: "Churrasco do\nbeto", iconName: "festas"),
-            Cart(name: "Churrasco do\nbeto", iconName: "festas"),
-            Cart(name: "Churrasco do\nbeto", iconName: "festas"),
-            Cart(name: "Churrasco do\nbeto", iconName: "festas"),
-            Cart(name: "Churrasco do\nbeto", iconName: "festas")
+            Cart(name: "Churrasco do\nbeto", iconName: .party),
+            Cart(name: "Churrasco do\nbeto", iconName: .beef),
+            Cart(name: "Churrasco do\nbeto", iconName: .fastShopping),
+            Cart(name: "Churrasco do\nbeto", iconName: .pet),
+            Cart(name: "Churrasco do\nbeto", iconName: .shopping),
+            Cart(name: "Churrasco do\nbeto", iconName: .vegetables),
+
         ]
     }
     

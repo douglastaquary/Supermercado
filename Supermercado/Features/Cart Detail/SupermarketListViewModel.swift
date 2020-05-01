@@ -30,6 +30,24 @@ class SupermarketListViewModel: ObservableObject {
         return items.count
     }
 
+    public func updateSections(items: [SupermarketItem]) -> [ListSection] {
+        var sections: [ListSection] = []
+        let categories = items.map { $0.category }
+        
+        for category in categories {
+            var section: ListSection = ListSection()
+            section.name = category
+            for supermarket in items {
+                if supermarket.category.lowercased() == category.lowercased() {
+                    section.items.append(supermarket)
+                }
+            }
+            sections.append(section)
+        }
+        
+        return sections
+    }
+
     // MARK: - CRUD
     
     func addItem(for id: Cart.ID, with content: SupermarketItem) {
@@ -51,7 +69,9 @@ class SupermarketListViewModel: ObservableObject {
     }
     
     func supermarket(withID id: Cart.ID) -> Cart {
-        return supermarketService.carts.first(where: { $0.id == id }) ?? Cart()
+        return supermarketService.carts.first(where:
+            { $0.id == id }
+        ) ?? Cart(name: "", iconName: .undefined)
     }
     
     func fetchItem(for id: Cart.ID, with uuid: UUID) -> SupermarketItem {

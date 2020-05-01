@@ -20,8 +20,6 @@ struct TitleHeader: View {
             Spacer()
 
         }
-        .padding(.leading, 16)
-        .padding(.trailing, 16)
     }
 }
 
