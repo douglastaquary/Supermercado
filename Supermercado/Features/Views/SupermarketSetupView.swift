@@ -77,21 +77,18 @@ struct SupermarketSetupView: View {
                 }
                 
                 HStack(spacing: 16) {
-                    AmountItemTextField(
-                        amountText: self.viewModel.supermarketItem.amount
-                    )
-                    .onTapGesture {
-                        self.isFocused = true
-                    }
+                    amountTextField()
+                        .onTapGesture {
+                            self.isFocused = true
+                        }
                     
                     Button(action: {
                         self.modalPresented.toggle()
                         self.pickerMode = .category
+                        self.isFocused = true
                     }, label: {
                         categoryView()
-                            .onTapGesture {
-                                self.isFocused = true
-                            }
+                            
                     })
                     .onTapGesture {
                         self.isFocused = true
@@ -101,19 +98,20 @@ struct SupermarketSetupView: View {
                 .padding(.top, 32)
                 
                 HStack(spacing: 16) {
-                    HowMuchTextField(howMuchText: self.howMuchText)
+                    howMuchTextField()
                         .onTapGesture {
                             self.isFocused = true
                     }
                     Button(action: {
                         self.modalPresented.toggle()
                         self.pickerMode = .measure
+                        self.isFocused = true
 
                     }, label: {
                         measureView()
-                            .onTapGesture {
-                                self.isFocused = true
-                            }
+//                            .onTapGesture {
+//                                self.isFocused = true
+//                            }
 
                     })
                     
@@ -164,6 +162,8 @@ struct SupermarketSetupView: View {
         }
         .onAppear {
             UINavigationBar.appearance().backgroundColor = .white
+            self.viewModel.measureName = Mock.Setup.measures[self.selectedMeasure].tipo
+            self.viewModel.categoryName = Mock.Setup.categories[self.selectedCategory].tipo
         }
         .navigationBarTitle(Text("Adicionar item"), displayMode: .inline)
         .accentColor(.black)
@@ -176,12 +176,53 @@ struct SupermarketSetupView: View {
 
     }
     
+    
+    private func amountTextField() -> some View {
+        return VStack {
+            HStack {
+                TextField("Quanto itens?", text: $viewModel.amount)
+                    .font(.body)
+                    .foregroundColor(.label)
+                    .frame(maxWidth: .infinity, maxHeight: 24)
+                    .keyboardType(.numberPad)
+                
+                Image("ic_down")
+                    .accentColor(Color("secondaryColor"))
+                    .frame(width: 28, height: 28)
+            }
+            
+            Rectangle()
+                .frame(maxWidth: .infinity, maxHeight: 1)
+                .foregroundColor(Color("secondaryText"))
+        }
+    }
+    
+    private func howMuchTextField() -> some View {
+        return VStack {
+            HStack {
+                TextField("Quanto custa?", text: $viewModel.howMuchText)
+                    .font(.body)
+                    .foregroundColor(.label)
+                    .frame(maxWidth: .infinity, maxHeight: 24)
+                    .keyboardType(.asciiCapableNumberPad)
+                
+                Image("ic_down")
+                    .accentColor(Color("secondaryColor"))
+                    .frame(width: 28, height: 28)
+            }
+            
+            Rectangle()
+                .frame(maxWidth: .infinity, maxHeight: 1)
+                .foregroundColor(Color("secondaryText"))
+        }
+    }
+    
     private func nameTextField() -> some View {
         return VStack(alignment: .leading) {
-            TextField("Qual produto deseja adicionar?", text: $viewModel.supermarketItem.name)
+            TextField("Qual produto deseja adicionar?", text: $viewModel.supermarketName)
                 .font(.body)
-                .frame(maxWidth: .infinity, maxHeight: 16)
-            
+                .foregroundColor(.label)
+                .frame(maxWidth: .infinity, maxHeight: 24)
             Rectangle()
                 .frame(maxWidth: .infinity, maxHeight: 1)
                 .foregroundColor(Color("secondaryText"))
@@ -198,7 +239,7 @@ struct SupermarketSetupView: View {
                 Text(Mock.Setup.categories[self.selectedCategory].tipo)
                     .font(.body)
                     .frame(maxWidth: .infinity, maxHeight: 24)
-                    .accentColor(Color.primary)
+                    .accentColor(.label)
                 Image("ic_down")
                     .accentColor(Color.primary)
                     .frame(width: 28, height: 28)
@@ -212,7 +253,7 @@ struct SupermarketSetupView: View {
     
     
     private func measureView() -> some View {
-        return VStack(alignment: .leading) {
+        return VStack {
             HStack {
                 Text(Mock.Setup.measures[self.selectedMeasure].tipo)
                     .font(.body)
@@ -227,6 +268,7 @@ struct SupermarketSetupView: View {
             Rectangle()
                 .frame(maxWidth: .infinity, maxHeight: 1)
                 .foregroundColor(Color("secondaryText"))
+            
             Text("Ex.: 500g, 10 metros")
                 .font(.body)
                 .foregroundColor(Color("secondaryText"))
@@ -253,6 +295,7 @@ struct SupermarketSetupView: View {
         // The Sheet View
         return VStack(spacing: 0) {
             // This is the little rounded bar (handler) on top of the sheet
+            
             VStack {
                 RoundedRectangle(cornerRadius: CGFloat(5.0) / 2.0)
                     .frame(width: 40, height: 4)
@@ -299,17 +342,21 @@ struct SupermarketSetupView: View {
                     Picker(selection: $selectedCategory, label: Text("")) {
                         ForEach(0..<Mock.Setup.categories.count) { index in
                             Text(Mock.Setup.categories[index].tipo).tag(index)
+                                .foregroundColor(.label)
                         }
                     }
                     .frame(height: 120)
+                    .foregroundColor(.primary)
                     .labelsHidden()
                 } else {
                     Picker(selection: $selectedMeasure, label: Text("")) {
                         ForEach(Mock.Setup.measures) { measure in
                             Text(measure.tipo).tag(measure)
+                                .foregroundColor(.label)
                         }
                     }
                     .frame(height: 120)
+                    .foregroundColor(.primary)
                     .labelsHidden()
                 }
             }
@@ -318,7 +365,8 @@ struct SupermarketSetupView: View {
         }
             
         .frame(width: UIScreen.main.bounds.width, height: 444)
-        .background(Color.white)
+        //.background(Color.label)
+        .foregroundColor(.systemBackground)
         .cornerRadius(20)
         .shadow(color: Color(.sRGBLinear, white: 0, opacity: 0.13), radius: 10.0)
         .offset(y: self.modalPresented ? 330 : 720)
@@ -330,183 +378,6 @@ struct SupermarketSetupView: View {
 struct SupermarketSetupView_Previews: PreviewProvider {
     static var previews: some View {
         SupermarketSetupView(viewModel: SupermarketSetupViewModel(cartID: UUID(), supermarketItem: SupermarketItem()))
-    }
-}
-
-
-
-struct CustomTextField: View {
-    
-    @State var text: String
-    @State var isFocused: Bool = false
-    
-    var body: some View {
-        ZStack {
-            VStack(alignment: .leading) {
-                TextField("Qual produto deseja adicionar?", text: $text)
-                    .font(.body)
-                    .frame(maxWidth: .infinity, maxHeight: 16)
-                
-                Rectangle()
-                    .frame(maxWidth: .infinity, maxHeight: 1)
-                    .foregroundColor(Color("secondaryText"))
-                Text("0 de 60")
-                    .foregroundColor(Color("secondaryText"))
-                    .font(.body)
-            }
-        }
-    }
-}
-
-
-struct AmountItemTextField: View {
-    
-    @State var amountText: String
-    
-    var body: some View {
-        VStack {
-            HStack {
-                TextField("Quanto itens?", text: $amountText)
-                    .font(.body)
-                    .frame(maxWidth: .infinity, maxHeight: 24)
-                    .keyboardType(.numberPad)
-                
-                Image("ic_down")
-                    .accentColor(Color("secondaryColor"))
-                    .frame(width: 28, height: 28)
-            }
-            
-            Rectangle()
-                .frame(maxWidth: .infinity, maxHeight: 1)
-                .foregroundColor(Color("secondaryText"))
-        }
-        
-        
-    }
-}
-
-struct HowMuchTextField: View {
-    
-    
-    var currencyFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.usesGroupingSeparator = true
-        formatter.numberStyle = .currency
-        formatter.groupingSeparator = "."
-        
-        //        formatter.minimumFractionDigits = .
-        //        formatter.maximumFractionDigits = NumberFormatter.currency.maximumFractionDigits
-        return formatter
-    }()
-    
-    @State var howMuchText: String
-    
-    var body: some View {
-        VStack {
-            HStack {
-                TextField("Quanto custa?", value: $howMuchText, formatter: currencyFormatter)
-                    .font(.body)
-                    .frame(maxWidth: .infinity, maxHeight: 24)
-                    .keyboardType(.asciiCapableNumberPad)
-                
-                
-                Image("ic_down")
-                    .accentColor(Color("secondaryColor"))
-                    .frame(width: 28, height: 28)
-            }
-            
-            Rectangle()
-                .frame(maxWidth: .infinity, maxHeight: 1)
-                .foregroundColor(Color("secondaryText"))
-        }
-        
-        
-    }
-}
-
-
-struct CategoryTextField: View {
-    
-    @State var categoryString: String
-    
-    var body: some View {
-        VStack {
-            HStack {
-                Text("Categoria")
-                    .font(.body)
-                    .frame(maxWidth: .infinity, maxHeight: 24)
-                    .accentColor(Color.primary)
-                Image("ic_down")
-                    .accentColor(Color.primary)
-                    .frame(width: 28, height: 28)
-            }
-            
-            Rectangle()
-                .frame(maxWidth: .infinity, maxHeight: 1)
-                .foregroundColor(Color("secondaryText"))
-        }
-    }
-    
-}
-
-
-struct MeasureTextFieldWithSubtitle: View {
-    
-    @State var title: String
-    var exampleDecription: String
-    
-    var body: some View {
-        VStack(alignment: .leading) {
-            HStack {
-                TextField("Medida", text: $title)
-                    .font(.body)
-                    .frame(maxWidth: .infinity, maxHeight: 24)
-                    .disabled(true)
-                    .accentColor(Color.primary)
-                Image("ic_down")
-                    .accentColor(Color.primary)
-                    .frame(width: 28, height: 28)
-            }
-            
-            Rectangle()
-                .frame(maxWidth: .infinity, maxHeight: 1)
-                .foregroundColor(Color("secondaryText"))
-            Text(exampleDecription)
-                .font(.body)
-                .foregroundColor(Color("secondaryText"))
-        }
-        .padding(.top, 26)
-        
-        
-    }
-}
-
-
-struct PickerEditView: View {
-    
-    @State var text: String
-    var exampleText: String
-    
-    var body: some View {
-        VStack(alignment: .leading) {
-            HStack {
-                TextField("", text: $text)
-                    .font(.body)
-                    .frame(maxWidth: .infinity, maxHeight: 24)
-                Image("ic_down")
-                    .frame(width: 28, height: 28)
-            }
-            
-            Rectangle()
-                .frame(maxWidth: .infinity, maxHeight: 1)
-                .foregroundColor(Color("secondaryText"))
-            Text(exampleText)
-                .font(.body)
-                .foregroundColor(Color("secondaryText"))
-        }
-        .padding(.top, 26)
-        
-        
     }
 }
 

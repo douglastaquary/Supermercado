@@ -20,18 +20,19 @@ struct NearestMarketView: View {
                     .font(.caption)
                     .foregroundColor(Color.secondary)
                     .padding(.leading)
-                MapView(centerCoordinate: $centerCoordinate)
-                    
+                MapView(
+                    centerCoordinate: $centerCoordinate
+                )
             }
             .padding(.top, 24)
-            .frame(height: 196)
-
+            .frame(height: 256)
+            
             VStack(alignment: .leading) {
-                
                 HStack() {
                     Image("icon_chevron")
                         .frame(width: 26, height: 24)
-                }.frame(maxWidth: .infinity)
+                }
+                .frame(maxWidth: .infinity)
                 
                 Text("06 lugares encontrados")
                     .font(.caption)
@@ -45,17 +46,16 @@ struct NearestMarketView: View {
         }
         .foregroundColor(.systemBackground)
         .onAppear {
-            UINavigationBar.appearance().backgroundColor = .white
+            UINavigationBar.appearance().backgroundColor = .systemBackground
         }
         .navigationBarTitle(Text("Mercados próximos"), displayMode: .inline)
         .accentColor(.black)
-        .navigationBarColor(.white)
-
+        .navigationBarColor(.systemBackground)
     }
 }
 
 struct NearestMarketView_Previews: PreviewProvider {
     static var previews: some View {
-        NearestMarketView().environment(\.colorScheme, .dark)
+        NearestMarketView()
     }
 }

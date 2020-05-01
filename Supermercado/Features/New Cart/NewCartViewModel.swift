@@ -35,7 +35,8 @@ class NewCartViewModel: ObservableObject {
         .debounce(for: 0.3, scheduler: RunLoop.main)
         .removeDuplicates()
         .map { input in
-          return input.count >= 4
+            self.cart.name = self.cartname
+            return input.count >= 4
         }
         .eraseToAnyPublisher()
     }

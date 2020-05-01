@@ -27,6 +27,7 @@ struct CartListView: View {
                         dataID: \.self
                     ) { cart, _ in
                        CardGridView(cart: cart)
+                            .environmentObject(self.supermarketService)
                     }
                     .contentInsets(.init(top: 20, left: 0, bottom: 20, right: 0))
                     .layout {
@@ -48,7 +49,7 @@ struct CartListView: View {
                         .cornerRadius(4)
                 })
                 .sheet(isPresented: $showAddCartView) {
-                    AddCartView()
+                    AddCartView().environmentObject(self.supermarketService)
                 }
                 .padding()
             }

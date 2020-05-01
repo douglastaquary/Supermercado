@@ -13,7 +13,6 @@ struct SupermarketListView: View {
     @ObservedObject var viewModel: SupermarketListViewModel
 
     var body: some View {
-        
         VStack {
             ZStack {
                 Color.systemBackground.edgesIgnoringSafeArea([.all])
@@ -52,7 +51,6 @@ struct SupermarketListView: View {
         }
         .navigationBarTitle(Text("Churrasco do beto"), displayMode: .inline)
         .accentColor(.black)
-            
         .navigationBarColor(.systemBackground)
 
     }

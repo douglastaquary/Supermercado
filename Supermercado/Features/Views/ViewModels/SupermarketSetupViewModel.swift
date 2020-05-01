@@ -14,12 +14,15 @@ class SupermarketSetupViewModel: ObservableObject {
     // input
     @Published var supermarketName = ""
     @Published var categoryName = ""
-    @Published var measureIndex: Int = 0
+    @Published var measureName = ""
+    @Published var amount: String = ""
+    @Published var howMuchText = ""
     @Published var cartID: Cart.ID
     @Published var supermarketItem: SupermarketItem
     // output
     @Published var supermarketMessage = "0 a 60"
     @Published var measuresTitle = ""
+    @Published var totalValue = ""
     @Published var isValid = false
     @Published var isCategoryValid = false
     
@@ -36,26 +39,80 @@ class SupermarketSetupViewModel: ObservableObject {
         .eraseToAnyPublisher()
     }
     
-    private var isCategoryNameValidPublisher: AnyPublisher<Bool, Never> {
-      $categoryName
+    private var isAmountValidPublisher: AnyPublisher<Bool, Never> {
+      $amount
         .debounce(for: 0.3, scheduler: RunLoop.main)
         .removeDuplicates()
         .map { input in
-            self.supermarketItem.measure = self.categoryName
+            self.supermarketItem.amount = self.amount
             return input.count > 0
         }
         .eraseToAnyPublisher()
     }
     
-    private var pickerMeasureValuePublisher: AnyPublisher<String, Never> {
-      $measureIndex
+    
+    private var isHowMuchTextValidPublisher: AnyPublisher<Bool, Never> {
+      $howMuchText
         .debounce(for: 0.3, scheduler: RunLoop.main)
-        .map { index -> String in
-            print("\(Mock.Setup.measures[index].tipo)")
-            return Mock.Setup.measures[index].tipo
+        .removeDuplicates()
+        .map { input in
+            self.supermarketItem.price = self.howMuchText
+            return input.count > 0
         }
         .eraseToAnyPublisher()
     }
+    
+    private var isCategoryNameValidPublisher: AnyPublisher<Bool, Never> {
+      $categoryName
+        .debounce(for: 0.3, scheduler: RunLoop.main)
+        .removeDuplicates()
+        .map { input in
+            self.supermarketItem.category = self.categoryName
+            return input.count > 0
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    private var pickerMeasureValuePublisher: AnyPublisher<Bool, Never> {
+      $measureName
+        .debounce(for: 0.3, scheduler: RunLoop.main)
+        .throttle(for: 0.3, scheduler: RunLoop.main, latest: true)
+        .map { input in
+            self.supermarketItem.measure = self.measureName
+            return input.count > 0
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    var readyToSubmit: AnyPublisher<Bool, Never> {
+        return Publishers.CombineLatest3(isSupermarketNameValidPublisher, isAmountValidPublisher, isCategoryNameValidPublisher)
+            .map { name, category, amount in
+                return name && category && amount
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    var total: AnyPublisher<String, Never> {
+        return Publishers.CombineLatest($amount, $howMuchText)
+            .map { newAmount, price in
+                let amountInt = Int(newAmount) ?? 1
+                let priceInt = Int(price) ?? 0
+                let result = priceInt * amountInt
+                return "R$ \(result)"
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    var currencyFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.usesGroupingSeparator = true
+        formatter.numberStyle = .currency
+        formatter.groupingSeparator = "."
+        
+        //        formatter.minimumFractionDigits = .
+        //        formatter.maximumFractionDigits = NumberFormatter.currency.maximumFractionDigits
+        return formatter
+    }()
     
     init(cartID: UUID, supermarketItem: SupermarketItem) {
         self.cartID = cartID
@@ -69,15 +126,17 @@ class SupermarketSetupViewModel: ObservableObject {
             .assign(to: \.supermarketMessage, on: self)
             .store(in: &cancellableSet)
         
-        isSupermarketNameValidPublisher
+        readyToSubmit
             .receive(on: RunLoop.main)
             .assign(to: \.isValid, on: self)
             .store(in: &cancellableSet)
         
-        isCategoryNameValidPublisher
+        total
             .receive(on: RunLoop.main)
-            .assign(to: \.isCategoryValid, on: self)
+            .assign(to: \.totalValue, on: self)
             .store(in: &cancellableSet)
+
+        
     }
 
 }

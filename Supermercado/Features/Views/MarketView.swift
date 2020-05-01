@@ -15,24 +15,22 @@ struct MarketView: View {
             HStack {
                 VStack(alignment:.leading, spacing: 4) {
                     Text("Empório Cosset")
-                        .font(.system(size: 16, weight: .medium, design: .default))
+                        .font(.system(size: 16, weight: .medium))
+                        .foregroundColor(.label)
                     Text("• 10 min - 750 m")
                         .font(.system(size: 12, weight: .regular, design: .default))
                         .foregroundColor(Color("primary"))
                     Text("R. das Ameixeiras,\n400 - Jabaquara, São Paulo")
                         .font(.system(size: 14, weight: .regular, design: .default))
-                        .foregroundColor(Color.secondary)
+                        .foregroundColor(.secondaryLabel)
                 }
                 Spacer()
                 Text("Como chegar")
                     .font(.system(size: 16, weight: .medium, design: .default))
                     .foregroundColor(Color("buttonAction"))
-
-                    
-
             }
             Rectangle()
-                .foregroundColor(Color("DividerColor"))
+                .foregroundColor(.secondarySystemBackground)
                 .frame(maxWidth: .infinity, maxHeight: 1)
         }
     }

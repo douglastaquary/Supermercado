@@ -14,6 +14,7 @@ struct AddCartView: View {
     @EnvironmentObject var supermarketService: SupermarketService
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @ObservedObject private var viewModel = NewCartViewModel()
+    
     @State var showAddCartView = false
 
     init() {
@@ -32,7 +33,7 @@ struct AddCartView: View {
                     )
                     Button(action: {
                         self.supermarketService.addNewCart(self.viewModel.cart)
-                        self.showAddCartView.toggle()
+                        self.presentationMode.wrappedValue.dismiss()
                     }, label: {
                         Text("Salvar")
                             .frame(maxWidth: .infinity)
@@ -73,7 +74,7 @@ struct AddCartView: View {
     private func cartTextField() -> some View {
         return ZStack {
             VStack(alignment: .leading) {
-                TextField("Digite o nome da lista", text: $viewModel.cart.name)
+                TextField("Digite o nome da lista", text: $viewModel.cartname)
                     .font(.body)
                     .frame(maxWidth: .infinity, maxHeight: 38)
                 Rectangle()
@@ -91,7 +92,7 @@ struct AddCartView: View {
 
 struct AddCartView_Previews: PreviewProvider {
     static var previews: some View {
-        AddCartView()//.environment(\.colorScheme, .dark)
+        AddCartView()
     }
 }
 
