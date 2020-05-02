@@ -29,7 +29,7 @@ struct CardGridView: View {
                     Image(cart.iconName.rawValue)
                         .resizable()
                         .foregroundColor(Color("buttonAction"))
-                        .frame(width: 48, height: 48, alignment: .center)
+                        .frame(width: 40, height: 40, alignment: .center)
                     Text(cart.name)
                         .font(.body)
                         .fontWeight(.medium)

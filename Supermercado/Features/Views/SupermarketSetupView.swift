@@ -29,146 +29,142 @@ struct SupermarketSetupView: View {
     @State private var showPhotoOptions: Bool = false
     @State private var image: UIImage?
     @State private var sourceType: UIImagePickerController.SourceType = .camera
-     
-    fileprivate enum PickerMode {
-        case measure
-        case category
-    }
-    
     @State fileprivate var pickerMode: PickerMode = .category
     
     var body: some View {
-        ZStack {
-            Color.systemBackground.edgesIgnoringSafeArea([.all])
-            Rectangle()
-                .frame(
-                    width: UIScreen.main.bounds.width,
-                    height: UIScreen.main.bounds.height
-            )
-                .edgesIgnoringSafeArea(.all)
-                .opacity(self.modalPresented ? 0.5 : 0)
-                .animation(.easeOut)
-                .onTapGesture {
-                    self.isFocused = false
-                    self.hideKeyboard()
-                    self.modalPresented.toggle()
-            }
-            
-            VStack(alignment: .leading, spacing: 16) {
-                nameTextField()
-                ImagePlaceholderView(image: self.image)
+        VStack {
+            ZStack {
+                Color.systemBackground.edgesIgnoringSafeArea([.all])
+                Rectangle()
+                    .frame(
+                        width: UIScreen.main.bounds.width,
+                        height: UIScreen.main.bounds.height
+                )
+                    .edgesIgnoringSafeArea(.all)
+                    .foregroundColor(.secondarySystemBackground)
+                    .opacity(self.modalPresented ? 0.5 : 0)
+                    .animation(.easeOut)
                     .onTapGesture {
-                        self.showSheet = true
-                }
-                .actionSheet(isPresented: $showSheet) {
-                    ActionSheet(title: Text("Selecione uma imagem"), message: Text(""), buttons: [
-                        .default(Text("Galeria de fotos")) {
-                            // open photo library
-                            self.showPhotoOptions = true
-                            self.sourceType = .photoLibrary
-                        },
-                        .default(Text("Câmera")) {
-                            // open camera
-                            self.showPhotoOptions = true
-                            self.sourceType = .camera
-                        },
-                        .cancel()
-                    ])
-                    
+                        self.isFocused = false
+                        self.hideKeyboard()
+                        self.modalPresented.toggle()
                 }
                 
-                HStack(spacing: 16) {
-                    amountTextField()
+                VStack(alignment: .leading, spacing: 16) {
+                    Spacer()
+                    nameTextField()
+                    ImagePlaceholderView(image: self.image)
+                        .onTapGesture {
+                            self.showSheet = true
+                    }
+                    .actionSheet(isPresented: $showSheet) {
+                        ActionSheet(title: Text("Selecione uma imagem"), message: Text(""), buttons: [
+                            .default(Text("Galeria de fotos")) {
+                                // open photo library
+                                self.showPhotoOptions = true
+                                self.sourceType = .photoLibrary
+                            },
+                            .default(Text("Câmera")) {
+                                // open camera
+                                self.showPhotoOptions = true
+                                self.sourceType = .camera
+                            },
+                            .cancel()
+                        ])
+                        
+                    }
+                    
+                    HStack(spacing: 16) {
+                        amountTextField()
+                            .onTapGesture {
+                                self.isFocused = true
+                            }
+                        
+                        Button(action: {
+                            self.modalPresented.toggle()
+                            self.pickerMode = .category
+                            self.isFocused = true
+                        }, label: {
+                            categoryView()
+                                
+                        })
                         .onTapGesture {
                             self.isFocused = true
                         }
-                    
-                    Button(action: {
-                        self.modalPresented.toggle()
-                        self.pickerMode = .category
-                        self.isFocused = true
-                    }, label: {
-                        categoryView()
-                            
-                    })
-                    .onTapGesture {
-                        self.isFocused = true
+                        
                     }
+                    .padding(.top, 32)
                     
-                }
-                .padding(.top, 32)
-                
-                HStack(spacing: 16) {
-                    howMuchTextField()
-                        .onTapGesture {
+                    HStack(spacing: 16) {
+                        howMuchTextField()
+                            .onTapGesture {
+                                self.isFocused = true
+                        }
+                        Button(action: {
+                            self.modalPresented.toggle()
+                            self.pickerMode = .measure
                             self.isFocused = true
+
+                        }, label: {
+                            measureView()
+                                .onTapGesture {
+                                    self.isFocused = true
+                                }
+                        })
+                        
                     }
+                    Spacer()
+                    
                     Button(action: {
-                        self.modalPresented.toggle()
-                        self.pickerMode = .measure
-                        self.isFocused = true
-
+                        self.setupPngImage()
+                        self.presentationMode.wrappedValue.dismiss()
+                        self.supermarketService.addItem(
+                                for: self.viewModel.cartID,
+                                with: self.viewModel.supermarketItem
+                        )
                     }, label: {
-                        measureView()
-//                            .onTapGesture {
-//                                self.isFocused = true
-//                            }
-
+                        Text("Confirmar")
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color("primary"))
+                            .foregroundColor(Color.white)
+                            .cornerRadius(4)
                     })
+                    .disabled(!viewModel.isValid)
+                    .opacity(!viewModel.isValid ? 0.6 : 1)
+                    .padding(.bottom, 64)
                     
                 }
+                .padding()
+                .onTapGesture {
+                    self.isFocused = false
+                    self.hideKeyboard()
+                }
                 
-                Button(action: {
-                    self.presentationMode.wrappedValue.dismiss()
-                    self.supermarketService.addItem(
-                            for: self.viewModel.cartID,
-                            with: self.viewModel.supermarketItem
-                    )
-                }, label: {
-                    Text("Confirmar")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color("primary"))
-                        .foregroundColor(Color.white)
-                        .cornerRadius(4)
-                })
-                .disabled(!viewModel.isValid)
-                .opacity(!viewModel.isValid ? 0.6 : 1)
-                .padding(.top, 64)
+                presentSheet()
                 
             }
-            .padding()
             .onTapGesture {
                 self.isFocused = false
                 self.hideKeyboard()
             }
-            
-            presentSheet()
-            
+            .sheet(isPresented: $showPhotoOptions) {
+                ImagePicker(
+                    image: self.$image,
+                    isShown: self.$showPhotoOptions,
+                    sourceType: self.sourceType
+                )
+                
+            }
+            .onAppear {
+                UINavigationBar.appearance().backgroundColor = .white
+                self.viewModel.measureName = Mock.Setup.measures[self.selectedMeasure].tipo
+                self.viewModel.categoryName = Mock.Setup.categories[self.selectedCategory].tipo
+            }
+            .navigationBarTitle(Text("Adicionar item"), displayMode: .inline)
+            .accentColor(.black)
+            .navigationBarColor(.systemBackground)
         }
-        .onTapGesture {
-            self.isFocused = false
-            self.hideKeyboard()
-        }
-        .sheet(isPresented: $showPhotoOptions) {
-            ImagePicker(
-                image: self.$image,
-                isShown: self.$showPhotoOptions,
-                sourceType: self.sourceType
-            )
-                .onAppear {
-                    self.setupPngImage()
-                }
-            
-        }
-        .onAppear {
-            UINavigationBar.appearance().backgroundColor = .white
-            self.viewModel.measureName = Mock.Setup.measures[self.selectedMeasure].tipo
-            self.viewModel.categoryName = Mock.Setup.categories[self.selectedCategory].tipo
-        }
-        .navigationBarTitle(Text("Adicionar item"), displayMode: .inline)
-        .accentColor(.black)
-        .navigationBarColor(.systemBackground)
         
     }
     
@@ -187,7 +183,7 @@ struct SupermarketSetupView: View {
                     .keyboardType(.numberPad)
                 
                 Image("ic_down")
-                    .accentColor(Color("secondaryColor"))
+                    .accentColor(Color.primary)
                     .frame(width: 28, height: 28)
             }
             
@@ -207,7 +203,7 @@ struct SupermarketSetupView: View {
                     .keyboardType(.asciiCapableNumberPad)
                 
                 Image("ic_down")
-                    .accentColor(Color("secondaryColor"))
+                    .accentColor(Color.primary)
                     .frame(width: 28, height: 28)
             }
             
@@ -228,7 +224,7 @@ struct SupermarketSetupView: View {
                 .foregroundColor(Color("secondaryText"))
             Text(self.viewModel.supermarketMessage)
                 .foregroundColor(Color("secondaryText"))
-                .font(.body)
+                .font(.subheadline)
         }
     }
     
@@ -239,16 +235,17 @@ struct SupermarketSetupView: View {
                 Text(Mock.Setup.categories[self.selectedCategory].tipo)
                     .font(.body)
                     .frame(maxWidth: .infinity, maxHeight: 24)
-                    .accentColor(.label)
+                    .foregroundColor(.label)
                 Image("ic_down")
                     .accentColor(Color.primary)
                     .frame(width: 28, height: 28)
             }
             
             Rectangle()
-                .frame(maxWidth: .infinity, maxHeight: 1)
+                .frame(maxWidth: .infinity, maxHeight: 1.2)
                 .foregroundColor(Color("secondaryText"))
         }
+        .padding(.bottom, 4)
     }
     
     
@@ -258,22 +255,21 @@ struct SupermarketSetupView: View {
                 Text(Mock.Setup.measures[self.selectedMeasure].tipo)
                     .font(.body)
                     .frame(maxWidth: .infinity, maxHeight: 24)
-                    .accentColor(Color.primary)
-
+                    .foregroundColor(.label)
                 Image("ic_down")
                     .accentColor(Color.primary)
                     .frame(width: 28, height: 28)
             }
             
             Rectangle()
-                .frame(maxWidth: .infinity, maxHeight: 1)
                 .foregroundColor(Color("secondaryText"))
+                .frame(maxWidth: .infinity, maxHeight: 1.2)
             
             Text("Ex.: 500g, 10 metros")
                 .font(.body)
                 .foregroundColor(Color("secondaryText"))
         }
-        .padding(.top, 26)
+        .padding(.top, 22)
     }
     
     func hideKeyboard() {
@@ -374,7 +370,7 @@ struct SupermarketSetupView: View {
 
 struct SupermarketSetupView_Previews: PreviewProvider {
     static var previews: some View {
-        SupermarketSetupView(viewModel: SupermarketSetupViewModel(cartID: UUID(), supermarketItem: SupermarketItem())).environment(\.colorScheme, .dark)
+        SupermarketSetupView(viewModel: SupermarketSetupViewModel(cartID: UUID(), supermarketItem: SupermarketItem()))//.environment(\.colorScheme, .dark)
     }
 }
 

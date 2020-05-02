@@ -12,7 +12,7 @@ struct SupermarketListView: View {
     @EnvironmentObject var supermarketService: SupermarketService
     @ObservedObject var viewModel: SupermarketListViewModel
     
-    
+    @State private var editMode = EditMode.inactive
 
     var body: some View {
         VStack {
@@ -33,15 +33,17 @@ struct SupermarketListView: View {
                                 imageName: self.viewModel.cart.iconName.rawValue
                             )
                             
-                            ForEach(self.viewModel.updateSections(items: supermarketService.fetchItems(for: viewModel.cart.id)))
-                            { section in
+                            ForEach(self.viewModel.rows) { section in
                                 TitleHeader(title: section.name)
-                                
                                 ForEach(section.items) { item in
                                     SupermarketRow(
                                         supermarketItem: item,
                                         cartID: self.viewModel.cart.id
                                     )
+                                }.onDelete { indices in
+                                    indices.forEach {
+                                        self.supermarketService.deleteItem(for: self.viewModel.cart.id, with: section.items[$0])
+                                    }
                                 }
                             }
                         }

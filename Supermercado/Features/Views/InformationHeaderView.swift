@@ -35,7 +35,7 @@ struct InformationHeaderView: View {
                         .resizable()
                         .renderingMode(.template)
                         .foregroundColor(Color("buttonAction"))
-                        .frame(width: 48, height: 48, alignment: .center)
+                        .frame(width: 40, height: 40, alignment: .center)
                     VStack(alignment: .leading, spacing: 8) {
                         Text(titleHeader)
                             .font(.body)
@@ -55,7 +55,7 @@ struct InformationHeaderView: View {
                     .frame(maxWidth: .infinity, maxHeight: 1)
                 
                 if countItems == 0 {
-                    Text("Para adicionar produtos em sua lista clique no botão `Adicionar item`.")
+                    Text("Para adicionar produtos em sua lista clique no botão Adicionar item.")
                         .font(.caption)
                         .lineLimit(nil)
                         .foregroundColor(Color("secondaryText"))

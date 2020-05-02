@@ -41,7 +41,7 @@ class SupermarketSetupViewModel: ObservableObject {
     
     private var isAmountValidPublisher: AnyPublisher<Bool, Never> {
       $amount
-        .debounce(for: 0.3, scheduler: RunLoop.main)
+        .debounce(for: 0.2, scheduler: RunLoop.main)
         .removeDuplicates()
         .map { input in
             self.supermarketItem.amount = self.amount
@@ -51,13 +51,13 @@ class SupermarketSetupViewModel: ObservableObject {
     }
     
     
-    private var isHowMuchTextValidPublisher: AnyPublisher<Bool, Never> {
+    private var isHowMuchTextValidPublisher: AnyPublisher<String, Never> {
       $howMuchText
         .debounce(for: 0.3, scheduler: RunLoop.main)
         .removeDuplicates()
-        .map { input in
-            self.supermarketItem.price = self.howMuchText
-            return input.count > 0
+        .map { price in
+            self.supermarketItem.price = price
+            return self.supermarketItem.price
         }
         .eraseToAnyPublisher()
     }
@@ -98,7 +98,9 @@ class SupermarketSetupViewModel: ObservableObject {
                 let amountInt = Int(newAmount) ?? 1
                 let priceInt = Int(price) ?? 0
                 let result = priceInt * amountInt
-                return "R$ \(result)"
+                if result > 0 { return "R$ \(result)"}
+                
+                return ""
             }
             .eraseToAnyPublisher()
     }
@@ -131,10 +133,10 @@ class SupermarketSetupViewModel: ObservableObject {
             .assign(to: \.isValid, on: self)
             .store(in: &cancellableSet)
         
-        total
-            .receive(on: RunLoop.main)
-            .assign(to: \.totalValue, on: self)
-            .store(in: &cancellableSet)
+//        total
+//            .receive(on: RunLoop.main)
+//            .assign(to: \.howMuchText, on: self)
+//            .store(in: &cancellableSet)
 
         
     }

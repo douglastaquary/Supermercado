@@ -17,6 +17,7 @@ class SupermarketListViewModel: ObservableObject {
     
     let supermarketService: SupermarketService = SupermarketService()
     var cart: Cart
+    var sections: [ListSection] = []
 
     init(cart: Cart) {
         self.cart = cart
@@ -29,11 +30,36 @@ class SupermarketListViewModel: ObservableObject {
     var count: Int {
         return items.count
     }
+    
+    var rows: [ListSection] {
+       return updateSections()
+    }
 
-    public func updateSections(items: [SupermarketItem]) -> [ListSection] {
-        var sections: [ListSection] = []
-        let categories = items.map { $0.category }
+    public func updateSections() -> [ListSection] {
+        let categories = removeRelaceCategoryIfNeeded(to: items.map { $0.category })
+        let sections = performSections(to: categories)
         
+        return sections
+    }
+    
+    private func removeRelaceCategoryIfNeeded(to categories: [String]) -> [String] {
+        var validCategories: [String] = []
+        
+        for category in categories {
+            if validCategories.isEmpty {
+                validCategories.append(category)
+            } else {
+                let valids = validCategories.filter { $0.contains(category) }
+                if valids.isEmpty {
+                    validCategories.append(category)
+                }
+            }
+        }
+        return validCategories
+    }
+    
+    private func performSections(to categories: [String]) -> [ListSection] {
+        sections.removeAll()
         for category in categories {
             var section: ListSection = ListSection()
             section.name = category

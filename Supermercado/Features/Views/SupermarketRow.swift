@@ -40,9 +40,11 @@ struct SupermarketRow: View {
                                 .fontWeight(.bold)
                         }
                         Spacer()
-                        Text("R$ \(supermarketItem.price)")
+                        if !supermarketItem.price.isEmpty {
+                            Text(supermarketItem.price)
                             .fontWeight(.semibold)
                             .foregroundColor(Color("buttonAction"))
+                        }
                     }
                     .padding(.top, 8)
                 }
