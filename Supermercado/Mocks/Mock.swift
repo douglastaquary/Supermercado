@@ -33,11 +33,13 @@ struct Mock {
     
     struct Setup {
         static let measures: [Measure] = [
-                Measure(tipo: "Kilo"),
-                Measure(tipo: "Metro"),
-                Measure(tipo: "Litro"),
-                Measure(tipo: "Milímetro"),
-                Measure(tipo: "Centímetro")
+                Measure(tipo: "Kilo(Kg)"),
+                Measure(tipo: "Metro(m)"),
+                Measure(tipo: "Litro(l)"),
+                Measure(tipo: "Grama(g)"),
+                Measure(tipo: "Unidade"),
+                Measure(tipo: "Milímetro(ml)"),
+                Measure(tipo: "Centímetro(cm)")
         ]
         
         static let categories: [Category] = [

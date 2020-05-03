@@ -43,7 +43,7 @@ struct CustomPresentSheet: View {
                         Spacer()
                         Button(action: {
                             if self.pickerMode == .category {
-//                                self.viewModel.categoryName = Mock.Setup.categories[self.selectedCategory].tipo
+                               // self.viewModel.categoryName = Mock.Setup.categories[self.selectedCategory].tipo
                             }
                             self.showingModal.toggle()
                             

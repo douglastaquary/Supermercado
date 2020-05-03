@@ -56,6 +56,7 @@ struct SupermarketSetupView: View {
                     ImagePlaceholderView(image: self.image)
                         .onTapGesture {
                             self.showSheet = true
+                            self.hideKeyboard()
                     }
                     .actionSheet(isPresented: $showSheet) {
                         ActionSheet(title: Text("Selecione uma imagem"), message: Text(""), buttons: [
@@ -78,19 +79,16 @@ struct SupermarketSetupView: View {
                         amountTextField()
                             .onTapGesture {
                                 self.isFocused = true
+                                self.modalPresented = false
                             }
                         
-                        Button(action: {
-                            self.modalPresented.toggle()
-                            self.pickerMode = .category
-                            self.isFocused = true
-                        }, label: {
-                            categoryView()
-                                
-                        })
-                        .onTapGesture {
-                            self.isFocused = true
-                        }
+                        categoryView()
+                            .onTapGesture {
+                                self.pickerMode = .category
+                                self.hideKeyboard()
+                                self.modalPresented = true
+                                self.isFocused = true
+                            }
                         
                     }
                     .padding(.top, 32)
@@ -99,29 +97,28 @@ struct SupermarketSetupView: View {
                         howMuchTextField()
                             .onTapGesture {
                                 self.isFocused = true
-                        }
-                        Button(action: {
-                            self.modalPresented.toggle()
-                            self.pickerMode = .measure
-                            self.isFocused = true
+                                self.modalPresented = false
 
-                        }, label: {
-                            measureView()
-                                .onTapGesture {
-                                    self.isFocused = true
-                                }
-                        })
+                        }
+                        measureView()
+                             .onTapGesture {
+                                 self.pickerMode = .measure
+                                 self.hideKeyboard()
+                                 self.modalPresented = true
+                                 self.isFocused = true
+                             }
                         
                     }
                     Spacer()
                     
                     Button(action: {
-                        self.setupPngImage()
+                        self.setPngDataRecord()
                         self.presentationMode.wrappedValue.dismiss()
                         self.supermarketService.addItem(
                                 for: self.viewModel.cartID,
                                 with: self.viewModel.supermarketItem
                         )
+                        haptic(.success)
                     }, label: {
                         Text("Confirmar")
                             .frame(maxWidth: .infinity)
@@ -138,7 +135,6 @@ struct SupermarketSetupView: View {
                 .padding()
                 .onTapGesture {
                     self.isFocused = false
-                    self.hideKeyboard()
                 }
                 
                 presentSheet()
@@ -146,7 +142,6 @@ struct SupermarketSetupView: View {
             }
             .onTapGesture {
                 self.isFocused = false
-                self.hideKeyboard()
             }
             .sheet(isPresented: $showPhotoOptions) {
                 ImagePicker(
@@ -164,11 +159,12 @@ struct SupermarketSetupView: View {
             .navigationBarTitle(Text("Adicionar item"), displayMode: .inline)
             .accentColor(.black)
             .navigationBarColor(.systemBackground)
+            .keyboardAdaptive()
         }
         
     }
     
-    private func setupPngImage() {
+    private func setPngDataRecord() {
         self.viewModel.supermarketItem.avatarJPEGData = self.image?.pngData()
 
     }
@@ -200,7 +196,7 @@ struct SupermarketSetupView: View {
                     .font(.body)
                     .foregroundColor(.label)
                     .frame(maxWidth: .infinity, maxHeight: 24)
-                    .keyboardType(.asciiCapableNumberPad)
+                    .keyboardType(.numbersAndPunctuation)
                 
                 Image("ic_down")
                     .accentColor(Color.primary)
@@ -271,17 +267,7 @@ struct SupermarketSetupView: View {
         }
         .padding(.top, 22)
     }
-    
-    func hideKeyboard() {
-        UIApplication.shared.sendAction(
-            #selector(UIResponder.resignFirstResponder),
-            to: nil,
-            from: nil,
-            for: nil
-        )
-    }
-    
-    
+
     /// The height of the handler bar section
     private var handlerSectionHeight: CGFloat {
         return 4
@@ -310,12 +296,13 @@ struct SupermarketSetupView: View {
                     })
                         .onTapGesture {
                             self.isFocused = true
-                            self.hideKeyboard()
                     }
                     Spacer()
                     Button(action: {
                         if self.pickerMode == .category {
                             self.viewModel.categoryName = Mock.Setup.categories[self.selectedCategory].tipo
+                        } else {
+                            self.viewModel.measureName = Mock.Setup.measures[self.selectedMeasure].tipo
                         }
                         self.modalPresented.toggle()
                         
@@ -326,7 +313,6 @@ struct SupermarketSetupView: View {
                     })
                         .onTapGesture {
                             self.isFocused = true
-                            self.hideKeyboard()
                     }
                 }
                 .padding(.leading)
@@ -364,6 +350,15 @@ struct SupermarketSetupView: View {
         .shadow(color: Color(.sRGBLinear, white: 0, opacity: 0.13), radius: 10.0)
         .offset(y: self.modalPresented ? 330 : 720)
         .animation(.spring(response: 0.3, dampingFraction: 0.8, blendDuration: 0))
+    }
+    
+    func hideKeyboard() {
+        UIApplication.shared.sendAction(
+            #selector(UIResponder.resignFirstResponder),
+            to: nil,
+            from: nil,
+            for: nil
+        )
     }
     
 }

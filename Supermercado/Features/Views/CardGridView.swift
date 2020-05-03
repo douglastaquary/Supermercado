@@ -15,7 +15,7 @@ struct CardGridView: View {
     var body: some View {
         NavigationLink(destination:
             SupermarketListView(
-                viewModel: SupermarketListViewModel(cart: cart)
+                viewModel: SupermarketListViewModel(cart: cart, supermarketService: supermarketService)
             ).environmentObject(self.supermarketService)
         ) {
             ZStack {

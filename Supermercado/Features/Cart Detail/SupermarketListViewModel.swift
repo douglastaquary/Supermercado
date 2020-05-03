@@ -15,12 +15,13 @@ import CloudKit
 
 class SupermarketListViewModel: ObservableObject {
     
-    let supermarketService: SupermarketService = SupermarketService()
+    let supermarketService: SupermarketService
     var cart: Cart
     var sections: [ListSection] = []
 
-    init(cart: Cart) {
+    init(cart: Cart, supermarketService: SupermarketService) {
         self.cart = cart
+        self.supermarketService = supermarketService
     }
 
     var items: [SupermarketItem] {

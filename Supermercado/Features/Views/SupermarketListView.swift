@@ -31,13 +31,9 @@ struct SupermarketListView: View {
                         VStack {
                             InformationHeaderView(
                                 titleHeader: self.viewModel.cart.name,
-                                countItems:self.$countList,
+                                countItems: self.viewModel.count,
                                 imageName: self.viewModel.cart.iconName.rawValue
                             )
-                                .onAppear {
-                                    self.countList = self.supermarketService.listItemCount(to: self.viewModel.cart.id)
-                                }
-                            
                             ForEach(self.supermarketService.updateSections(to: self.viewModel.cart.id)) { section in
                                 TitleHeader(title: section.name)
                                 ForEach(section.items) { item in
@@ -94,6 +90,6 @@ struct SupermarketListView: View {
 
 struct SupermarketListView_Previews: PreviewProvider {
     static var previews: some View {
-        SupermarketListView(viewModel: SupermarketListViewModel(cart: Cart(name: "List View", iconName: .beef))).environment(\.colorScheme, .dark)
+        SupermarketListView(viewModel: SupermarketListViewModel(cart: Cart(name: "List View", iconName: .beef), supermarketService: SupermarketService())).environment(\.colorScheme, .dark)
     }
 }

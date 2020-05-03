@@ -92,6 +92,7 @@ struct AddCartView: View {
                     Button(action: {
                         self.supermarketService.addNewCart(self.viewModel.cart)
                         self.presentationMode.wrappedValue.dismiss()
+                        haptic(.success)
                     }, label: {
                         Text("Salvar")
                             .frame(maxWidth: .infinity)

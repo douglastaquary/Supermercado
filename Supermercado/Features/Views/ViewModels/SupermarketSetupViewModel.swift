@@ -53,7 +53,7 @@ class SupermarketSetupViewModel: ObservableObject {
     
     private var isHowMuchTextValidPublisher: AnyPublisher<String, Never> {
       $howMuchText
-        .debounce(for: 0.3, scheduler: RunLoop.main)
+        .debounce(for: 0.2, scheduler: RunLoop.main)
         .removeDuplicates()
         .map { price in
             self.supermarketItem.price = price
