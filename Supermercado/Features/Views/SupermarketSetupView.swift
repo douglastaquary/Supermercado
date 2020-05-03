@@ -40,8 +40,7 @@ struct SupermarketSetupView: View {
                         width: UIScreen.main.bounds.width,
                         height: UIScreen.main.bounds.height
                 )
-                    .edgesIgnoringSafeArea(.all)
-                    .foregroundColor(.secondarySystemBackground)
+                    .foregroundColor(Color.label)
                     .opacity(self.modalPresented ? 0.5 : 0)
                     .animation(.easeOut)
                     .onTapGesture {
@@ -72,7 +71,6 @@ struct SupermarketSetupView: View {
                             },
                             .cancel()
                         ])
-                        
                     }
                     
                     HStack(spacing: 16) {
@@ -99,7 +97,7 @@ struct SupermarketSetupView: View {
                                 self.isFocused = true
                                 self.modalPresented = false
 
-                        }
+                            }
                         measureView()
                              .onTapGesture {
                                  self.pickerMode = .measure
@@ -130,13 +128,11 @@ struct SupermarketSetupView: View {
                     .disabled(!viewModel.isValid)
                     .opacity(!viewModel.isValid ? 0.6 : 1)
                     .padding(.bottom, 64)
-                    
                 }
                 .padding()
                 .onTapGesture {
                     self.isFocused = false
                 }
-                
                 presentSheet()
                 
             }
@@ -172,7 +168,7 @@ struct SupermarketSetupView: View {
     private func amountTextField() -> some View {
         return VStack {
             HStack {
-                TextField("Quanto itens?", text: $viewModel.amount)
+                TextField("Quantos itens?", text: $viewModel.amount)
                     .font(.body)
                     .foregroundColor(.label)
                     .frame(maxWidth: .infinity, maxHeight: 24)
