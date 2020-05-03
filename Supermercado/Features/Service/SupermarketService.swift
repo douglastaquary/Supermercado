@@ -27,6 +27,8 @@ public final class SupermarketService: ObservableObject {
         return coordinator
     }()
     
+    var sections: [ListSection] = []
+    
     private var cartSubscriber: AnyCancellable?
     
     public init() {
@@ -71,11 +73,55 @@ public final class SupermarketService: ObservableObject {
     
     //MARK: SupermarketItems Store Manager
     
+    func listItemCount(to cartId: UUID) -> Int {
+        return self.fetchItems(for: cartId).count
+    }
+    
     func fetchSupermarketItem(for id: Cart.ID, with uuid: UUID) -> SupermarketItem {
         let cart = self.cart(withID: id)
         return cart.items.first(where: { $0.id == uuid }) ?? SupermarketItem()
     }
+
+    func updateSections(to cartID: UUID) -> [ListSection] {
+        let items = fetchItems(for: cartID)
+        let categories = removeRelaceCategoryIfNeeded(to: items.map { $0.category })
+        let sections = performSections(to: categories, with: cartID)
+        
+        return sections
+    }
     
+    private func removeRelaceCategoryIfNeeded(to categories: [String]) -> [String] {
+        var validCategories: [String] = []
+        
+        for category in categories {
+            if validCategories.isEmpty {
+                validCategories.append(category)
+            } else {
+                let valids = validCategories.filter { $0.contains(category) }
+                if valids.isEmpty {
+                    validCategories.append(category)
+                }
+            }
+        }
+        return validCategories
+    }
+    
+    private func performSections(to categories: [String], with cartID: UUID) -> [ListSection] {
+        sections.removeAll()
+        let items = fetchItems(for: cartID)
+        for category in categories {
+            var section: ListSection = ListSection()
+            section.name = category
+            for supermarket in items {
+                if supermarket.category.lowercased() == category.lowercased() {
+                    section.items.append(supermarket)
+                }
+            }
+            sections.append(section)
+        }
+        
+        return sections
+    }
 
     
     func fetchItems(for id: Cart.ID) -> [SupermarketItem] {

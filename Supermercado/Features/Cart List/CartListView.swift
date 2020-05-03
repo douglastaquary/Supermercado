@@ -57,6 +57,14 @@ struct CartListView: View {
         .onAppear {
             UINavigationBar.appearance().backgroundColor = .white
         }
+        .navigationBarItems(
+            trailing: Button(action: {
+                //self.showPopover = true
+            }, label: {
+                Image("ic_option")
+                    .foregroundColor(.label)
+                })
+            )
         .navigationBarTitle(Text("Minhas listas"), displayMode: .inline)
         .accentColor(.black)
         .navigationBarColor(.systemBackground)

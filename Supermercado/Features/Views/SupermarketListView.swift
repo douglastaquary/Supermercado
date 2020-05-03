@@ -13,6 +13,8 @@ struct SupermarketListView: View {
     @ObservedObject var viewModel: SupermarketListViewModel
     
     @State private var editMode = EditMode.inactive
+    @State private var showPopover: Bool = false
+    @State private var countList: Int = 0
 
     var body: some View {
         VStack {
@@ -29,11 +31,14 @@ struct SupermarketListView: View {
                         VStack {
                             InformationHeaderView(
                                 titleHeader: self.viewModel.cart.name,
-                                countItems: self.viewModel.cart.items.count,
+                                countItems:self.$countList,
                                 imageName: self.viewModel.cart.iconName.rawValue
                             )
+                                .onAppear {
+                                    self.countList = self.supermarketService.listItemCount(to: self.viewModel.cart.id)
+                                }
                             
-                            ForEach(self.viewModel.rows) { section in
+                            ForEach(self.supermarketService.updateSections(to: self.viewModel.cart.id)) { section in
                                 TitleHeader(title: section.name)
                                 ForEach(section.items) { item in
                                     SupermarketRow(
@@ -57,7 +62,18 @@ struct SupermarketListView: View {
         .onAppear {
             UINavigationBar.appearance().backgroundColor = .white
         }
-        .navigationBarTitle(Text("Churrasco do beto"), displayMode: .inline)
+        .navigationBarItems(
+            trailing: Button(action: {
+                self.showPopover = true
+            }, label: {
+            Image("ic_option")
+                .foregroundColor(.label)
+            })
+                .contextMenu {
+                    Text("Editar")
+            }
+        )
+        .navigationBarTitle(Text(self.viewModel.cart.name), displayMode: .inline)
         .accentColor(.black)
         .navigationBarColor(.systemBackground)
 

@@ -11,8 +11,8 @@ import SwiftUI
 struct InformationHeaderView: View {
     
     @State var titleHeader: String = ""
-    @State var countItems: Int = 0
-    @State var imageName: String = "carnes"
+    @Binding var countItems: Int
+    @State var imageName: String = "Outros" 
     
     var body: some View {
         ZStack(alignment: .leading) {
@@ -74,6 +74,6 @@ struct InformationHeaderView: View {
 
 struct InformationHeaderView_Previews: PreviewProvider {
     static var previews: some View {
-        InformationHeaderView().environment(\.colorScheme, .dark)
+        InformationHeaderView(countItems: .constant(0)).environment(\.colorScheme, .dark)
     }
 }
