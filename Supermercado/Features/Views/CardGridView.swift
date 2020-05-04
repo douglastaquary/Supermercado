@@ -37,7 +37,7 @@ struct CardGridView: View {
                         .multilineTextAlignment(.center)
                         .padding(.leading, 16)
                         .padding(.trailing, 16)
-                    Text("\(cart.items.count) itens adicionados")
+                    Text(cart.items.count > 1 ? "\(cart.items.count) itens adicionados" : "\(cart.items.count) item adicionado")
                         .font(.caption)
                         .foregroundColor(.secondary)
                         .multilineTextAlignment(.center)

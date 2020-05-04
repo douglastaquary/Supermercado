@@ -16,3 +16,14 @@ extension View {
     }
 }
 
+extension View {
+
+    func popover(isShowing: Binding<Bool>) -> some View {
+        PopoverView(
+            isShowing: isShowing,
+              presenting: { self }
+        )
+    }
+
+}
+

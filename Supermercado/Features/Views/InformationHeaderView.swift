@@ -42,7 +42,7 @@ struct InformationHeaderView: View {
                             .fontWeight(.medium)
                             .multilineTextAlignment(.center)
                             .foregroundColor(.label)
-                        Text("\(countItems) itens adicionados")
+                        Text(countItems > 1 ? "\(countItems) itens adicionados" : "\(countItems) item adicionado")
                             .font(.caption)
                             .foregroundColor(.secondary)
                             .multilineTextAlignment(.center)
@@ -55,7 +55,7 @@ struct InformationHeaderView: View {
                     .frame(maxWidth: .infinity, maxHeight: 1)
                 
                 if countItems == 0 {
-                    Text("Para adicionar produtos em sua lista clique no botão Adicionar item.")
+                    Text("Para adicionar produtos em sua lista clique no botão Adicionar item")
                         .font(.caption)
                         .lineLimit(nil)
                         .foregroundColor(Color("secondaryText"))

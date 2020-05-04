@@ -72,6 +72,7 @@ struct SupermarketListView: View {
         .navigationBarTitle(Text(self.viewModel.cart.name), displayMode: .inline)
         .accentColor(.black)
         .navigationBarColor(.systemBackground)
+        .popover(isShowing: $showPopover)
 
     }
 

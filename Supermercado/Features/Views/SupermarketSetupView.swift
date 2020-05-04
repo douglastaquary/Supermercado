@@ -24,6 +24,7 @@ struct SupermarketSetupView: View {
     @State private var selectedCategory: Int = 0
     @State private var selectedMeasure: Int = 0
     @State private var isFocused: Bool = false
+    @State private var showPopover: Bool = false
     
     @State private var showSheet: Bool = false
     @State private var showPhotoOptions: Bool = false
@@ -41,7 +42,7 @@ struct SupermarketSetupView: View {
                         height: UIScreen.main.bounds.height
                 )
                     .foregroundColor(Color.label)
-                    .opacity(self.modalPresented ? 0.5 : 0)
+                    .opacity(self.modalPresented || self.showPopover ? 0.5 : 0)
                     .animation(.easeOut)
                     .onTapGesture {
                         self.isFocused = false
@@ -105,7 +106,6 @@ struct SupermarketSetupView: View {
                                  self.modalPresented = true
                                  self.isFocused = true
                              }
-                        
                     }
                     Spacer()
                     
@@ -152,6 +152,14 @@ struct SupermarketSetupView: View {
                 self.viewModel.measureName = Mock.Setup.measures[self.selectedMeasure].tipo
                 self.viewModel.categoryName = Mock.Setup.categories[self.selectedCategory].tipo
             }
+            .navigationBarItems(
+                trailing: Button(action: {
+                    self.showPopover = true
+                }, label: {
+                    Image("ic_option")
+                        .foregroundColor(.label)
+                })
+            )
             .navigationBarTitle(Text("Adicionar item"), displayMode: .inline)
             .accentColor(.black)
             .navigationBarColor(.systemBackground)
@@ -263,6 +271,40 @@ struct SupermarketSetupView: View {
         }
         .padding(.top, 22)
     }
+    
+    
+    private func renderPopover() -> some View {
+        return VStack {
+            VStack(alignment: .leading, spacing: 18) {
+                Button(action: {
+                    self.showPopover = false
+                }) {
+                    HStack(spacing: 15) {
+                        Text("Editar")
+                            .frame(height: 24)
+                            .foregroundColor(Color("buttonAction"))
+                    }
+                }
+                Divider()
+                Button(action: {
+                   self.showPopover = false
+                }) {
+                    HStack(spacing: 15) {
+                        Text("Remover")
+                            .frame(height: 24)
+                            .foregroundColor(Color("buttonAction"))
+                    }
+                }
+            }
+            .frame(width: 150)
+            .padding()
+            .foregroundColor(.systemBackground)
+            .background(colorScheme == .light ? Color.white : Color.black)
+            .cornerRadius(4)
+        }
+        .padding(.top, 24)
+        .padding()
+    }
 
     /// The height of the handler bar section
     private var handlerSectionHeight: CGFloat {
@@ -326,8 +368,8 @@ struct SupermarketSetupView: View {
                     .labelsHidden()
                 } else {
                     Picker(selection: $selectedMeasure, label: Text("")) {
-                        ForEach(Mock.Setup.measures) { measure in
-                            Text(measure.tipo).tag(measure)
+                        ForEach(0..<Mock.Setup.measures.count) { index in
+                            Text(Mock.Setup.measures[index].tipo).tag(index)
                                 .foregroundColor(.label)
                         }
                     }

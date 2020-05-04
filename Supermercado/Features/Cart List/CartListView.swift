@@ -13,12 +13,12 @@ struct CartListView: View {
     @EnvironmentObject var supermarketService: SupermarketService
 
     @State var showAddCartView = false
+    @State var showOptions = false
 
     var body: some View {
         ZStack {
             Color.systemBackground.edgesIgnoringSafeArea([.all])
             VStack {
-                
                 if self.supermarketService.carts.isEmpty {
                     EmptyStateView()
                 } else {
@@ -59,7 +59,7 @@ struct CartListView: View {
         }
         .navigationBarItems(
             trailing: Button(action: {
-                //self.showPopover = true
+                self.showOptions = true
             }, label: {
                 Image("ic_option")
                     .foregroundColor(.label)
@@ -68,7 +68,12 @@ struct CartListView: View {
         .navigationBarTitle(Text("Minhas listas"), displayMode: .inline)
         .accentColor(.black)
         .navigationBarColor(.systemBackground)
+        .popover(isShowing: $showOptions)
+        
+        
+        
     }
+    
 
 }
 
