@@ -7,31 +7,26 @@
 //
 
 import Foundation
-import LLVS
-import SwiftUI
+import CoreLocation
 
-public struct Medida: Codable, Identifiable, Hashable {
-    public let id = UUID()
-    public let tipo: String
-}
-
-//public struct Category: Codable {
-//    public let id = UUID()
-//}
-
-public struct Category: Codable, Identifiable, Hashable {
-    public let id = UUID()
-    public var tipo: String = ""
-}
-
-struct Supermarket: Model {
-    static let storeIdentifierTypeTag = "Supermarket"
+struct Supermarket: Codable {
+    //static let storeIdentifierTypeTag = "Supermarket"
     var id: UUID = .init()
-    var items: [SupermarketItem] = []
     var name: String = ""
     var address: Address = .init()
     var avatarJPEGData: Data?
+    var location: SupermarketLocation?
+    
+    var coodinate: CLLocationCoordinate2D {
+        return CLLocationCoordinate2D(
+            latitude: location?.latitude ?? 0.0,
+            longitude: location?.longitude ?? 0.0
+        )
+    }
 }
 
-
+struct SupermarketLocation: Codable {
+    let latitude: Double
+    let longitude: Double
+}
 

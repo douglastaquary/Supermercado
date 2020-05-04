@@ -25,17 +25,17 @@ struct SupermarketsView : View {
     
     var body: some View {
         NavigationView {
-            list(of: supermarketService.supermarkets)
+            list(of: supermarketService.carts)
         }
     }
     
-    private func list(of supermarkets: [Supermarket]) -> some View {
+    private func list(of supermarkets: [Cart]) -> some View {
         return List {
                 ForEach(supermarkets) { supermarket in
                     SupermarketCell(supermarket: supermarket).environmentObject(self.supermarketService)
                 }.onDelete { indices in
                     indices.forEach {
-                        self.supermarketService.deleteSupermarket(withID: self.supermarketService.supermarkets[$0].id)
+                        self.supermarketService.deleteCart(withID: self.supermarketService.carts[$0].id)
                     }
                 }
             }

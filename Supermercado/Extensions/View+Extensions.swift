@@ -10,4 +10,20 @@ import SwiftUI
 
 extension View {
     func eraseToAnyView() -> AnyView { AnyView(self) }
+    
+    func navigationBarColor(_ backgroundColor: UIColor?) -> some View {
+        self.modifier(NavigationBarModifier(backgroundColor: backgroundColor))
+    }
 }
+
+extension View {
+
+    func popover(isShowing: Binding<Bool>) -> some View {
+        PopoverView(
+            isShowing: isShowing,
+              presenting: { self }
+        )
+    }
+
+}
+

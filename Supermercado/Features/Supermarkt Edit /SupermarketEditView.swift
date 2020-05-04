@@ -12,7 +12,7 @@ struct SupermarketEditView: View {
     
     @EnvironmentObject var supermarketService: SupermarketService
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    var supermarketID: Supermarket.ID
+    var supermarketID: Cart.ID
     @State var supermarketItem: SupermarketItem
     @State var showEditView = false
     
@@ -28,17 +28,18 @@ struct SupermarketEditView: View {
                     TextField("Nome", text: $supermarketItem.name)
                     TextField("Valor", text: $supermarketItem.price)
                 }
-                Section(header: Text("Medida")) {
-                    Picker(
-                        selection: $supermarketItem.price,
-                        label: Text("Selecione a medida"),
-                        content: {
-                            ForEach(medidas) { medida in
-                                Text(medida.tipo)//.tag(medida)
-                            }
-                        }
-                    )
-                }
+//                Section(header: Text("Medida")) {
+//                    Picker(
+//                        selection: $supermarketItem.price,
+//                        label: Text("Selecione a medida"),
+//                        content: {
+//                            ForEach(medidas) { medida in
+//                                Text(medida.tipo).tag(medida)
+//                            }
+//                        }
+//                    )
+//                    
+//                }
             }
             .navigationBarTitle(Text(supermarketItem.name))
             .navigationBarItems(

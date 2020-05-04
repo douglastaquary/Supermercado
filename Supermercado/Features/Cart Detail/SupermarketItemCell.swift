@@ -11,7 +11,7 @@ import SwiftUI
 struct SupermarketItemCell: View {
     @EnvironmentObject var supermarketService: SupermarketService
     var supermarketItem: SupermarketItem
-    var supermarketID: Supermarket.ID
+    var supermarketID: Cart.ID
     var imageName = ""
     
     @State var isDone = false

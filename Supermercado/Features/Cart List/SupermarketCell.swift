@@ -10,27 +10,35 @@ import SwiftUI
 
 struct SupermarketCell: View {
     @EnvironmentObject var supermarketService: SupermarketService
-    var supermarket: Supermarket
+    var supermarket: Cart
 
     var body: some View {
-        NavigationLink(destination:
-            SupermarketDetailView(viewModel: SupermarketDetailViewModel(supermarket: supermarket))
-                .environmentObject(self.supermarketService)
-        ) {
-            HStack {
-                SupermarketThumbnail(supermarket: supermarket)
-                VStack(alignment: .leading) {
-                    Text(supermarket.name)
-                        .font(.headline)
-                        .foregroundColor(.primary)
-                }
+        HStack {
+            SupermarketThumbnail(supermarket: supermarket)
+            VStack(alignment: .leading) {
+                Text(supermarket.name)
+                    .font(.headline)
+                    .foregroundColor(.primary)
             }
         }
+//        NavigationLink(destination:
+//            SupermarketDetailView(viewModel: SupermarketListViewModel(supermarket: supermarket))
+//                .environmentObject(self.supermarketService)
+//        ) {
+//            HStack {
+//                SupermarketThumbnail(supermarket: supermarket)
+//                VStack(alignment: .leading) {
+//                    Text(supermarket.name)
+//                        .font(.headline)
+//                        .foregroundColor(.primary)
+//                }
+//            }
+//        }
     }
 }
 
 struct SupermarketThumbnail: View {
-    var supermarket: Supermarket
+    var supermarket: Cart
     var body: some View {
         var image: Image
         if let data = supermarket.avatarJPEGData {
