@@ -33,51 +33,56 @@ struct PopoverView<Presenting>: View where Presenting: View {
                         self.isShowing = false
                     }
                 
-                VStack(alignment: .leading, spacing: 18) {
-                    Button(action: {
-                        self.isShowing = false
-                    }) {
-                        HStack(spacing: 15) {
-                            Text("Editar")
-                                .frame(height: 24)
-                                .multilineTextAlignment(.leading)
-                                .foregroundColor(Color("buttonAction"))
+                VStack {
+                    VStack(alignment: .leading, spacing: 18) {
+                        Button(action: {
+                            self.isShowing = false
+                        }) {
+                            HStack(spacing: 15) {
+                                Text("Editar")
+                                    .frame(height: 24)
+                                    .multilineTextAlignment(.leading)
+                                    .foregroundColor(Color("buttonAction"))
+                            }
+                        }
+                        Divider()
+                        Button(action: {
+                           self.isShowing = false
+                        }) {
+                            HStack(spacing: 15) {
+                                Text("Remover")
+                                    .frame(height: 24)
+                                    .multilineTextAlignment(.leading)
+                                    .foregroundColor(Color("buttonAction"))
+                            }
+                        }
+                        Divider()
+                        Button(action: {
+                           self.isShowing = false
+                        }) {
+                            HStack(spacing: 15) {
+                                Text("Cancelar")
+                                    .frame(height: 24)
+                                    .multilineTextAlignment(.leading)
+                                    .foregroundColor(Color("buttonAction"))
+                            }
                         }
                     }
-                    Divider()
-                    Button(action: {
-                       self.isShowing = false
-                    }) {
-                        HStack(spacing: 15) {
-                            Text("Remover")
-                                .frame(height: 24)
-                                .multilineTextAlignment(.leading)
-                                .foregroundColor(Color("buttonAction"))
-                        }
-                    }
-                    Divider()
-                    Button(action: {
-                       self.isShowing = false
-                    }) {
-                        HStack(spacing: 15) {
-                            Text("Cancelar")
-                                .frame(height: 24)
-                                .multilineTextAlignment(.leading)
-                                .foregroundColor(Color("buttonAction"))
-                        }
-                    }
+                    .padding()
+                    .foregroundColor(.systemBackground)
+                    .background(self.colorScheme == .light ? Color.secondarySystemBackground : Color.tertiarySystemBackground)
+                    .cornerRadius(4)
+                    .frame(width: geometry.size.width / 2, height: geometry.size.height / 4)
+                    .transition(.slide)
+                    .opacity(self.isShowing ? 1 : 0)
+                    
                 }
                 .padding()
-                .foregroundColor(.systemBackground)
-                .background(self.colorScheme == .light ? Color.secondarySystemBackground : Color.tertiarySystemBackground)
-                .cornerRadius(4)
-                .frame(width: geometry.size.width / 2, height: geometry.size.height / 4)
-                .transition(.slide)
-                .opacity(self.isShowing ? 1 : 0)
+
                 
             }
+            
         }
-        .padding()
 
     }
 
