@@ -29,21 +29,25 @@ struct SupermarketRow: View {
                     Text(supermarketItem.name)
                         .foregroundColor(.label)
                         .font(.body)
+                        .strikethrough(supermarketItem.isDone ?? false)
                     HStack {
                         HStack {
                             Text("Qnt:")
                                 .foregroundColor(.label)
                                 .font(.body)
+                                .strikethrough(supermarketItem.isDone ?? false)
                             Text(supermarketItem.amount)
                                 .foregroundColor(.label)
                                 .font(.body)
                                 .fontWeight(.bold)
+                                .strikethrough(supermarketItem.isDone ?? false)
                         }
                         Spacer()
                         if !supermarketItem.price.isEmpty {
                             Text(supermarketItem.price)
                             .fontWeight(.semibold)
                             .foregroundColor(Color("buttonAction"))
+                            .strikethrough(supermarketItem.isDone ?? false)
                         }
                     }
                     .padding(.top, 8)
@@ -56,7 +60,7 @@ struct SupermarketRow: View {
                 .frame(maxWidth: .infinity, maxHeight: 1)
 
         }
-        .foregroundColor(.tertiarySystemBackground)
+        .foregroundColor(.tertiarySystemBackground).opacity((supermarketItem.isDone ?? false) ? 0.4 : 1)
         .frame(height: 76)
     }
     

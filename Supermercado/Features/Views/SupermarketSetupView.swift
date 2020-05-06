@@ -42,7 +42,7 @@ struct SupermarketSetupView: View {
                         height: UIScreen.main.bounds.height
                 )
                     .foregroundColor(Color.label)
-                    .opacity(self.modalPresented || self.showPopover ? 0.5 : 0)
+                    .opacity(self.modalPresented ? 0.5 : 0)
                     .animation(.easeOut)
                     .onTapGesture {
                         self.isFocused = false
@@ -152,14 +152,6 @@ struct SupermarketSetupView: View {
                 self.viewModel.measureName = Mock.Setup.measures[self.selectedMeasure].tipo
                 self.viewModel.categoryName = Mock.Setup.categories[self.selectedCategory].tipo
             }
-            .navigationBarItems(
-                trailing: Button(action: {
-                    self.showPopover = true
-                }, label: {
-                    Image("ic_option")
-                        .foregroundColor(.label)
-                })
-            )
             .navigationBarTitle(Text("Adicionar item"), displayMode: .inline)
             .accentColor(.black)
             .navigationBarColor(.systemBackground)

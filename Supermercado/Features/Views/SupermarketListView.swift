@@ -41,10 +41,6 @@ struct SupermarketListView: View {
                                         supermarketItem: item,
                                         cartID: self.viewModel.cart.id
                                     )
-                                }.onDelete { indices in
-                                    indices.forEach {
-                                        self.supermarketService.deleteItem(for: self.viewModel.cart.id, with: section.items[$0])
-                                    }
                                 }
                             }
                         }
@@ -59,20 +55,32 @@ struct SupermarketListView: View {
             UINavigationBar.appearance().backgroundColor = .white
         }
         .navigationBarItems(
-            trailing: Button(action: {
-                self.showPopover = true
-            }, label: {
-            Image("ic_option")
-                .foregroundColor(.label)
-            })
-                .contextMenu {
-                    Text("Editar")
+            trailing:
+            
+            HStack(spacing: 24) {
+                Button(action: {
+                    self.showPopover = true
+                }, label: {
+                Image("ic_more")
+                    .foregroundColor(Color("buttonAction"))
+                })
+                
+                Button(action: {
+                    print("DEBUG: - Share list!")
+                }, label: {
+                Image("ic_share")
+                    .foregroundColor(Color("buttonAction"))
+                })
             }
+
+
         )
         .navigationBarTitle(Text(self.viewModel.cart.name), displayMode: .inline)
         .accentColor(.black)
         .navigationBarColor(.systemBackground)
-        .popover(isShowing: $showPopover)
+            .popover(isShowing: $showPopover) {
+                    print("Edit mode On!!")
+            }
 
     }
 

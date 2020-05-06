@@ -64,11 +64,14 @@ struct CartListView: View {
                 Image("ic_option")
                     .foregroundColor(.label)
                 })
+                .frame(width: 24, height: 24)
             )
         .navigationBarTitle(Text("Minhas listas"), displayMode: .inline)
         .accentColor(.black)
         .navigationBarColor(.systemBackground)
-        .popover(isShowing: $showOptions)
+            .popover(isShowing: $showOptions) {
+                    print("Edit Mode ON")
+            }
         
         
         
