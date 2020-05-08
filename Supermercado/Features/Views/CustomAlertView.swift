@@ -24,7 +24,7 @@ struct CustomAlertView: View {
     
     var body: some View {
         ZStack {
-            Color.secondary.edgesIgnoringSafeArea(.all)
+            Color.black.opacity(0.6).edgesIgnoringSafeArea(.all)
             VStack {
                 Spacer()
                 Text(titleLabel)
@@ -53,7 +53,7 @@ struct CustomAlertView: View {
                                 .foregroundColor(.label)
                                 .frame(maxWidth: .infinity)
                                 .frame(height: 44)
-                                .background(Color.systemBackground)
+                                .background(Color.tertiarySystemBackground)
                                 .border(Color.secondaryLabel, width: 1)
                                 .cornerRadius(4)
                     }
@@ -73,7 +73,7 @@ struct CustomAlertView: View {
                 
             }
             .frame(width: 280, height: 220)
-            .background(colorScheme == .light ?  Color.white : Color.black)
+            .background(colorScheme == .light ?  Color.white : Color.tertiarySystemBackground)
             .cornerRadius(4)
             .shadow(radius: 20)
         }

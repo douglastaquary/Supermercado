@@ -67,7 +67,7 @@ struct PopoverView<Presenting>: View where Presenting: View {
                     .opacity(self.isShowing ? 1 : 0)
                     
                 }
-                .shadow(color: Color("DividerColor"), radius: 8, x: 0, y: 5)
+                .shadow(color: self.colorScheme == .light ? Color("DividerColor") : Color.systemBackground, radius: 8, x: 0, y: 5)
                 .padding(.top, -36)
                 .padding(.trailing, 16)
 
