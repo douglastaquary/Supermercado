@@ -11,8 +11,13 @@ import SwiftUI
 struct CustomAlertView: View {
     
     var titleLabel: String = "Bad Stuff Happened"
-    var bodyLabel: String
-    var callToActionButton: String
+    var bodyLabel: String = ""
+    @State var cartName: String = "connection"
+    var callToActionLeftButton: String = "Não"
+    var callToActionRightButton: String = "Sim"
+    var leftAction: () -> Void
+    var rightAction: () -> Void
+    
     
     @Binding var showingModal: Bool
     @Environment(\.colorScheme) var colorScheme
@@ -21,35 +26,55 @@ struct CustomAlertView: View {
         ZStack {
             Color.secondary.edgesIgnoringSafeArea(.all)
             VStack {
+                Spacer()
                 Text(titleLabel)
-                    .font(.headline)
+                    .font(.body)
+                    .foregroundColor(.label)
                     .bold()
-                    .padding(.top, 20)
-                    .padding(.horizontal, 20)
-                    .padding(.bottom, 20)
-                    .frame(height: 38)
-                Text(bodyLabel)
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(4)
-                    .padding(.bottom, 20)
-                    .padding(.top, 8)
-                    .padding(.horizontal, 20)
-                Button(action: { self.showingModal = false }) {
-                        Text(callToActionButton)
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 44)
-                            .background(Color("buttonAction"))
-                    .cornerRadius(10)
+                    .frame(height: 24)
+                
+                HighlightedText(
+                    bodyLabel,
+                    matching: self.cartName
+                )
+                .font(.body)
+                .foregroundColor(.label)
+                .multilineTextAlignment(.leading)
+                .lineLimit(4)
+                .padding(12)
+
+                Spacer()
+                HStack(spacing: 16) {
+                    Button(action: {
+                        self.showingModal = false
+                        self.leftAction()
+                    }) {
+                            Text(callToActionLeftButton)
+                                .foregroundColor(.label)
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 44)
+                                .background(Color.systemBackground)
+                                .border(Color.secondaryLabel, width: 1)
+                                .cornerRadius(4)
+                    }
+                    Button(action: {
+                        self.showingModal = false
+                        self.rightAction()
+                    }) {
+                            Text(callToActionRightButton)
+                                .foregroundColor(.white)
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 44)
+                                .background(Color("buttonAction"))
+                                .cornerRadius(4)
+                    }
                 }
-                .padding(.horizontal, 20)
-                .padding(.bottom, 20)
+                .padding()
+                
             }
             .frame(width: 280, height: 220)
             .background(colorScheme == .light ?  Color.white : Color.black)
-            .cornerRadius(16)
+            .cornerRadius(4)
             .shadow(radius: 20)
         }
     }
@@ -58,7 +83,28 @@ struct CustomAlertView: View {
 struct CustomAlertView_Previews: PreviewProvider {
     static var previews: some View {
         let body = "Unable to complete your request. Please check your internet connection."
-        let buttonText = "Ok"
-        return CustomAlertView(bodyLabel: body, callToActionButton: buttonText, showingModal: .constant(true))
+        return CustomAlertView(bodyLabel: body,leftAction: { }, rightAction: {}, showingModal: .constant(true))
+    }
+}
+
+
+struct HighlightedText: View {
+    let text: String
+    let matching: String
+
+    init(_ text: String, matching: String) {
+        self.text = text
+        self.matching = matching
+    }
+
+    var body: some View {
+        let tagged = text.replacingOccurrences(of: self.matching, with: "<SPLIT>>\(self.matching)<SPLIT>")
+        let split = tagged.components(separatedBy: "<SPLIT>")
+        return split.reduce(Text("")) { (a, b) -> Text in
+            guard !b.hasPrefix(">") else {
+                return a + Text(b.dropFirst()).foregroundColor(.label).fontWeight(.bold)
+            }
+            return a + Text(b)
+        }
     }
 }

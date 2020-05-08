@@ -8,9 +8,15 @@
 
 import SwiftUI
 
+
+import SwiftUI
+
 struct ActivityIndicatorView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            Color(UIColor.secondarySystemBackground).opacity(0.8).edgesIgnoringSafeArea(.all)
+            ActivityIndicator(style: .medium)
+        }
     }
 }
 

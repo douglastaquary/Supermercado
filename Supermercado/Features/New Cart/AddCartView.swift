@@ -90,9 +90,16 @@ struct AddCartView: View {
                     .foregroundColor(Color.tertiarySystemBackground)
 
                     Button(action: {
-                        self.supermarketService.addNewCart(self.viewModel.cart)
-                        self.presentationMode.wrappedValue.dismiss()
-                        haptic(.success)
+                        self.supermarketService.addNewCart(cart: self.viewModel.cart) { result in
+                            switch result {
+                            case .success(_):
+                                self.presentationMode.wrappedValue.dismiss()
+                                haptic(.success)
+                            case .failure(let error):
+                                print("\(error.localizedDescription)")
+                            }
+                        }
+
                     }, label: {
                         Text("Salvar")
                             .frame(maxWidth: .infinity)
