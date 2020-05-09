@@ -16,6 +16,9 @@ struct SupermarketListView: View {
     @State private var showPopover: Bool = false
     @State private var countList: Int = 0
     @State private var loadingData: Bool = false
+    @State private var showFooterView: Bool = false
+    
+    @State private var itemsToRemove: [UUID] = []
 
     var body: some View {
         VStack {
@@ -40,7 +43,18 @@ struct SupermarketListView: View {
                                 ForEach(section.items) { item in
                                     SupermarketRow(
                                         supermarketItem: item,
-                                        cartID: self.viewModel.cart.id
+                                        cartID: self.viewModel.cart.id,
+                                        showEditMode: self.$showFooterView,
+                                        actionTapRow: { item in
+                                            if self.showFooterView {
+                                                let items = self.itemsToRemove.filter { $0 == item.id }
+                                                if items.isEmpty {
+                                                    self.itemsToRemove.append(item.id)
+                                                } else {
+                                                    self.itemsToRemove.removeAll(where: { $0 == item.id })
+                                                }
+                                            }
+                                        }
                                     )
                                 }
                             }
@@ -55,7 +69,7 @@ struct SupermarketListView: View {
             }
             
             if !loadingData {
-               newSupermarketButon()
+                installFooterViewIfNeeded()
             }
             
         }
@@ -69,10 +83,13 @@ struct SupermarketListView: View {
             
             HStack(spacing: 24) {
                 Button(action: {
-                    self.showPopover = true
+                    //self.showPopover = true
+                    self.showFooterView = true
                 }, label: {
                 Image("ic_more")
                     .foregroundColor(Color("buttonAction"))
+                    .rotationEffect(.degrees(showFooterView ? 90 : 0))
+                    .animation(.default)
                 })
                 
                 Button(action: {
@@ -88,10 +105,6 @@ struct SupermarketListView: View {
         .navigationBarTitle(Text(self.viewModel.cart.name), displayMode: .inline)
         .accentColor(.black)
         .navigationBarColor(.systemBackground)
-            .popover(isShowing: $showPopover) {
-                    print("Edit mode On!!")
-            }
-
     }
     
     private func performShoppingList() {
@@ -107,21 +120,47 @@ struct SupermarketListView: View {
         }
         
     }
+    
+    private func installFooterViewIfNeeded() -> some View {
+        return VStack {
+            Rectangle()
+                .foregroundColor(.secondarySystemBackground)
+                .frame(height: 1)
+                .offset(y: -8)
 
-    private func newSupermarketButon() -> some View {
-        return NavigationLink(destination: SupermarketSetupView(viewModel: SupermarketSetupViewModel(
-                cartID: self.viewModel.cart.id,
-                supermarketItem: SupermarketItem()
-            )
-        )) {
-            Text("Adicionar item")
-                .frame(maxWidth: .infinity)
+            if showFooterView {
+                installFooterManagerView().animation(.default)
+
+            } else {
+                NavigationLink(destination: SupermarketSetupView(viewModel: SupermarketSetupViewModel(
+                    cartID: self.viewModel.cart.id,
+                    supermarketItem: SupermarketItem()
+                    )
+                )) {
+                    Text("Adicionar item")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color("primary"))
+                        .foregroundColor(Color.white)
+                        .cornerRadius(4)
+                        .animation(.default)
+                        //.transition(.opacity)
+                        //.scaleEffect()
+
+                }
                 .padding()
-                .background(Color("primary"))
-                .foregroundColor(Color.white)
-                .cornerRadius(4)
+            }
         }
-        .padding()
+    }
+    
+    private func installFooterManagerView() -> some View {
+        return SupermarketListButtonFooter(
+            removeAction: {
+                self.showFooterView = false
+            }, editAction: {
+                self.showFooterView = false
+            }, showEditManagerView: $showFooterView
+        )
     }
 }
 
