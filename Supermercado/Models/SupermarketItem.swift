@@ -19,6 +19,7 @@ public struct SupermarketItem: Codable, Equatable, Identifiable {
     public var measure: String = ""
     public var category: String = ""
     public var isDone: Bool? = false
+    public var isReadyToRemove: Bool? = false
 
    
     init(name: String = "", price: String = "", amount: String = "", discount: String = "", isDone: Bool = false) {

@@ -18,11 +18,13 @@ extension View {
 
 extension View {
 
-    func popover(isShowing: Binding<Bool>) -> some View {
+    func popover(isShowing: Binding<Bool>, action: @escaping () -> Void) -> some View {
         PopoverView(
             isShowing: isShowing,
-              presenting: { self }
+            action: action,
+            presenting: { self }
         )
+
     }
 
 }

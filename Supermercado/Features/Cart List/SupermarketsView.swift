@@ -33,10 +33,6 @@ struct SupermarketsView : View {
         return List {
                 ForEach(supermarkets) { supermarket in
                     SupermarketCell(supermarket: supermarket).environmentObject(self.supermarketService)
-                }.onDelete { indices in
-                    indices.forEach {
-                        self.supermarketService.deleteCart(withID: self.supermarketService.carts[$0].id)
-                    }
                 }
             }
             .listStyle(GroupedListStyle())

@@ -14,11 +14,16 @@ import LLVSCloudKit
 import CloudKit
 
 class SupermarketListViewModel: ObservableObject {
-    
+    var objectWillChange = PassthroughSubject<Void, Never>()
+
     let supermarketService: SupermarketService
     var cart: Cart
-    var sections: [ListSection] = []
-
+    var sections: [ListSection] = [] {
+        willSet {
+            self.objectWillChange.send()
+        }
+    }
+    
     init(cart: Cart, supermarketService: SupermarketService) {
         self.cart = cart
         self.supermarketService = supermarketService

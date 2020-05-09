@@ -15,6 +15,7 @@ struct SupermarketListView: View {
     @State private var editMode = EditMode.inactive
     @State private var showPopover: Bool = false
     @State private var countList: Int = 0
+    @State private var loadingData: Bool = false
 
     var body: some View {
         VStack {
@@ -34,50 +35,85 @@ struct SupermarketListView: View {
                                 countItems: self.viewModel.count,
                                 imageName: self.viewModel.cart.iconName.rawValue
                             )
-                            ForEach(self.supermarketService.updateSections(to: self.viewModel.cart.id)) { section in
+                            ForEach(self.supermarketService.performSections(to: self.viewModel.cart.id)) { section in
                                 TitleHeader(title: section.name)
                                 ForEach(section.items) { item in
                                     SupermarketRow(
                                         supermarketItem: item,
                                         cartID: self.viewModel.cart.id
                                     )
-                                }.onDelete { indices in
-                                    indices.forEach {
-                                        self.supermarketService.deleteItem(for: self.viewModel.cart.id, with: section.items[$0])
-                                    }
                                 }
                             }
                         }
                         .padding(32)
                     }
                 }
+                
+                if loadingData {
+                    ActivityIndicatorView()
+                }
             }
             
-            newSupermarketButon()
+            if !loadingData {
+               newSupermarketButon()
+            }
+            
         }
+
+        //.onAppear(perform: self.performShoppingList)
         .onAppear {
             UINavigationBar.appearance().backgroundColor = .white
         }
         .navigationBarItems(
-            trailing: Button(action: {
-                self.showPopover = true
-            }, label: {
-            Image("ic_option")
-                .foregroundColor(.label)
-            })
-                .contextMenu {
-                    Text("Editar")
+            trailing:
+            
+            HStack(spacing: 24) {
+                Button(action: {
+                    self.showPopover = true
+                }, label: {
+                Image("ic_more")
+                    .foregroundColor(Color("buttonAction"))
+                })
+                
+                Button(action: {
+                    print("DEBUG: - Share list!")
+                }, label: {
+                Image("ic_share")
+                    .foregroundColor(Color("buttonAction"))
+                })
             }
+
+
         )
         .navigationBarTitle(Text(self.viewModel.cart.name), displayMode: .inline)
         .accentColor(.black)
         .navigationBarColor(.systemBackground)
-        .popover(isShowing: $showPopover)
+            .popover(isShowing: $showPopover) {
+                    print("Edit mode On!!")
+            }
 
+    }
+    
+    private func performShoppingList() {
+        self.loadingData = true
+        self.supermarketService.updateSections(to: self.viewModel.cart.id) { result in
+            switch result {
+            case .success(let shopping):
+                self.viewModel.sections = shopping
+                self.loadingData.toggle()
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
     }
 
     private func newSupermarketButon() -> some View {
-        return NavigationLink(destination: SupermarketSetupView(viewModel: SupermarketSetupViewModel(cartID: self.viewModel.cart.id, supermarketItem: SupermarketItem()))) {
+        return NavigationLink(destination: SupermarketSetupView(viewModel: SupermarketSetupViewModel(
+                cartID: self.viewModel.cart.id,
+                supermarketItem: SupermarketItem()
+            )
+        )) {
             Text("Adicionar item")
                 .frame(maxWidth: .infinity)
                 .padding()

@@ -19,6 +19,7 @@ struct Cart: Model {
     var address: Address = .init()
     var avatarJPEGData: Data?
     var lastShopping: Supermarket?
+    var isReadyToRemove: Bool? = false
     
     static func == (lhs: Cart, rhs: Cart) -> Bool {
         return lhs.id == lhs.id

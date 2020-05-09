@@ -48,10 +48,15 @@ public final class SupermarketService: ObservableObject {
     
     // MARK: - Cart Store Manager
     
-    func addNewCart(_ cart: Cart) {
+    func addNewCart(cart: Cart, _ completion: @escaping (Result<Cart, CloudKitError>) -> Void) {
         let change: Value.Change = .insert(try! cart.encodeValue())
-        try! storeCoordinator.save([change])
-        sync()
+        do {
+            try storeCoordinator.save([change])
+            sync()
+            completion(.success(cart))
+        } catch {
+            completion(.failure(.unableToAddPurchase))
+        }
     }
     
     func updateCart(_ cart: Cart) {
@@ -60,11 +65,15 @@ public final class SupermarketService: ObservableObject {
         sync()
     }
     
-    func deleteCart(withID id: Cart.ID) {
+    func deleteCart(withID id: Cart.ID, _ completion: @escaping (Result<Bool, CloudKitError>) -> Void) {
         let change: Value.Change = .remove(Cart.storeValueId(for: id))
-        try! storeCoordinator.save([change])
-        sync()
-
+        do {
+            try storeCoordinator.save([change])
+            sync()
+            completion(.success(true))
+        } catch {
+            completion(.failure(.unableToRemoveCart))
+        }
     }
     
     func cart(withID id: Cart.ID) -> Cart {
@@ -81,13 +90,26 @@ public final class SupermarketService: ObservableObject {
         let cart = self.cart(withID: id)
         return cart.items.first(where: { $0.id == uuid }) ?? SupermarketItem()
     }
-
-    func updateSections(to cartID: UUID) -> [ListSection] {
+    
+    func performSections(to cartID: UUID) -> [ListSection] {
         let items = fetchItems(for: cartID)
         let categories = removeRelaceCategoryIfNeeded(to: items.map { $0.category })
         let sections = performSections(to: categories, with: cartID)
         
         return sections
+
+    }
+
+    func updateSections(to cartID: UUID, completion: @escaping (Result<[ListSection], CloudKitError>) -> Void) {
+        let items = fetchItems(for: cartID)
+        let categories = removeRelaceCategoryIfNeeded(to: items.map { $0.category })
+        let sections = performSections(to: categories, with: cartID)
+        if !sections.isEmpty {
+            completion(.success(sections))
+        } else {
+            completion(.failure(.unableToShoppingList))
+        }
+
     }
     
     private func removeRelaceCategoryIfNeeded(to categories: [String]) -> [String] {

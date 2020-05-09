@@ -41,7 +41,7 @@ struct CartEditView: View {
                 },
                 trailing:
                     Button(action: {
-                        self.supermarketService.addNewCart(self.cart)
+                                
                         self.presentationMode.wrappedValue.dismiss()
                     }
                 ) {

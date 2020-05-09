@@ -76,7 +76,6 @@ class SupermarketSetupViewModel: ObservableObject {
     private var pickerMeasureValuePublisher: AnyPublisher<Bool, Never> {
       $measureName
         .debounce(for: 0.3, scheduler: RunLoop.main)
-        .throttle(for: 0.3, scheduler: RunLoop.main, latest: true)
         .map { input in
             self.supermarketItem.measure = self.measureName
             return input.count > 0
@@ -85,11 +84,15 @@ class SupermarketSetupViewModel: ObservableObject {
     }
     
     var readyToSubmit: AnyPublisher<Bool, Never> {
-        return Publishers.CombineLatest3(isSupermarketNameValidPublisher, isAmountValidPublisher, isCategoryNameValidPublisher)
-            .map { name, category, amount in
-                return name && category && amount
-            }
-            .eraseToAnyPublisher()
+        return Publishers.CombineLatest3(
+            isSupermarketNameValidPublisher,
+            isAmountValidPublisher,
+            isCategoryNameValidPublisher
+        )
+        .map { name, category, amount in
+            return name && category && amount
+        }
+        .eraseToAnyPublisher()
     }
     
     var total: AnyPublisher<String, Never> {
