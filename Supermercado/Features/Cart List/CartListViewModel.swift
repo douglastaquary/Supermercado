@@ -11,9 +11,12 @@ import Foundation
 
 class CartListViewModel: ObservableObject {
     var objectWillChange = PassthroughSubject<Void, Never>()
+    
+    let service = SupermarketService.shared
 
     // input
-    @Published var isReadyToRemove = false
+    @Published var idsToRemove: [UUID] = []
+    
     // output
     var carts: [Cart] = [] {
         willSet {
@@ -23,26 +26,7 @@ class CartListViewModel: ObservableObject {
     
     private var cancellableSet: Set<AnyCancellable> = []
     
-    private var isCartRemoveModeValidPublisher: AnyPublisher<[Cart], Never> {
-      $isReadyToRemove
-        .debounce(for: 0.1, scheduler: RunLoop.main)
-        .removeDuplicates()
-        .map { isReady in
-            if isReady {
-                for i in 0..<self.carts.count {
-                    self.carts[i].isReadyToRemove = true
-                }
-                return self.carts
-            }
-            
-            for i in 0..<self.carts.count {
-                self.carts[i].isReadyToRemove = false
-            }
-            return self.carts
-        }
-        .eraseToAnyPublisher()
-    }
-    
+    init() {}
     
     func performEditMode(_ isReady: Bool) {
         if isReady {
@@ -54,17 +38,20 @@ class CartListViewModel: ObservableObject {
                 self.carts[i].isReadyToRemove = false
             }
         }
-    
-
     }
     
-    init() {
-
-//        isCartRemoveModeValidPublisher
-//            .receive(on: RunLoop.main)
-//            .assign(to: \.carts, on: self)
-//            .store(in: &cancellableSet)
+    
+    func deletCarts(to ids: [UUID]) {
+        _ = service
+            .deleteCarts(to: self.idsToRemove)
+            .subscribe(on: DispatchQueue.global(qos: .userInitiated))
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] newCarts in
+                self?.carts.removeAll()
+                self?.carts = newCarts ?? []
+            })
+        
     }
-
+    
 }
 

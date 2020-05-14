@@ -20,7 +20,6 @@ struct SupermarketRow: View {
     
     var actionTapRow: (SupermarketItem) -> Void
     
-    
     var body: some View {
         VStack {
             HStack {

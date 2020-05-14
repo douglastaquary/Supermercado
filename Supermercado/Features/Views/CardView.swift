@@ -11,8 +11,10 @@ import SwiftUI
 struct CardView: View {
     
     var cart: Cart
-    @Binding var isRedyToRemove: Bool
-    @State var isReadyToRemoveAction: (Cart) -> Void
+    
+    @State var didTapped: Bool = false
+    @Binding var showEditMode: Bool
+    @State var actionTappedCard: (Cart) -> Void
     
     var body: some View {
         ZStack {
@@ -23,23 +25,16 @@ struct CardView: View {
                 .frame(width: 156, height: 186, alignment: .center)
                 .shadow(radius: 5, x: 0, y: 5).opacity(0.4)
             
-            if self.isRedyToRemove {
-                Button(action: {
-                    self.isReadyToRemoveAction(self.cart)
-                    print("DEBUG: Delete item")
-                }) {
-                    HStack {
-                        Image("ic_trash")
-                            .resizable()
-                            .renderingMode(.original)
-                            .frame(width: 30, height: 30, alignment: .center)
-                    }
-                    .frame(maxWidth: 156, maxHeight: 256)
-                    .padding(.trailing, -147)
-                    .padding(.top, -178)
+            if self.showEditMode {
+                HStack {
+                    Image(showEditMode && didTapped ? "ic_check" : "ic_check_empty")
+                        .resizable()
+                        .renderingMode(.original)
+                        .frame(width: 24, height: 24, alignment: .center)
                 }
-                .buttonStyle(PlainButtonStyle())
-                
+                .frame(maxWidth: 156, maxHeight: 256)
+                .padding(.trailing, -108)
+                .padding(.top, -140)
             }
             
             VStack(alignment: .center) {
@@ -64,6 +59,10 @@ struct CardView: View {
                     .padding(.trailing, 8)
             }
         }
+        .onTapGesture {
+            self.didTapped.toggle()
+            self.actionTappedCard(self.cart)
+        }
     }
 }
 
@@ -71,6 +70,8 @@ struct CardView_Previews: PreviewProvider {
     static var previews: some View {
         CardView(
             cart: Cart(name: "Churrasco do\nBeto", iconName: .party),
-            isRedyToRemove: .constant(true), isReadyToRemoveAction: {_ in })
+            showEditMode: .constant(true),
+            actionTappedCard: { _ in }
+        )
     }
 }

@@ -38,7 +38,7 @@ struct SupermarketListView: View {
                                 countItems: self.viewModel.count,
                                 imageName: self.viewModel.cart.iconName.rawValue
                             )
-                            ForEach(self.supermarketService.performSections(to: self.viewModel.cart.id)) { section in
+                            ForEach(supermarketService.performSections(to: viewModel.cart.id)) { section in
                                 TitleHeader(title: section.name)
                                 ForEach(section.items) { item in
                                     SupermarketRow(
@@ -73,8 +73,6 @@ struct SupermarketListView: View {
             }
             
         }
-
-        //.onAppear(perform: self.performShoppingList)
         .onAppear {
             UINavigationBar.appearance().backgroundColor = .white
         }
@@ -83,7 +81,6 @@ struct SupermarketListView: View {
             
             HStack(spacing: 24) {
                 Button(action: {
-                    //self.showPopover = true
                     self.showFooterView = true
                 }, label: {
                 Image("ic_more")
@@ -107,20 +104,7 @@ struct SupermarketListView: View {
         .navigationBarColor(.systemBackground)
     }
     
-    private func performShoppingList() {
-        self.loadingData = true
-        self.supermarketService.updateSections(to: self.viewModel.cart.id) { result in
-            switch result {
-            case .success(let shopping):
-                self.viewModel.sections = shopping
-                self.loadingData.toggle()
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
-        
-    }
-    
+   
     private func installFooterViewIfNeeded() -> some View {
         return VStack {
             Rectangle()
@@ -154,18 +138,20 @@ struct SupermarketListView: View {
     }
     
     private func installFooterManagerView() -> some View {
-        return SupermarketListButtonFooter(
+        return EditManagerFooterView(
             removeAction: {
                 self.showFooterView = false
+                self.viewModel.remove(ids: self.itemsToRemove)
             }, editAction: {
                 self.showFooterView = false
             }, showEditManagerView: $showFooterView
         )
     }
+
 }
 
 struct SupermarketListView_Previews: PreviewProvider {
     static var previews: some View {
-        SupermarketListView(viewModel: SupermarketListViewModel(cart: Cart(name: "List View", iconName: .beef), supermarketService: SupermarketService())).environment(\.colorScheme, .dark)
+        SupermarketListView(viewModel: SupermarketListViewModel(cart: Cart(name: "List View", iconName: .beef))).environment(\.colorScheme, .dark)
     }
 }

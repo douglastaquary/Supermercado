@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct SupermarketListButtonFooter: View {
+struct EditManagerFooterView: View {
     @Environment(\.colorScheme) var colorScheme
     
     var removeAction: () -> Void
@@ -63,6 +63,6 @@ struct SupermarketListButtonFooter: View {
 
 struct SupermarketListButtonFooter_Previews: PreviewProvider {
     static var previews: some View {
-        SupermarketListButtonFooter(removeAction: {}, editAction: {}, showEditManagerView: .constant(true))
+        EditManagerFooterView(removeAction: {}, editAction: {}, showEditManagerView: .constant(true))
     }
 }

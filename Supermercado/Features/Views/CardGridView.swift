@@ -10,25 +10,30 @@ import SwiftUI
 
 struct CardGridView: View {
     @EnvironmentObject var supermarketService: SupermarketService
+    
     var cart: Cart
-    @Binding var isRedyToRemove: Bool
-    @State var isReadyToRemoveAction: (Cart) -> Void
+    @State var actionTappedCard: (Cart) -> Void
+    @Binding var showEditMode: Bool
     
     var body: some View {
         VStack {
-            if isRedyToRemove {
+            if showEditMode {
                 CardView(
                     cart: cart,
-                    isRedyToRemove: $isRedyToRemove,
-                    isReadyToRemoveAction: isReadyToRemoveAction
+                    showEditMode: $showEditMode,
+                    actionTappedCard: actionTappedCard
                 )
             } else {
                 NavigationLink(destination:
                     SupermarketListView(
-                        viewModel: SupermarketListViewModel(cart: cart, supermarketService: supermarketService)
+                        viewModel: SupermarketListViewModel(cart: cart)
                     ).environmentObject(self.supermarketService)
                 ) {
-                    CardView(cart: cart, isRedyToRemove: $isRedyToRemove, isReadyToRemoveAction: isReadyToRemoveAction)
+                    CardView(
+                        cart: cart,
+                        showEditMode: $showEditMode,
+                        actionTappedCard: actionTappedCard
+                    )
                 }
             }
         }
@@ -40,9 +45,8 @@ struct CardGridView_Previews: PreviewProvider {
     static var previews: some View {
         CardGridView(
             cart: Cart(name: "Churrasco do\nBeto", iconName: .party),
-            isRedyToRemove: .constant(true),
-            isReadyToRemoveAction: { _ in }
+            actionTappedCard: { _ in },
+            showEditMode: .constant(true)
         )
-        //.environment(\.colorScheme, .dark)
     }
 }

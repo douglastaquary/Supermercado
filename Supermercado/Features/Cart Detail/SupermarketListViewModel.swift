@@ -16,36 +16,51 @@ import CloudKit
 class SupermarketListViewModel: ObservableObject {
     var objectWillChange = PassthroughSubject<Void, Never>()
 
-    let supermarketService: SupermarketService
-    var cart: Cart
-    var sections: [ListSection] = [] {
-        willSet {
-            self.objectWillChange.send()
-        }
-    }
+    let service = SupermarketService.shared
     
-    init(cart: Cart, supermarketService: SupermarketService) {
+    @Published var idsToRemove: [UUID] = []
+    @Published var loadingData: Bool = false
+    private var cancellableSet: Set<AnyCancellable> = []
+    
+    var cart: Cart
+    @Published var sections: [ListSection] = []
+    
+    init(cart: Cart) {
         self.cart = cart
-        self.supermarketService = supermarketService
+        
+        _ = service
+            .updateSections(to: cart.id)
+            .subscribe(on: DispatchQueue.global(qos: .userInitiated))
+            .receive(on: DispatchQueue.main)
+            .assign(to: \.sections, on: self)
+            .store(in: &cancellableSet)
     }
 
     var items: [SupermarketItem] {
-        return supermarketService.fetchItems(for: cart.id)
+        return service.fetchItems(for: cart.id)
     }
     
     var count: Int {
         return items.count
     }
     
-    var rows: [ListSection] {
-       return updateSections()
-    }
-
     public func updateSections() -> [ListSection] {
         let categories = removeRelaceCategoryIfNeeded(to: items.map { $0.category })
         let sections = performSections(to: categories)
-        
+    
         return sections
+    }
+    
+    func remove(ids: [UUID]) {
+        _ = service
+            .performDeleteItems(for: cart.id, with: ids)
+            .subscribe(on: DispatchQueue.global(qos: .userInitiated))
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] sorted in
+                self?.sections.removeAll()
+                self?.sections = sorted ?? []
+            })
+        
     }
     
     private func removeRelaceCategoryIfNeeded(to categories: [String]) -> [String] {
@@ -83,31 +98,31 @@ class SupermarketListViewModel: ObservableObject {
     // MARK: - CRUD
     
     func addItem(for id: Cart.ID, with content: SupermarketItem) {
-        var item = supermarketService.cart(withID: id)
+        var item = service.cart(withID: id)
         item.items.append(content)
-        supermarketService.sync()
+        service.sync()
     }
 
     func updateItem(for id: Cart.ID, with content: SupermarketItem) {
-        var item = supermarketService.cart(withID: id)
+        var item = service.cart(withID: id)
         item.items.removeAll(where: { $0.id == content.id})
-        supermarketService.sync()
+        service.sync()
     }
     
     func deleteItem(for id: Cart.ID, with content: SupermarketItem) {
-        var supermarket = supermarketService.cart(withID: id)
+        var supermarket = service.cart(withID: id)
         supermarket.items.removeAll(where: { $0.id == content.id})
-        supermarketService.sync()
+        service.sync()
     }
     
     func supermarket(withID id: Cart.ID) -> Cart {
-        return supermarketService.carts.first(where:
+        return service.carts.first(where:
             { $0.id == id }
         ) ?? Cart(name: "", iconName: .undefined)
     }
     
     func fetchItem(for id: Cart.ID, with uuid: UUID) -> SupermarketItem {
-        let cart = supermarketService.cart(withID: id)
+        let cart = service.cart(withID: id)
         return cart.items.first(where: { $0.id == uuid }) ?? SupermarketItem()
     }
 
