@@ -17,6 +17,7 @@ struct SupermarketListView: View {
     @State private var countList: Int = 0
     @State private var loadingData: Bool = false
     @State private var showFooterView: Bool = false
+    @State private var headerItemsCount: Int = 0
     
     @State private var itemsToRemove: [UUID] = []
 
@@ -35,7 +36,7 @@ struct SupermarketListView: View {
                         VStack {
                             InformationHeaderView(
                                 titleHeader: self.viewModel.cart.name,
-                                countItems: self.viewModel.count,
+                                countItems: $headerItemsCount,//self.supermarketService.listItemCount(to: viewModel.cart.id),
                                 imageName: self.viewModel.cart.iconName.rawValue
                             )
                             ForEach(supermarketService.performSections(to: viewModel.cart.id)) { section in
@@ -75,6 +76,7 @@ struct SupermarketListView: View {
         }
         .onAppear {
             UINavigationBar.appearance().backgroundColor = .white
+            self.updateHeaderCount()
         }
         .navigationBarItems(
             trailing:
@@ -154,10 +156,15 @@ struct SupermarketListView: View {
             .performDeleteItems(for: viewModel.cart.id, with: ids)
             .subscribe(on: DispatchQueue.global(qos: .userInitiated))
             .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { sorted in
+            .sink(receiveValue: { _ in
+                self.updateHeaderCount()
                 print("Did update supermarkets! ")
             })
         
+    }
+    
+    private func updateHeaderCount() {
+       self.headerItemsCount = self.supermarketService.listItemCount(to: self.viewModel.cart.id)
     }
 
 }
