@@ -51,18 +51,6 @@ class SupermarketListViewModel: ObservableObject {
         return sections
     }
     
-    func remove(ids: [UUID]) {
-        _ = service
-            .performDeleteItems(for: cart.id, with: ids)
-            .subscribe(on: DispatchQueue.global(qos: .userInitiated))
-            .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] sorted in
-                self?.sections.removeAll()
-                self?.sections = sorted ?? []
-            })
-        
-    }
-    
     private func removeRelaceCategoryIfNeeded(to categories: [String]) -> [String] {
         var validCategories: [String] = []
         

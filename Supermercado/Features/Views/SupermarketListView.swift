@@ -141,11 +141,23 @@ struct SupermarketListView: View {
         return EditManagerFooterView(
             removeAction: {
                 self.showFooterView = false
-                self.viewModel.remove(ids: self.itemsToRemove)
+                self.remove(ids: self.itemsToRemove)
             }, editAction: {
                 self.showFooterView = false
             }, showEditManagerView: $showFooterView
         )
+    }
+    
+    
+    func remove(ids: [UUID]) {
+        _ = supermarketService
+            .performDeleteItems(for: viewModel.cart.id, with: ids)
+            .subscribe(on: DispatchQueue.global(qos: .userInitiated))
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { sorted in
+                print("Did update supermarkets! ")
+            })
+        
     }
 
 }
