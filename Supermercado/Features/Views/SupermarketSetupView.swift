@@ -19,10 +19,8 @@ struct SupermarketSetupView: View {
     @State private var nameSujestionText: String = ""
     @State private var amountText: String = ""
     @State private var howMuchText: String = ""
-    @State private var categoryText: String = "Medida"
     @State private var measureText: String = ""
     @State private var selectedCategory: Int = 0
-    @State private var selectedMeasure: Int = 0
     @State private var isFocused: Bool = false
     @State private var showPopover: Bool = false
     
@@ -31,20 +29,7 @@ struct SupermarketSetupView: View {
     @State private var image: UIImage?
     @State private var sourceType: UIImagePickerController.SourceType = .camera
     @State fileprivate var pickerMode: PickerMode = .category
-    
-    @State var someNumber = 123.0
 
-    var someNumberProxy: Binding<String> {
-        Binding<String>(
-            get: { String(format: "%.02f", Double(self.someNumber)) },
-            set: {
-                if let value = NumberFormatter().number(from: $0) {
-                    self.someNumber = value.doubleValue
-                }
-            }
-        )
-    }
-    
     var body: some View {
         VStack {
             ZStack {
@@ -182,7 +167,7 @@ struct SupermarketSetupView: View {
                     .font(.body)
                     .foregroundColor(.label)
                     .frame(maxWidth: .infinity, maxHeight: 24)
-                    .keyboardType(.numberPad)
+                    .keyboardType(.numbersAndPunctuation)
                 
                 Image("ic_down")
                     .accentColor(Color.primary)
@@ -198,7 +183,9 @@ struct SupermarketSetupView: View {
     private func howMuchTextField() -> some View {
         let howMuchText = Binding<String>(get: { () -> String in
             let valueString = "\(self.viewModel.value)"
-            let decimalResult = Decimal(fromString: valueString).toBrazilianRealString()
+            let decimalResult = Decimal(
+                fromString: valueString
+            ).toBrazilianRealString(withDollarSymbol: true)
             
             return decimalResult
         }) { (string) in
@@ -206,7 +193,6 @@ struct SupermarketSetupView: View {
             string.removeAll { (c) -> Bool in
                 !c.isNumber
             }
-            
             self.viewModel.howMuchText = string
         }
         
@@ -227,19 +213,30 @@ struct SupermarketSetupView: View {
     
     private func nameTextField() -> some View {
         return VStack(alignment: .leading) {
-            TextField("Qual produto deseja adicionar?", text: $viewModel.supermarketName)
+            TextField("Qual produto deseja adicionar?", text: $viewModel.supermarketName, onEditingChanged: onEditingChanged(_:), onCommit: onCommit)
+                .disabled(self.viewModel.disableTextField)
                 .font(.body)
                 .foregroundColor(.label)
                 .frame(maxWidth: .infinity, maxHeight: 24)
             Rectangle()
                 .frame(maxWidth: .infinity, maxHeight: 1)
                 .foregroundColor(Color("secondaryText"))
-            Text(self.viewModel.supermarketMessage)
-                .foregroundColor(Color("secondaryText"))
-                .font(.subheadline)
+            HStack {
+                Text(self.viewModel.supermarketMessage)
+                    .multilineTextAlignment(.leading)
+                    .foregroundColor(Color("secondaryText"))
+                    .font(.subheadline)
+            }
         }
     }
     
+    func onCommit() {
+        print("commit")
+    }
+
+    func onEditingChanged(_ changed: Bool) {
+        print(changed)
+    }
     
     private func categoryView() -> some View {
         return VStack {
@@ -268,7 +265,7 @@ struct SupermarketSetupView: View {
                     .font(.body)
                     .foregroundColor(.label)
                     .frame(maxWidth: .infinity, maxHeight: 24)
-                    .keyboardType(.numbersAndPunctuation)
+                    .keyboardType(.alphabet)
             }
             
             Rectangle()

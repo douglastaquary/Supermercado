@@ -11,6 +11,9 @@ import SwiftUI
 import Foundation
 
 class SupermarketSetupViewModel: ObservableObject {
+    
+    let characterLimit: Int = 60
+    
     // input
     @Published var supermarketName = ""
     @Published var categoryName = ""
@@ -27,21 +30,28 @@ class SupermarketSetupViewModel: ObservableObject {
     @Published var measuresTitle = ""
     @Published var totalValue = ""
     @Published var isValid = false
+    @Published var disableTextField = false
     @Published var isCategoryValid = false
     
     private var cancellableSet: Set<AnyCancellable> = []    
     
     private var isSupermarketNameValidPublisher: AnyPublisher<Bool, Never> {
       $supermarketName
-        .debounce(for: 0.3, scheduler: RunLoop.main)
+        //.debounce(for: 0.1, scheduler: RunLoop.main)
         .removeDuplicates()
         .map { input in
+            if input.count != 60 {
+                self.disableTextField = false
+                self.supermarketMessage = "\(input.count) a 60"
+            } else {
+                self.disableTextField = true
+            }
             self.supermarketItem.name = self.supermarketName
             return input.count >= 3
         }
         .eraseToAnyPublisher()
     }
-    
+
     private var isAmountValidPublisher: AnyPublisher<Bool, Never> {
       $amount
         .debounce(for: 0.2, scheduler: RunLoop.main)
@@ -110,28 +120,18 @@ class SupermarketSetupViewModel: ObservableObject {
             .eraseToAnyPublisher()
     }
     
-    var currencyFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-        formatter.usesGroupingSeparator = true
-        formatter.numberStyle = .currency
-        formatter.groupingSeparator = "."
-        
-        //        formatter.minimumFractionDigits = .
-        //        formatter.maximumFractionDigits = NumberFormatter.currency.maximumFractionDigits
-        return formatter
-    }()
-    
+
     init(cartID: UUID, supermarketItem: SupermarketItem) {
         self.cartID = cartID
         self.supermarketItem = supermarketItem
         
-        isSupermarketNameValidPublisher
-            .receive(on: RunLoop.main)
-            .map { valid in
-                valid ? "0 a 60" : "O nome do item de compra não pode estar vazio"
-            }
-            .assign(to: \.supermarketMessage, on: self)
-            .store(in: &cancellableSet)
+//        isSupermarketNameCountValidPublisher
+//            .receive(on: RunLoop.main)
+//            .map { inputCount in
+//                "\(inputCount) a 60"
+//            }
+//            .assign(to: \.supermarketMessage, on: self)
+//            .store(in: &cancellableSet)
         
 //        isHowMuchTextValidPublisher
 //            .receive(on: RunLoop.main)
