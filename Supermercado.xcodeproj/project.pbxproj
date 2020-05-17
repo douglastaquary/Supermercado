@@ -74,6 +74,7 @@
 		4EC350C52432E89D00245842 /* LLVS in Frameworks */ = {isa = PBXBuildFile; productRef = 4EC350C42432E89D00245842 /* LLVS */; };
 		4EC350C92432E8EC00245842 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EC350C82432E8EC00245842 /* CloudKit.framework */; };
 		4ECD972D244E8FBF00F4C6DA /* CartFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECD972C244E8FBF00F4C6DA /* CartFormViewModel.swift */; };
+		4ED2F5EF247084C900ECDA88 /* Decimal+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED2F5EE247084C900ECDA88 /* Decimal+Extensions.swift */; };
 		4EF0703F24312BE0006F94B9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF0703E24312BE0006F94B9 /* AppDelegate.swift */; };
 		4EF0704124312BE0006F94B9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF0704024312BE0006F94B9 /* SceneDelegate.swift */; };
 		4EF0704524312BE1006F94B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4EF0704424312BE1006F94B9 /* Assets.xcassets */; };
@@ -149,6 +150,7 @@
 		4EC350C62432E8E900245842 /* Supermercado.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Supermercado.entitlements; sourceTree = "<group>"; };
 		4EC350C82432E8EC00245842 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		4ECD972C244E8FBF00F4C6DA /* CartFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartFormViewModel.swift; sourceTree = "<group>"; };
+		4ED2F5EE247084C900ECDA88 /* Decimal+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Decimal+Extensions.swift"; sourceTree = "<group>"; };
 		4EF0703B24312BE0006F94B9 /* Supermercado.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Supermercado.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EF0703E24312BE0006F94B9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4EF0704024312BE0006F94B9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -409,6 +411,7 @@
 				4E5FAA9E244F55EC00E69B1F /* Views+Haptic.swift */,
 				4E5FAAA0244F756E00E69B1F /* Colors+Extensions.swift */,
 				4E8012A2245F778200619842 /* UIResponder+Current.swift */,
+				4ED2F5EE247084C900ECDA88 /* Decimal+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -508,6 +511,7 @@
 				4E5FAAAC2457B0FE00E69B1F /* HomeItem.swift in Sources */,
 				4E9B6D9E243E224D002297E8 /* AddCartView.swift in Sources */,
 				4EC350B82432E84100245842 /* SupermarketItemCell.swift in Sources */,
+				4ED2F5EF247084C900ECDA88 /* Decimal+Extensions.swift in Sources */,
 				4EF0703F24312BE0006F94B9 /* AppDelegate.swift in Sources */,
 				4E8012A8246244FE00619842 /* ActivityIndicatorView.swift in Sources */,
 				4E80129D245E16B400619842 /* PopoverView.swift in Sources */,
