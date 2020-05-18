@@ -25,10 +25,10 @@ struct MarketView: View {
                     Text(place.name ?? "")
                         .font(.system(size: 16, weight: .medium))
                         .foregroundColor(.label)
-                    Text(expectedTravelTimeWalking)//"• 10 min - 750 m")
+                    Text(expectedTravelTimeWalking)
                         .font(.system(size: 12, weight: .regular, design: .default))
                         .foregroundColor(Color("primary"))
-                    Text( "\(place.placemark.title ?? "")")//"R. das Ameixeiras,\n400 - Jabaquara, São Paulo")
+                    Text( "\(place.placemark.title ?? "")")
                         .font(.system(size: 14, weight: .regular, design: .default))
                         .foregroundColor(.secondaryLabel)
                 }

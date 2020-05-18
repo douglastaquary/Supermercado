@@ -38,7 +38,7 @@ class NearestMarketViewModel: ObservableObject {
         let region = MKCoordinateRegion(center: location, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
 
         searchRequest.region = region
-        searchRequest.naturalLanguageQuery = "market"
+        searchRequest.naturalLanguageQuery = "supermarket"
         
         // Include only point of interest results. This excludes results based on address matches.
         searchRequest.resultTypes = .pointOfInterest
@@ -48,34 +48,12 @@ class NearestMarketViewModel: ObservableObject {
         localSearch.start { [unowned self] (response, error) in
             guard error == nil else {
                 self.loadingPlaces = false
-                //self.displaySearchError(error)
                 return
             }
             
             self.places = response?.mapItems ?? []
             self.loadingPlaces = false
  
-        }
-    }
-    
-    
-    func arrivalTimeWalking(of origin: CLLocationCoordinate2D?, to destination: CLLocationCoordinate2D, _ completion: @escaping (String) -> Void) {
-        
-        if let originCoordinate = origin {
-            let source = MKPlacemark(coordinate: originCoordinate)
-            let destination = MKPlacemark(coordinate: destination)
-            request.source = MKMapItem(placemark: source)
-            request.destination = MKMapItem(placemark: destination)
-            
-            // Specify the transportation type
-            request.transportType = .walking
-            
-            let directions = MKDirections(request: request)
-            directions.calculate { (response, error) in
-                if let response = response, let route = response.routes.first {
-                    completion("\(route.expectedTravelTime.string(style: .short)) a pé • \(Int(route.distance)) m")
-                }
-            }
         }
     }
 

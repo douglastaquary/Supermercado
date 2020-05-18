@@ -25,13 +25,22 @@ struct NearestMarketView: View {
                     .foregroundColor(Color.secondary)
                     .padding(.leading)
                 
-                MapView(locationManager: $locationManager, showMapAlert: $showMapAlert)
-                    .alert(isPresented: $showMapAlert) {
-                      Alert(title: Text("Acesso à localização negado"),
-                            message: Text("Sua localização é necessária."),
-                            primaryButton: .cancel(),
-                            secondaryButton: .default(Text("Configurações"),
-                                                      action: { self.goToDeviceSettings() }))
+                MapView(
+                    locationManager: $locationManager,
+                    showMapAlert: $showMapAlert
+                )
+                .alert(isPresented: $showMapAlert) {
+                    Alert(
+                        title: Text("Acesso à localização negado"),
+                        message: Text("Sua localização é necessária."),
+                        primaryButton: .cancel(),
+                        secondaryButton: .default(Text("Configurações"),
+                                                
+                        action: {
+                            self.goToDeviceSettings()
+                            
+                        })
+                    )
                 }
             }
             .padding(.top, 24)
