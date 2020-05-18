@@ -46,3 +46,15 @@ extension Decimal {
         return ""
     }
 }
+
+
+extension TimeInterval {
+    func string(style: DateComponentsFormatter.UnitsStyle) -> String {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.minute]
+        formatter.unitsStyle = style
+        guard let formattedString = formatter.string(from: self) else { return "" }
+        return formattedString
+    }
+
+}

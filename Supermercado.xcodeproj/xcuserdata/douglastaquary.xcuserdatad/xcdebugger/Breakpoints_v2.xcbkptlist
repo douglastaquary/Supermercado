@@ -64,7 +64,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "30"
                   endingLineNumber = "30"
-                  offsetFromSymbolStart = "480">
+                  offsetFromSymbolStart = "452">
                </Location>
                <Location
                   uuid = "DA7E6F1C-1F24-4B16-9F4F-5C6215E30551 - 2a32b4872d22bb"
@@ -79,7 +79,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "30"
                   endingLineNumber = "30"
-                  offsetFromSymbolStart = "0">
+                  offsetFromSymbolStart = "4">
                </Location>
                <Location
                   uuid = "DA7E6F1C-1F24-4B16-9F4F-5C6215E30551 - ba4fd258037873f2"
@@ -94,7 +94,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "32"
                   endingLineNumber = "32"
-                  offsetFromSymbolStart = "144">
+                  offsetFromSymbolStart = "120">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -141,6 +141,22 @@
             startingLineNumber = "45"
             endingLineNumber = "45"
             landmarkName = "deletCarts(to:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A43DE6C9-42BC-4647-A3A1-264D6017C363"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Supermercado/Features/Nearest map/NearestMarketViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
+            landmarkName = "search(to:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
