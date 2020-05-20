@@ -1,5 +1,5 @@
 [![Swift 5.2](https://img.shields.io/badge/swift-5.2-ED523F.svg?style=flat)](https://swift.org/download/)
-![Xcode Build](https://github.com/douglastaquary/Supermercado/workflows/Xcode%20Build/badge.svg?branch=master)
+![Xcode build](https://github.com/douglastaquary/Supermercado/workflows/Xcode%20build/badge.svg?branch=master)
 
 # 🥗 Supermercado
 
