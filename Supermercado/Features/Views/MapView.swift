@@ -13,17 +13,15 @@ struct MapView: UIViewRepresentable {
     
     @Binding var locationManager: CLLocationManager
     @Binding var showMapAlert: Bool
+    @Binding var annotations: [MKPointAnnotation]
     
     let mapView = MKMapView()
-    
     let span: MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
-    
-    var supermarkets: [MKPlacemark] = []
     
     func makeUIView(context: Context) -> MKMapView {
         locationManager.delegate = context.coordinator
         mapView.delegate = context.coordinator
-    
+        
         return mapView
     }
 
@@ -42,14 +40,8 @@ struct MapView: UIViewRepresentable {
             let region = MKCoordinateRegion(center: location, span: span)
             view.setRegion(region, animated: true)
         }
-        
-        
-        for placemark in supermarkets {
-            let placemarkAnnotation = MKPointAnnotation()
-            placemarkAnnotation.coordinate = placemark.coordinate
-            placemarkAnnotation.title = placemark.title
-            view.addAnnotation(placemarkAnnotation)
-        }
+                
+         mapView.addAnnotations(self.annotations)
     }
 
     ///Use class Coordinator method
@@ -88,38 +80,41 @@ struct MapView: UIViewRepresentable {
             }
             mapView.locationManager.startUpdatingLocation()
         }
+        
+
+        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+            guard annotation is MKPointAnnotation else { return nil }
+
+            let identifier = "Annotation"
+            var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+
+            if annotationView == nil {
+                annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+                annotationView!.canShowCallout = true
+            } else {
+                annotationView!.annotation = annotation
+            }
+
+            return annotationView
+        }
+        
     }
-    
 }
     
 
 //-23.5965911, -46.6867937
 struct MapView_Previews: PreviewProvider {
     static var previews: some View {
-        MapView(locationManager: .constant(CLLocationManager()), showMapAlert: .constant(false))
+        MapView(locationManager: .constant(CLLocationManager()), showMapAlert: .constant(false), annotations: .constant([MKPointAnnotation.example]))
     }
 }
-    
-    
-
-
-final class Checkpoint: NSObject, MKAnnotation {
-  let title: String?
-  let coordinate: CLLocationCoordinate2D
-  
-  init(title: String?, coordinate: CLLocationCoordinate2D) {
-    self.title = title
-    self.coordinate = coordinate
-  }
-}
-
 
 extension MKPointAnnotation {
     static var example: MKPointAnnotation {
         let annotation = MKPointAnnotation()
-        annotation.title = "London"
-        annotation.subtitle = "Home to the 2012 Summer Olympics."
-        annotation.coordinate = CLLocationCoordinate2D(latitude: 51.5, longitude: -0.13)
+        annotation.title = "Home"
+        annotation.subtitle = "Any where street"
+        annotation.coordinate = CLLocationCoordinate2D(latitude: -23.5965911, longitude: -46.6867937)
         return annotation
     }
 }

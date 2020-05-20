@@ -27,7 +27,8 @@ struct NearestMarketView: View {
                 
                 MapView(
                     locationManager: $locationManager,
-                    showMapAlert: $showMapAlert
+                    showMapAlert: $showMapAlert,
+                    annotations: $viewModel.currentAnnotations
                 )
                 .alert(isPresented: $showMapAlert) {
                     Alert(

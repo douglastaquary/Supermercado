@@ -22,8 +22,6 @@ struct CartListView: View {
     @State var cartToRemove: Cart?
     @State private var showFooterView: Bool = false
     @State private var cartIdsToRemove: [UUID] = []
-
-    
     @State var carts: [Cart] = []
 
     var body: some View {

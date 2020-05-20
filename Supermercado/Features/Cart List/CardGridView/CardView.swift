@@ -35,6 +35,10 @@ struct CardView: View {
                 .frame(maxWidth: 156, maxHeight: 256)
                 .padding(.trailing, -108)
                 .padding(.top, -140)
+                .onTapGesture {
+                    self.didTapped.toggle()
+                    self.actionTappedCard(self.cart)
+                }
             }
             
             VStack(alignment: .center) {
@@ -59,10 +63,7 @@ struct CardView: View {
                     .padding(.trailing, 8)
             }
         }
-        .onTapGesture {
-            self.didTapped.toggle()
-            self.actionTappedCard(self.cart)
-        }
+
     }
 }
 

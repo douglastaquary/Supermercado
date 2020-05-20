@@ -20,6 +20,8 @@ class NearestMarketViewModel: ObservableObject {
         return locationManager.location?.coordinate ?? CLLocationCoordinate2D()
     }
     
+    @Published var currentAnnotations: [MKPointAnnotation] = []
+    
     // input
     @Published var idsToRemove: [UUID] = []
     @Published var places: [MKMapItem] = []
@@ -52,9 +54,23 @@ class NearestMarketViewModel: ObservableObject {
             }
             
             self.places = response?.mapItems ?? []
+            self.currentAnnotations = self.setupAnnotationFactory(to: self.places)
             self.loadingPlaces = false
  
         }
+    }
+    
+    func setupAnnotationFactory(to places: [MKMapItem]) -> [MKPointAnnotation] {
+        var newPlaces: [MKPointAnnotation] = []
+        for place in places {
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = place.placemark.coordinate
+            annotation.title = place.name
+            annotation.subtitle = place.placemark.title
+            newPlaces.append(annotation)
+        }
+        
+        return newPlaces
     }
 
 }
