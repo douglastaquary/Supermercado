@@ -1,9 +1,20 @@
-[![Swift 5.2](https://img.shields.io/badge/swift-5.2-ED523F.svg?style=flat)](https://swift.org/download/)
-![Xcode build](https://github.com/douglastaquary/Supermercado/workflows/Xcode%20build/badge.svg?branch=master)
-
 # 🥗 Supermercado
 
+<p align="leading">
+    <img src="https://github.com/douglastaquary/Supermercado/workflows/Xcode%20build/badge.svg?branch=master" />
+    <img src="https://img.shields.io/badge/Swift-5.2-orange.svg" />
+    <a href="https://swift.org/package-manager">
+        <img src="https://img.shields.io/badge/swiftpm-compatible-brightgreen.svg?style=flat" alt="Swift Package Manager" />
+    </a>
+     <img src="http://img.shields.io/badge/platforms-ios-brightgreen.svg?style=flat" alt="iOS" />
+    <a href="https://twitter.com/bluesprogrammer">
+        <img src="https://img.shields.io/badge/twitter-@bluesprogrammer-blue.svg?style=flat" alt="Twitter: @bluesprogrammer" />
+    </a>
+</p>
+
+
 [You can now download the app on the App Store!]()
+
 
 # 📝 Top list SwiftUI application!
 
