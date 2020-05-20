@@ -1,0 +1,23 @@
+name: XCode Build
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: XCode Tests
+      run: swift test 
+    
+    - name: Xcode build iOS App
+      run: |
+        cd Supermercado/
+        xcodebuild clean build -scheme Supermercado -destination 'platform=iOS Simulator,name=iPhone 11,OS=13.4'
