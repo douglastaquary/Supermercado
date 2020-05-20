@@ -11,7 +11,8 @@ import LLVSCloudKit
 import CloudKit
 import Combine
 
-public final class SupermarketService: ObservableObject {
+public class SupermarketService: ObservableObject {
+    public static let shared =  SupermarketService()
     
     static let identifier = "iCloud.com.douglastaquary.mercado"
     static let mainZone = "MainZone"
@@ -65,15 +66,21 @@ public final class SupermarketService: ObservableObject {
         sync()
     }
     
-    func deleteCart(withID id: Cart.ID, _ completion: @escaping (Result<Bool, CloudKitError>) -> Void) {
-        let change: Value.Change = .remove(Cart.storeValueId(for: id))
-        do {
-            try storeCoordinator.save([change])
-            sync()
-            completion(.success(true))
-        } catch {
-            completion(.failure(.unableToRemoveCart))
-        }
+    func deleteCarts(to ids: [Cart.ID]) -> AnyPublisher<[Cart]?, Never>  {
+        return Future { [weak self] resolve in
+            for id in ids {
+                let change: Value.Change = .remove(Cart.storeValueId(for: id))
+                do {
+                    try self?.storeCoordinator.save([change])
+                    self?.sync()
+                } catch {
+                    print("Error when deletes carts: \(error.localizedDescription)")
+                }
+            }
+            
+            return resolve(.success(self?.carts))
+            
+        }.eraseToAnyPublisher()
     }
     
     func cart(withID id: Cart.ID) -> Cart {
@@ -100,16 +107,22 @@ public final class SupermarketService: ObservableObject {
 
     }
 
-    func updateSections(to cartID: UUID, completion: @escaping (Result<[ListSection], CloudKitError>) -> Void) {
+    func updateSections(to cartID: UUID) -> AnyPublisher<[ListSection], Never> {
+        return Future { [weak self] resolve in
+            let items = self?.fetchItems(for: cartID)
+            let categories = self?.removeRelaceCategoryIfNeeded(to: items?.map { $0.category } ?? [])
+            let sections = self?.performSections(to: categories ?? [], with: cartID)
+            return resolve(.success(sections ?? []))
+            
+        }.eraseToAnyPublisher()
+    }
+    
+    func createSections(to cartID: UUID) -> [ListSection] {
         let items = fetchItems(for: cartID)
         let categories = removeRelaceCategoryIfNeeded(to: items.map { $0.category })
         let sections = performSections(to: categories, with: cartID)
-        if !sections.isEmpty {
-            completion(.success(sections))
-        } else {
-            completion(.failure(.unableToShoppingList))
-        }
-
+        
+        return sections
     }
     
     private func removeRelaceCategoryIfNeeded(to categories: [String]) -> [String] {
@@ -147,9 +160,7 @@ public final class SupermarketService: ObservableObject {
 
     
     func fetchItems(for id: Cart.ID) -> [SupermarketItem] {
-        
         let cart = self.cart(withID: id)
-        
         return cart.items
     }
     
@@ -160,10 +171,21 @@ public final class SupermarketService: ObservableObject {
         sync()
     }
     
-    func deleteItem(for id: Cart.ID, with content: SupermarketItem) {
-        var cart = self.cart(withID: id)
-        cart.items.removeAll(where: { $0.id == content.id})
-        updateCart(cart)
+    func performDeleteItems(for id: Cart.ID, with ids: [UUID]) -> AnyPublisher<[ListSection]?, Never> {
+        return Future { [weak self] resolve in
+            
+            var sections: [ListSection] = []
+            var cart = self?.cart(withID: id) ?? Cart(name: "", iconName: IconName.undefined)
+            
+            for itemID in ids {
+                cart.items.removeAll(where: { $0.id == itemID })
+                self?.updateCart(cart)
+            }
+            
+            sections = self?.createSections(to: cart.id) ?? []
+            return resolve(.success(sections))
+            
+        }.eraseToAnyPublisher()
     }
     
     // MARK: Syncing

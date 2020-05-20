@@ -11,7 +11,7 @@ import SwiftUI
 struct InformationHeaderView: View {
     
     @State var titleHeader: String = ""
-    @State var countItems: Int = 0
+    @Binding var countItems: Int
     @State var imageName: String = "Outros" 
     
     var body: some View {
@@ -74,6 +74,6 @@ struct InformationHeaderView: View {
 
 struct InformationHeaderView_Previews: PreviewProvider {
     static var previews: some View {
-        InformationHeaderView().environment(\.colorScheme, .dark)
+        InformationHeaderView(countItems: .constant(1)).environment(\.colorScheme, .dark)
     }
 }

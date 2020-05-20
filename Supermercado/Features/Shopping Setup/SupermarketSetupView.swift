@@ -19,10 +19,8 @@ struct SupermarketSetupView: View {
     @State private var nameSujestionText: String = ""
     @State private var amountText: String = ""
     @State private var howMuchText: String = ""
-    @State private var categoryText: String = "Medida"
     @State private var measureText: String = ""
     @State private var selectedCategory: Int = 0
-    @State private var selectedMeasure: Int = 0
     @State private var isFocused: Bool = false
     @State private var showPopover: Bool = false
     
@@ -31,7 +29,7 @@ struct SupermarketSetupView: View {
     @State private var image: UIImage?
     @State private var sourceType: UIImagePickerController.SourceType = .camera
     @State fileprivate var pickerMode: PickerMode = .category
-    
+
     var body: some View {
         VStack {
             ZStack {
@@ -101,9 +99,7 @@ struct SupermarketSetupView: View {
                             }
                         measureView()
                              .onTapGesture {
-                                 self.pickerMode = .measure
-                                 self.hideKeyboard()
-                                 self.modalPresented = true
+                                 self.modalPresented = false
                                  self.isFocused = true
                              }
                     }
@@ -149,7 +145,6 @@ struct SupermarketSetupView: View {
             }
             .onAppear {
                 UINavigationBar.appearance().backgroundColor = .white
-                self.viewModel.measureName = Mock.Setup.measures[self.selectedMeasure].tipo
                 self.viewModel.categoryName = Mock.Setup.categories[self.selectedCategory].tipo
             }
             .navigationBarTitle(Text("Adicionar item"), displayMode: .inline)
@@ -172,26 +167,6 @@ struct SupermarketSetupView: View {
                     .font(.body)
                     .foregroundColor(.label)
                     .frame(maxWidth: .infinity, maxHeight: 24)
-                    .keyboardType(.numberPad)
-                
-                Image("ic_down")
-                    .accentColor(Color.primary)
-                    .frame(width: 28, height: 28)
-            }
-            
-            Rectangle()
-                .frame(maxWidth: .infinity, maxHeight: 1)
-                .foregroundColor(Color("secondaryText"))
-        }
-    }
-    
-    private func howMuchTextField() -> some View {
-        return VStack {
-            HStack {
-                TextField("Quanto custa?", text: $viewModel.howMuchText)
-                    .font(.body)
-                    .foregroundColor(.label)
-                    .frame(maxWidth: .infinity, maxHeight: 24)
                     .keyboardType(.numbersAndPunctuation)
                 
                 Image("ic_down")
@@ -205,21 +180,63 @@ struct SupermarketSetupView: View {
         }
     }
     
+    private func howMuchTextField() -> some View {
+        let howMuchText = Binding<String>(get: { () -> String in
+            let valueString = "\(self.viewModel.value)"
+            let decimalResult = Decimal(
+                fromString: valueString
+            ).toBrazilianRealString(withDollarSymbol: true)
+            
+            return decimalResult
+        }) { (string) in
+            var string = string
+            string.removeAll { (c) -> Bool in
+                !c.isNumber
+            }
+            self.viewModel.howMuchText = string
+        }
+        
+        return VStack {
+            HStack {
+                TextField("Quanto custa?", text: howMuchText)
+                    .font(.body)
+                    .foregroundColor(.label)
+                    .frame(maxWidth: .infinity, maxHeight: 24)
+                    .keyboardType(.numbersAndPunctuation)
+            }
+            
+            Rectangle()
+                .frame(maxWidth: .infinity, maxHeight: 1)
+                .foregroundColor(Color("secondaryText"))
+        }
+    }
+    
     private func nameTextField() -> some View {
         return VStack(alignment: .leading) {
-            TextField("Qual produto deseja adicionar?", text: $viewModel.supermarketName)
+            TextField("Qual produto deseja adicionar?", text: $viewModel.supermarketName, onEditingChanged: onEditingChanged(_:), onCommit: onCommit)
+                .disabled(self.viewModel.disableTextField)
                 .font(.body)
                 .foregroundColor(.label)
                 .frame(maxWidth: .infinity, maxHeight: 24)
             Rectangle()
                 .frame(maxWidth: .infinity, maxHeight: 1)
                 .foregroundColor(Color("secondaryText"))
-            Text(self.viewModel.supermarketMessage)
-                .foregroundColor(Color("secondaryText"))
-                .font(.subheadline)
+            HStack {
+                Text(self.viewModel.supermarketMessage)
+                    .multilineTextAlignment(.leading)
+                    .foregroundColor(Color("secondaryText"))
+                    .font(.subheadline)
+            }
         }
     }
     
+    func onCommit() {
+        print("commit")
+    }
+
+    func onEditingChanged(_ changed: Bool) {
+        print(changed)
+    }
     
     private func categoryView() -> some View {
         return VStack {
@@ -244,63 +261,22 @@ struct SupermarketSetupView: View {
     private func measureView() -> some View {
         return VStack {
             HStack {
-                Text(Mock.Setup.measures[self.selectedMeasure].tipo)
+                TextField("Medida", text: $viewModel.measureName)
                     .font(.body)
-                    .frame(maxWidth: .infinity, maxHeight: 24)
                     .foregroundColor(.label)
-                Image("ic_down")
-                    .accentColor(Color.primary)
-                    .frame(width: 28, height: 28)
+                    .frame(maxWidth: .infinity, maxHeight: 24)
+                    .keyboardType(.alphabet)
             }
             
             Rectangle()
                 .foregroundColor(Color("secondaryText"))
-                .frame(maxWidth: .infinity, maxHeight: 1.2)
+                .frame(maxWidth: .infinity, maxHeight: 1)
             
             Text("Ex.: 500g, 10 metros")
                 .font(.body)
                 .foregroundColor(Color("secondaryText"))
         }
-        .padding(.top, 22)
-    }
-    
-    
-    private func renderPopover() -> some View {
-        return VStack {
-            VStack(alignment: .leading, spacing: 18) {
-                Button(action: {
-                    self.showPopover = false
-                }) {
-                    HStack(spacing: 15) {
-                        Text("Editar")
-                            .frame(height: 24)
-                            .foregroundColor(Color("buttonAction"))
-                    }
-                }
-                Divider()
-                Button(action: {
-                   self.showPopover = false
-                }) {
-                    HStack(spacing: 15) {
-                        Text("Remover")
-                            .frame(height: 24)
-                            .foregroundColor(Color("buttonAction"))
-                    }
-                }
-            }
-            .frame(width: 150)
-            .padding()
-            .foregroundColor(.systemBackground)
-            .background(colorScheme == .light ? Color.white : Color.black)
-            .cornerRadius(4)
-        }
-        .padding(.top, 24)
-        .padding()
-    }
-
-    /// The height of the handler bar section
-    private var handlerSectionHeight: CGFloat {
-        return 4
+        .padding(.top, 26)
     }
     
     private func presentSheet() -> some View {
@@ -321,7 +297,7 @@ struct SupermarketSetupView: View {
                         self.modalPresented.toggle()
                     }, label: {
                         Text("Cancelar")
-                            .frame(height: 24)
+                            .frame(height: 28)
                             .foregroundColor(Color("buttonAction"))
                     })
                         .onTapGesture {
@@ -331,14 +307,12 @@ struct SupermarketSetupView: View {
                     Button(action: {
                         if self.pickerMode == .category {
                             self.viewModel.categoryName = Mock.Setup.categories[self.selectedCategory].tipo
-                        } else {
-                            self.viewModel.measureName = Mock.Setup.measures[self.selectedMeasure].tipo
                         }
                         self.modalPresented.toggle()
                         
                     }, label: {
                         Text("Concluído")
-                            .frame(height: 24)
+                            .frame(height: 28)
                             .foregroundColor(Color("buttonAction"))
                     })
                         .onTapGesture {
@@ -355,17 +329,6 @@ struct SupermarketSetupView: View {
                                 .foregroundColor(.label)
                         }
                     }
-                    .frame(height: 120)
-                    .foregroundColor(.primary)
-                    .labelsHidden()
-                } else {
-                    Picker(selection: $selectedMeasure, label: Text("")) {
-                        ForEach(0..<Mock.Setup.measures.count) { index in
-                            Text(Mock.Setup.measures[index].tipo).tag(index)
-                                .foregroundColor(.label)
-                        }
-                    }
-                    .frame(height: 120)
                     .foregroundColor(.primary)
                     .labelsHidden()
                 }
