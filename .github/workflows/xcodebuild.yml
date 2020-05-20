@@ -8,7 +8,11 @@ on:
 
 jobs:
   build:
-
+    env:
+      SCHEME: "Supermercado"
+      DEVICE: "iPhone 11"
+      DERIVED_DATA_PATH: "DerivedData"
+    
     runs-on: macos-latest
 
     steps:
@@ -19,5 +23,5 @@ jobs:
     
     - name: Xcode build iOS App
       run: |
-        cd Supermercado/
-        xcodebuild clean build -project Supermercado.xcodeproj -scheme Supermercado -destination 'platform=iOS Simulator,name=iPhone 11,OS=13.4'
+        set -o pipefail && xcodebuild clean -scheme $SCHEME -destination "platform=iOS Simulator,name=$DEVICE" -derivedDataPath $DERIVED_DATA_PATH build-for-testing | xcpretty --color --simple
+
