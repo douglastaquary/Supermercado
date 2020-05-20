@@ -1,11 +1,11 @@
 [![Swift 5.2](https://img.shields.io/badge/swift-5.2-ED523F.svg?style=flat)](https://swift.org/download/)
-![Xcode Build](https://github.com/douglastaquary/Supermercado/workflows/Xcode%20build/badge.svg?branch=master)
+![Xcode Build](https://github.com/douglastaquary/Supermercado/workflows/.github/workflows/xcodebuild.yml/badge.svg?branch=master)
 
-# Supermercado
+# 🥗 Supermercado
 
 [You can now download the app on the App Store!]()
 
-# Top list SwiftUI application!
+# 📝 Top list SwiftUI application!
 
 This is a full featured supermarket list helper application written entirely in SwiftUI.
 
