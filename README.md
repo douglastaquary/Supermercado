@@ -1,4 +1,4 @@
-# 🥗 Supermercado
+#  🛒 Magic list app 📝📈
 
 <p align="leading">
     <img src="https://github.com/douglastaquary/Supermercado/workflows/Xcode%20build/badge.svg?branch=master" />
@@ -13,27 +13,25 @@
 </p>
 
 
-[You can now download the app on the App Store!]()
+[Você pode baixar agora o aplicativo na App Store!]()
 
 
-# 📝 Top list SwiftUI application!
+Este é um aplicativo auxiliar de lista de supermercados completo, totalmente escrito em SwiftUI.
 
-This is a full featured supermarket list helper application written entirely in SwiftUI.
+# Recursos
 
-# Features
-* Dashboard to track your shoppings
-* List carts 
-* Add new cart 
-* Delete and edit cart
-* List of shopping per cart 
-* Add new shopping item
-* Delete and edit shopping list
-* Display nearby supermarkets
-* Localized to English
+* Painel para rastrear suas compras
+* Listar carrinhos
+* Adicionar novo carrinho
+* Excluir e editar carrinho
+* Lista de compras por carrinho
+* Adicionar novo item de compras
+* Excluir e editar lista de compras
+* Exibir supermercados próximos
+* Localizado para inglês
 
-You can use this application to learn about SwiftUI and Combine. It uses a very standard view, and view model architecture with full use of @State, @Binding, @Published, Observed and Observable object. 
+Você pode usar este aplicativo para aprender sobre o SwiftUI e o Combine. Ele usa a arquitetura MVVM com o uso completo do @State, @Binding, @Published, Observed and Observable. 
 
 ## Credits
 
-As the API is private the app use a local dump of the API at the moment. 
-Thanks to [Anne Fortes](https://twitter.com/annefortess) for the sexy app design.
+Muito obrigado a [Anne Fortes](https://twitter.com/annefortess) pelo incrível design do aplicativo. 🤩👏🏻👏🏻
