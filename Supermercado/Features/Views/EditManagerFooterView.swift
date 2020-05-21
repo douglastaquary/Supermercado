@@ -41,17 +41,17 @@ struct EditManagerFooterView: View {
                         .padding()
                 }
                 
-                Spacer()
-                
-                Button(action: {
-                    self.showEditManagerView.toggle()
-                    self.editAction()
-                }) {
-                    Text("Editar")
-                        .foregroundColor(Color("buttonAction"))
-                        .frame(height: 16)
-                        .padding()
-                }
+//                Spacer()
+//                
+//                Button(action: {
+//                    self.showEditManagerView.toggle()
+//                    self.editAction()
+//                }) {
+//                    Text("Editar")
+//                        .foregroundColor(Color("buttonAction"))
+//                        .frame(height: 16)
+//                        .padding()
+//                }
             }
         }
         .frame(width: UIScreen.main.bounds.width, height: 72)

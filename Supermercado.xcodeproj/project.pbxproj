@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E09D3382476303600D638AD /* ActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E09D3372476303600D638AD /* ActivityViewController.swift */; };
 		4E19AEBF2471FDA500CD2C57 /* NearestMarketViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E19AEBE2471FDA500CD2C57 /* NearestMarketViewModel.swift */; };
 		4E333BFA2435674C005E3AEC /* SupermarketItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E333BF92435674C005E3AEC /* SupermarketItem.swift */; };
 		4E333BFC24356764005E3AEC /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E333BFB24356764005E3AEC /* Address.swift */; };
@@ -77,6 +78,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4E09D3372476303600D638AD /* ActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewController.swift; sourceTree = "<group>"; };
 		4E19AEBE2471FDA500CD2C57 /* NearestMarketViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearestMarketViewModel.swift; sourceTree = "<group>"; };
 		4E333BF92435674C005E3AEC /* SupermarketItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupermarketItem.swift; sourceTree = "<group>"; };
 		4E333BFB24356764005E3AEC /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
@@ -263,6 +265,7 @@
 				4E801296245DCCDA00619842 /* CustomAlertView.swift */,
 				4E80129C245E16B400619842 /* PopoverView.swift */,
 				4E8012AF246712D300619842 /* EditManagerFooterView.swift */,
+				4E09D3372476303600D638AD /* ActivityViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -539,6 +542,7 @@
 				4E9B6DBA2440D4E9002297E8 /* TitleHeader.swift in Sources */,
 				4EC350B92432E84100245842 /* Supermarket.swift in Sources */,
 				4EB316E5243D62F500CEA706 /* HomeView.swift in Sources */,
+				4E09D3382476303600D638AD /* ActivityViewController.swift in Sources */,
 				4E19AEBF2471FDA500CD2C57 /* NearestMarketViewModel.swift in Sources */,
 				4E8012AE2464D70E00619842 /* CardView.swift in Sources */,
 				4E8012A3245F778200619842 /* UIResponder+Current.swift in Sources */,

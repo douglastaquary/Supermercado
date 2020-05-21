@@ -18,6 +18,7 @@ struct SupermarketListView: View {
     @State private var loadingData: Bool = false
     @State private var showFooterView: Bool = false
     @State private var headerItemsCount: Int = 0
+    @State private var isSharePresented: Bool = false
     
     @State private var itemsToRemove: [UUID] = []
 
@@ -92,10 +93,16 @@ struct SupermarketListView: View {
                 })
                 
                 Button(action: {
-                    print("DEBUG: - Share list!")
+                    print("DEBUG: - Share App!")
+                    self.isSharePresented = true
                 }, label: {
                 Image("ic_share")
                     .foregroundColor(Color("buttonAction"))
+                })
+                .sheet(isPresented: $isSharePresented, onDismiss: {
+                    print("Dismiss")
+                }, content: {
+                    ActivityViewController(activityItems: [URL(string: "toplist://")!])
                 })
             }
 
