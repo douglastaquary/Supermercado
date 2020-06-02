@@ -1,4 +1,4 @@
-#  🛒 Magic list app 📝📈
+# Bag 🛒📝📈
 
 <p align="leading">
     <img src="https://github.com/douglastaquary/Supermercado/workflows/Xcode%20build/badge.svg?branch=master" />
@@ -16,17 +16,17 @@
 [Você pode baixar agora o aplicativo na App Store!]()
 
 
-Este é um aplicativo auxiliar de lista de supermercados completo, totalmente escrito em SwiftUI.
+Este é um aplicativo para organizar listas de compras completo, totalmente escrito em SwiftUI.
 
 # Recursos
 
-* Painel para rastrear suas compras
-* Listar carrinhos
-* Adicionar novo carrinho
-* Excluir e editar carrinho
-* Lista de compras por carrinho
-* Adicionar novo item de compras
-* Excluir e editar lista de compras
+* Painel para mostrar informações sobre suas compras
+* Listar as sacolas de compras
+* Adicionar nova sacola
+* Excluir e editar sacola
+* Listar itens da sacola
+* Adicionar novo item na sacola de compra
+* Excluir item da sacola
 * Exibir supermercados próximos
 * Localizado para inglês
 
