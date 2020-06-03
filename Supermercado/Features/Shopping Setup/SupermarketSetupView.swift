@@ -213,7 +213,7 @@ struct SupermarketSetupView: View {
     
     private func nameTextField() -> some View {
         return VStack(alignment: .leading) {
-            TextField("Qual produto deseja adicionar?", text: $viewModel.supermarketName, onEditingChanged: onEditingChanged(_:), onCommit: onCommit)
+            TextField("Qual produto deseja adicionar?", text: $viewModel.supermarketName)
                 .disabled(self.viewModel.disableTextField)
                 .font(.body)
                 .foregroundColor(.label)
@@ -229,15 +229,7 @@ struct SupermarketSetupView: View {
             }
         }
     }
-    
-    func onCommit() {
-        print("commit")
-    }
 
-    func onEditingChanged(_ changed: Bool) {
-        print(changed)
-    }
-    
     private func categoryView() -> some View {
         return VStack {
             HStack {
@@ -319,13 +311,13 @@ struct SupermarketSetupView: View {
                             self.isFocused = true
                     }
                 }
-                .padding(.leading)
-                .padding(.trailing)
+                .padding([.leading, .trailing])
                 
                 if self.pickerMode == PickerMode.category {
                     Picker(selection: $selectedCategory, label: Text("")) {
                         ForEach(0..<Mock.Setup.categories.count) { index in
-                            Text(Mock.Setup.categories[index].tipo).tag(index)
+                            Text(Mock.Setup.categories[index].tipo)
+                                .tag(index)
                                 .foregroundColor(.label)
                         }
                     }

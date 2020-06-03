@@ -135,14 +135,21 @@ struct CartListView: View {
     
     
     private func installFooterManagerView() -> some View {
-        return EditManagerFooterView(
-            removeAction: {
-                self.showFooterView = false
-                self.deletCarts(to: self.cartIdsToRemove)
-            }, editAction: {
-                self.showFooterView = false
-            }, showEditManagerView: $showFooterView
-        )
+        return EditManagerFooterView(showEditManagerView: self.$showFooterView, removeAction: {
+            self.showFooterView = false
+            self.deletCarts(to: self.cartIdsToRemove)
+        }, content: AnyView(
+                Button(action: {
+                    self.showFooterView = false
+                }) {
+                    Text("Editar")
+                        .foregroundColor(Color("buttonAction"))
+                        .frame(height: 16)
+                        .padding()
+                     //   Text("Editar")
+            }
+            .padding()
+        ))
     }
     
 }

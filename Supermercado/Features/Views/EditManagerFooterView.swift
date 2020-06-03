@@ -11,11 +11,11 @@ import SwiftUI
 struct EditManagerFooterView: View {
     @Environment(\.colorScheme) var colorScheme
     
-    var removeAction: () -> Void
-    var editAction: () -> Void
-    
     @Binding var showEditManagerView: Bool
-    
+    var removeAction: () -> Void
+    var content: AnyView
+
+    // MARK: - Body
     var body: some View {
         VStack {
             HStack {
@@ -43,15 +43,16 @@ struct EditManagerFooterView: View {
                 
                 Spacer()
                 
-                Button(action: {
-                    self.showEditManagerView.toggle()
-                    self.editAction()
-                }) {
-                    Text("Editar")
-                        .foregroundColor(Color("buttonAction"))
-                        .frame(height: 16)
-                        .padding()
-                }
+                self.content
+                
+//                Button(action: {
+//                    self.showEditManagerView.toggle()
+//                }) {
+//                    Text("Editar")
+//                        .foregroundColor(Color("buttonAction"))
+//                        .frame(height: 16)
+//                        .padding()
+//                }
             }
         }
         .frame(width: UIScreen.main.bounds.width, height: 72)
@@ -63,6 +64,6 @@ struct EditManagerFooterView: View {
 
 struct SupermarketListButtonFooter_Previews: PreviewProvider {
     static var previews: some View {
-        EditManagerFooterView(removeAction: {}, editAction: {}, showEditManagerView: .constant(true))
+        EditManagerFooterView(showEditManagerView: .constant(true), removeAction: {}, content: AnyView(Text("")))
     }
 }

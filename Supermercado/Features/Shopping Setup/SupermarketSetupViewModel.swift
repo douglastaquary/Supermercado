@@ -37,12 +37,12 @@ class SupermarketSetupViewModel: ObservableObject {
     
     private var isSupermarketNameValidPublisher: AnyPublisher<Bool, Never> {
       $supermarketName
-        //.debounce(for: 0.1, scheduler: RunLoop.main)
+        .debounce(for: 0.1, scheduler: RunLoop.main)
         .removeDuplicates()
         .map { input in
             if input.count != 60 {
                 self.disableTextField = false
-                self.supermarketMessage = "\(input.count) a 60"
+                self.supermarketMessage = "\(input.count)" + " a 60"
             } else {
                 self.disableTextField = true
             }
@@ -124,20 +124,7 @@ class SupermarketSetupViewModel: ObservableObject {
     init(cartID: UUID, supermarketItem: SupermarketItem) {
         self.cartID = cartID
         self.supermarketItem = supermarketItem
-        
-//        isSupermarketNameCountValidPublisher
-//            .receive(on: RunLoop.main)
-//            .map { inputCount in
-//                "\(inputCount) a 60"
-//            }
-//            .assign(to: \.supermarketMessage, on: self)
-//            .store(in: &cancellableSet)
-        
-//        isHowMuchTextValidPublisher
-//            .receive(on: RunLoop.main)
-//            .assign(to: \.howMuchText, on: self)
-//            .store(in: &cancellableSet)
-        
+
         readyToSubmit
             .receive(on: RunLoop.main)
             .assign(to: \.isValid, on: self)
@@ -153,29 +140,3 @@ class SupermarketSetupViewModel: ObservableObject {
 
 }
 
-
-extension Locale {
-    static let br = Locale(identifier: "pt_BR")
-    static let us = Locale(identifier: "en_US")
-    static let uk = Locale(identifier: "en_GB") // ISO Locale
-}
-
-extension NumberFormatter {
-    convenience init(style: Style, locale: Locale = .current) {
-        self.init()
-        self.locale = locale
-        numberStyle = style
-    }
-}
-
-extension Formatter {
-    static let currency = NumberFormatter(style: .currency)
-    static let currencyUS = NumberFormatter(style: .currency, locale: .us)
-    static let currencyBR = NumberFormatter(style: .currency, locale: .br)
-}
-
-extension Numeric {
-    var currency: String { Formatter.currency.string(for: self) ?? "" }
-    var currencyUS: String { Formatter.currencyUS.string(for: self) ?? "" }
-    var currencyBR: String { Formatter.currencyBR.string(for: self) ?? "" }
-}

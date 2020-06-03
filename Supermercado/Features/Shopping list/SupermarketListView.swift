@@ -118,9 +118,10 @@ struct SupermarketListView: View {
                 installFooterManagerView().animation(.default)
 
             } else {
-                NavigationLink(destination: SupermarketSetupView(viewModel: SupermarketSetupViewModel(
-                    cartID: self.viewModel.cart.id,
-                    supermarketItem: SupermarketItem()
+                NavigationLink(destination:
+                    SupermarketSetupView(viewModel: SupermarketSetupViewModel(
+                        cartID: self.viewModel.cart.id,
+                        supermarketItem: SupermarketItem()
                     )
                 )) {
                     Text("Adicionar item")
@@ -141,13 +142,26 @@ struct SupermarketListView: View {
     
     private func installFooterManagerView() -> some View {
         return EditManagerFooterView(
+            showEditManagerView: self.$showFooterView,
             removeAction: {
                 self.showFooterView = false
                 self.remove(ids: self.itemsToRemove)
-            }, editAction: {
-                self.showFooterView = false
-            }, showEditManagerView: $showFooterView
-        )
+        }, content: AnyView(
+            NavigationLink(destination:
+                SupermarketSetupView(viewModel: SupermarketSetupViewModel(
+                    cartID: self.viewModel.cart.id,
+                    supermarketItem: SupermarketItem()
+                )
+            )) {
+                Text("Editar")
+                    .foregroundColor(Color("buttonAction"))
+                    //.foregroundColor(self.itemsToRemove.count == 1 ? Color("buttonAction") : Color.gray)
+                    .frame(height: 24)
+                    .padding()
+                //.disabled(self.itemsToRemove.count == 1 ? false : true)
+            }
+        ))
+        
     }
     
     
@@ -158,7 +172,7 @@ struct SupermarketListView: View {
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { _ in
                 self.updateHeaderCount()
-                print("Did update supermarkets! ")
+                print("Did update bags! ")
             })
         
     }
