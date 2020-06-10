@@ -18,7 +18,7 @@ class SupermarketListViewModel: ObservableObject {
 
     let service = SupermarketService.shared
     
-    @Published var idsToRemove: [UUID] = []
+    public var idsToRemove: [UUID] = []
     @Published var loadingData: Bool = false
     private var cancellableSet: Set<AnyCancellable> = []
     

@@ -49,11 +49,17 @@ struct SupermarketListView: View {
                                         actionTapRow: { item in
                                             if self.showFooterView {
                                                 let items = self.itemsToRemove.filter { $0 == item.id }
+                                
                                                 if items.isEmpty {
                                                     self.itemsToRemove.append(item.id)
+                                                    self.viewModel.idsToRemove.append(item.id)
                                                 } else {
                                                     self.itemsToRemove.removeAll(where: { $0 == item.id })
+                                                    self.viewModel.idsToRemove.removeAll(where: { $0 == item.id })
                                                 }
+                                            } else {
+                                                //verificar se todos os itens já foram checados.
+                                                // Caso sim, mostrar dialog!
                                             }
                                         }
                                     )
@@ -67,6 +73,7 @@ struct SupermarketListView: View {
                 if loadingData {
                     ActivityIndicatorView()
                 }
+
             }
             
             if !loadingData {
@@ -78,6 +85,7 @@ struct SupermarketListView: View {
             UINavigationBar.appearance().backgroundColor = .white
             self.updateHeaderCount()
         }
+        //.onDisappear(perform: { self.showFooterView = false })
         .navigationBarItems(
             trailing:
             
@@ -98,8 +106,6 @@ struct SupermarketListView: View {
                     .foregroundColor(Color("buttonAction"))
                 })
             }
-
-
         )
         .navigationBarTitle(Text(self.viewModel.cart.name), displayMode: .inline)
         .accentColor(.black)
@@ -116,13 +122,12 @@ struct SupermarketListView: View {
 
             if showFooterView {
                 installFooterManagerView().animation(.default)
-
             } else {
                 NavigationLink(destination:
                     SupermarketSetupView(viewModel: SupermarketSetupViewModel(
                         cartID: self.viewModel.cart.id,
-                        supermarketItem: SupermarketItem()
-                    )
+                        setupPresentationMode: .adding
+                        ), ids: $itemsToRemove
                 )) {
                     Text("Adicionar item")
                         .frame(maxWidth: .infinity)
@@ -147,21 +152,36 @@ struct SupermarketListView: View {
                 self.showFooterView = false
                 self.remove(ids: self.itemsToRemove)
         }, content: AnyView(
-            NavigationLink(destination:
-                SupermarketSetupView(viewModel: SupermarketSetupViewModel(
-                    cartID: self.viewModel.cart.id,
-                    supermarketItem: SupermarketItem()
-                )
-            )) {
-                Text("Editar")
-                    .foregroundColor(Color("buttonAction"))
-                    //.foregroundColor(self.itemsToRemove.count == 1 ? Color("buttonAction") : Color.gray)
-                    .frame(height: 24)
-                    .padding()
-                //.disabled(self.itemsToRemove.count == 1 ? false : true)
-            }
+            installEditButtonView()
         ))
         
+    }
+    
+    func installEditButtonView() -> some View {
+        return NavigationLink(destination:
+            SupermarketSetupView(
+                viewModel: SupermarketSetupViewModel(
+                    cartID: self.viewModel.cart.id,
+                    setupPresentationMode: .editing
+            ), ids: $itemsToRemove
+                
+        )) {
+            Text("Editar")
+                .foregroundColor(Color("buttonAction"))
+                //.foregroundColor(self.itemsToRemove.count == 1 ? Color("buttonAction") : Color.gray)
+                .frame(height: 24)
+                .padding()
+            //.disabled(self.itemsToRemove.count == 1 ? false : true)
+        }
+    }
+    
+    func newSupermarketIfNeeded() -> SupermarketItem {
+        if self.itemsToRemove.count == 1 {
+            let item = self.supermarketService.fetchSupermarketItem(for: self.viewModel.cart.id, with: itemsToRemove[0])
+            return item
+        }
+        
+        return SupermarketItem()
     }
     
     

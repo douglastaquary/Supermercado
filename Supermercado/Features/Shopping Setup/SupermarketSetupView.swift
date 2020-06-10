@@ -14,7 +14,8 @@ struct SupermarketSetupView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var supermarketService: SupermarketService
     @ObservedObject var viewModel: SupermarketSetupViewModel
-
+    @Binding var ids: [UUID]
+    
     @State private var modalPresented: Bool = false
     @State private var nameSujestionText: String = ""
     @State private var amountText: String = ""
@@ -108,10 +109,7 @@ struct SupermarketSetupView: View {
                     Button(action: {
                         self.setPngDataRecord()
                         self.presentationMode.wrappedValue.dismiss()
-                        self.supermarketService.addItem(
-                                for: self.viewModel.cartID,
-                                with: self.viewModel.supermarketItem
-                        )
+                        self.addNewShoppingIfNeeded()
                         haptic(.success)
                     }, label: {
                         Text("Confirmar")
@@ -146,6 +144,7 @@ struct SupermarketSetupView: View {
             .onAppear {
                 UINavigationBar.appearance().backgroundColor = .white
                 self.viewModel.categoryName = Mock.Setup.categories[self.selectedCategory].tipo
+                self.viewModel.performEditModeIfNeeded(to: self.ids)
             }
             .navigationBarTitle(Text("Adicionar item"), displayMode: .inline)
             .accentColor(.black)
@@ -155,8 +154,28 @@ struct SupermarketSetupView: View {
         
     }
     
+    func addNewShoppingIfNeeded() {
+        if ids.count == 1 {
+            if let shopping = self.viewModel.supermarketItem {
+                self.supermarketService.updateShopping(
+                    for: self.viewModel.cartID,
+                    with: shopping
+                )
+            }
+
+        } else {
+            if let shopping = self.viewModel.supermarketItem {
+                self.supermarketService.addItem(
+                    for: self.viewModel.cartID,
+                    with: shopping
+                )
+            }
+        }
+
+    }
+    
     private func setPngDataRecord() {
-        self.viewModel.supermarketItem.avatarJPEGData = self.image?.pngData()
+        self.viewModel.supermarketItem?.avatarJPEGData = self.image?.pngData()
 
     }
     
@@ -350,7 +369,7 @@ struct SupermarketSetupView: View {
 
 struct SupermarketSetupView_Previews: PreviewProvider {
     static var previews: some View {
-        SupermarketSetupView(viewModel: SupermarketSetupViewModel(cartID: UUID(), supermarketItem: SupermarketItem()))//.environment(\.colorScheme, .dark)
+        SupermarketSetupView(viewModel: SupermarketSetupViewModel(cartID: UUID(), setupPresentationMode: .adding), ids: .constant([]))//.environment(\.colorScheme, .dark)
     }
 }
 

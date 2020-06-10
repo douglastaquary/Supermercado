@@ -27,7 +27,8 @@ struct CardGridView: View {
                 NavigationLink(destination:
                     SupermarketListView(
                         viewModel: SupermarketListViewModel(cart: cart)
-                    ).environmentObject(self.supermarketService)
+                    )
+                    .environmentObject(self.supermarketService)
                 ) {
                     CardView(
                         cart: cart,

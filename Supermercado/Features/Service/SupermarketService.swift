@@ -95,7 +95,7 @@ public class SupermarketService: ObservableObject {
     
     func fetchSupermarketItem(for id: Cart.ID, with uuid: UUID) -> SupermarketItem {
         let cart = self.cart(withID: id)
-        return cart.items.first(where: { $0.id == uuid }) ?? SupermarketItem()
+        return cart.items.first(where: { $0.id == uuid })!
     }
     
     func performSections(to cartID: UUID) -> [ListSection] {
@@ -167,6 +167,17 @@ public class SupermarketService: ObservableObject {
     func addItem(for id: Cart.ID, with content: SupermarketItem) {
         var cart = self.cart(withID: id)
         cart.items.append(content)
+        updateCart(cart)
+        sync()
+    }
+    
+    func updateShopping(for id: Cart.ID, with content: SupermarketItem) {
+        var cart = self.cart(withID: id)
+        for i in 0..<cart.items.count {
+            if cart.items[i].id == content.id {
+                cart.items[i] = content
+            }
+        }
         updateCart(cart)
         sync()
     }

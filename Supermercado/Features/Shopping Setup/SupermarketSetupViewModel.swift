@@ -10,9 +10,15 @@ import Combine
 import SwiftUI
 import Foundation
 
+public enum SetupPresentationMode {
+    case editing
+    case adding
+}
+
 class SupermarketSetupViewModel: ObservableObject {
-    
+        
     let characterLimit: Int = 60
+    let service = SupermarketService.shared
     
     // input
     @Published var supermarketName = ""
@@ -24,7 +30,11 @@ class SupermarketSetupViewModel: ObservableObject {
         (Double(self.howMuchText) ?? 0.0) / 100
     }
     @Published var cartID: Cart.ID
-    @Published var supermarketItem: SupermarketItem
+    @Published var setupPresentationMode: SetupPresentationMode
+    
+    public var idsToEdit: [UUID] = []
+    @Published var supermarketItem: SupermarketItem?
+    //@Published var setupPresentationMode: SetupPresentationMode = .adding
     // output
     @Published var supermarketMessage = "0 a 60"
     @Published var measuresTitle = ""
@@ -42,11 +52,11 @@ class SupermarketSetupViewModel: ObservableObject {
         .map { input in
             if input.count != 60 {
                 self.disableTextField = false
-                self.supermarketMessage = "\(input.count)" + " a 60"
+                self.supermarketMessage = " \(input.count) " + " a 60 "
             } else {
                 self.disableTextField = true
             }
-            self.supermarketItem.name = self.supermarketName
+            self.supermarketItem?.name = self.supermarketName
             return input.count >= 3
         }
         .eraseToAnyPublisher()
@@ -57,7 +67,7 @@ class SupermarketSetupViewModel: ObservableObject {
         .debounce(for: 0.2, scheduler: RunLoop.main)
         .removeDuplicates()
         .map { input in
-            self.supermarketItem.amount = self.amount
+            self.supermarketItem?.amount = self.amount
             return input.count > 0
         }
         .eraseToAnyPublisher()
@@ -68,8 +78,9 @@ class SupermarketSetupViewModel: ObservableObject {
       $howMuchText
         .debounce(for: 0.2, scheduler: RunLoop.main)
         .map { newPrice in
-            self.supermarketItem.price = newPrice
-            return self.supermarketItem.price
+            self.supermarketItem?.price = newPrice
+            print("\nPreço: \(newPrice)\n")
+            return self.supermarketItem?.price ?? ""
         }
         .eraseToAnyPublisher()
     }
@@ -79,7 +90,7 @@ class SupermarketSetupViewModel: ObservableObject {
         .debounce(for: 0.3, scheduler: RunLoop.main)
         .removeDuplicates()
         .map { input in
-            self.supermarketItem.category = self.categoryName
+            self.supermarketItem?.category = self.categoryName
             return input.count > 0
         }
         .eraseToAnyPublisher()
@@ -89,7 +100,7 @@ class SupermarketSetupViewModel: ObservableObject {
       $measureName
         .debounce(for: 0.3, scheduler: RunLoop.main)
         .map { input in
-            self.supermarketItem.measure = self.measureName
+            self.supermarketItem?.measure = self.measureName
             return input.count > 0
         }
         .eraseToAnyPublisher()
@@ -120,16 +131,39 @@ class SupermarketSetupViewModel: ObservableObject {
             .eraseToAnyPublisher()
     }
     
+    func isEditActionValid(ids: [UUID]) -> Bool {
+        if !ids.isEmpty {
+            return true
+        }
+        
+        return false
+    }
+    
+    func performEditModeIfNeeded(to ids: [UUID]) {
+        if isEditActionValid(ids: ids) && setupPresentationMode == .editing && (ids.count == 1 || idsToEdit.count == 1) {
+            self.supermarketItem = service.fetchSupermarketItem(for: cartID, with: ids.first ?? UUID())
+            supermarketName = self.supermarketItem?.name ?? ""
+            categoryName = self.supermarketItem?.category ?? ""
+            measureName = self.supermarketItem?.measure ?? ""
+            amount = self.supermarketItem?.amount ?? ""
+            howMuchText  = self.supermarketItem?.price ?? ""
+        } else {
+            self.supermarketItem = SupermarketItem()
+        }
+    }
 
-    init(cartID: UUID, supermarketItem: SupermarketItem) {
+    init(cartID: UUID, setupPresentationMode: SetupPresentationMode, ids: [UUID] = []) {
         self.cartID = cartID
-        self.supermarketItem = supermarketItem
-
+        self.setupPresentationMode = setupPresentationMode
+        self.idsToEdit = ids
+        
+        performEditModeIfNeeded(to: ids)
+       
         readyToSubmit
             .receive(on: RunLoop.main)
             .assign(to: \.isValid, on: self)
             .store(in: &cancellableSet)
-        
+
 //        total
 //            .receive(on: RunLoop.main)
 //            .assign(to: \.howMuchText, on: self)
