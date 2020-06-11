@@ -43,13 +43,13 @@ struct Mock {
         ]
         
         static let categories: [Category] = [
-                Category(tipo: "Cama, mesa e banho"),
-                Category(tipo: "Limpeza"),
-                Category(tipo: "Bebidas"),
-                Category(tipo: "Grãos"),
-                Category(tipo: "Legumes e verduras"),
-                Category(tipo: "Carnes"),
-                Category(tipo: "Outros")
+                Category(index: 0, tipo: "Cama, mesa e banho"),
+                Category(index: 1, tipo: "Limpeza"),
+                Category(index: 2, tipo: "Bebidas"),
+                Category(index: 3, tipo: "Grãos"),
+                Category(index: 4, tipo: "Legumes e verduras"),
+                Category(index: 5, tipo: "Carnes"),
+                Category(index: 6, tipo: "Outros")
         ]
     }
 }

@@ -78,8 +78,8 @@ class SupermarketSetupViewModel: ObservableObject {
       $howMuchText
         .debounce(for: 0.2, scheduler: RunLoop.main)
         .map { newPrice in
-            self.supermarketItem?.price = newPrice
             print("\nPreço: \(newPrice)\n")
+            self.supermarketItem?.price = newPrice
             return self.supermarketItem?.price ?? ""
         }
         .eraseToAnyPublisher()
@@ -90,7 +90,9 @@ class SupermarketSetupViewModel: ObservableObject {
         .debounce(for: 0.3, scheduler: RunLoop.main)
         .removeDuplicates()
         .map { input in
+            print("Categoria agora:\(self.categoryName)")
             self.supermarketItem?.category = self.categoryName
+            
             return input.count > 0
         }
         .eraseToAnyPublisher()
@@ -141,8 +143,11 @@ class SupermarketSetupViewModel: ObservableObject {
     
     func performEditModeIfNeeded(to ids: [UUID]) {
         if isEditActionValid(ids: ids) && setupPresentationMode == .editing && (ids.count == 1 || idsToEdit.count == 1) {
+            print("\nEditando item do cart: \(cartID)\n")
             self.supermarketItem = service.fetchSupermarketItem(for: cartID, with: ids.first ?? UUID())
             supermarketName = self.supermarketItem?.name ?? ""
+            print("\nCategoria do item editado: \(self.supermarketItem?.category ?? "Sem registro")\n")
+
             categoryName = self.supermarketItem?.category ?? ""
             measureName = self.supermarketItem?.measure ?? ""
             amount = self.supermarketItem?.amount ?? ""

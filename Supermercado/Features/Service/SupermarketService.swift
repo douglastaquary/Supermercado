@@ -104,7 +104,6 @@ public class SupermarketService: ObservableObject {
         let sections = performSections(to: categories, with: cartID)
         
         return sections
-
     }
 
     func updateSections(to cartID: UUID) -> AnyPublisher<[ListSection], Never> {

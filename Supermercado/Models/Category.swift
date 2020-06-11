@@ -10,6 +10,7 @@ import Foundation
 
 public struct Category: Codable, Identifiable, Hashable {
     public let id = UUID()
+    public var index: Int?
     public var tipo: String = ""
 }
 

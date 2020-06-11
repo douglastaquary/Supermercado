@@ -143,8 +143,23 @@ struct SupermarketSetupView: View {
             }
             .onAppear {
                 UINavigationBar.appearance().backgroundColor = .white
-                self.viewModel.categoryName = Mock.Setup.categories[self.selectedCategory].tipo
-                self.viewModel.performEditModeIfNeeded(to: self.ids)
+                if !self.ids.isEmpty {
+                    self.viewModel.performEditModeIfNeeded(to: self.ids)
+                    for i in 0..<Mock.Setup.categories.count {
+                        if Mock.Setup.categories[i].tipo == self.viewModel.categoryName {
+                            self.selectedCategory = i
+                            print("\(self.selectedCategory)")
+                            self.viewModel.categoryName = Mock.Setup.categories[self.selectedCategory].tipo
+                            return
+                        }
+                    }
+                    
+                } else {
+                    if self.viewModel.categoryName.isEmpty {
+                        self.viewModel.categoryName = Mock.Setup.categories[self.selectedCategory].tipo
+                        return
+                    }
+                }
             }
             .navigationBarTitle(Text("Adicionar item"), displayMode: .inline)
             .accentColor(.black)
@@ -213,6 +228,7 @@ struct SupermarketSetupView: View {
                 !c.isNumber
             }
             self.viewModel.howMuchText = string
+            self.viewModel.supermarketItem?.price = string
         }
         
         return VStack {
