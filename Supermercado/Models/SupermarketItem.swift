@@ -29,5 +29,12 @@ public struct SupermarketItem: Codable, Equatable, Identifiable {
         self.discount = discount
         self.isDone = isDone
     }
+    
+    public var unitPrice: String {
+        let decimalResult = Decimal(fromString: price)
+        let newValue = (decimalResult / 100).toBrazilianRealString(withDollarSymbol: true)
+        
+        return "\(newValue)"
+    }
 }
 

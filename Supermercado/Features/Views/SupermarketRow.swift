@@ -61,7 +61,7 @@ struct SupermarketRow: View {
                                 }
                                 Spacer()
                                 if !supermarketItem.price.isEmpty {
-                                    Text(supermarketItem.price)
+                                    Text(supermarketItem.unitPrice)
                                         .fontWeight(.semibold)
                                         .foregroundColor(Color("buttonAction"))
                                         .strikethrough(isDone)
