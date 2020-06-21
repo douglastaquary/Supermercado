@@ -96,8 +96,8 @@ struct SupermarketSetupView: View {
                             .onTapGesture {
                                 self.isFocused = true
                                 self.modalPresented = false
-
                             }
+                        
                         measureView()
                              .onTapGesture {
                                  self.modalPresented = false
@@ -153,7 +153,6 @@ struct SupermarketSetupView: View {
                             return
                         }
                     }
-                    
                 } else {
                     if self.viewModel.categoryName.isEmpty {
                         self.viewModel.categoryName = Mock.Setup.categories[self.selectedCategory].tipo
@@ -191,7 +190,6 @@ struct SupermarketSetupView: View {
     
     private func setPngDataRecord() {
         self.viewModel.supermarketItem?.avatarJPEGData = self.image?.pngData()
-
     }
     
     private func amountTextField() -> some View {
@@ -283,7 +281,6 @@ struct SupermarketSetupView: View {
         }
         .padding(.bottom, 4)
     }
-    
     
     private func measureView() -> some View {
         return VStack {

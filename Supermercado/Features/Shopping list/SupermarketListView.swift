@@ -19,7 +19,7 @@ struct SupermarketListView: View {
     @State private var showFooterView: Bool = false
     @State private var headerItemsCount: Int = 0
     
-    @State private var itemsToRemove: [UUID] = []
+    @State var itemsToRemove: [UUID] = []
 
     var body: some View {
         VStack {
@@ -73,7 +73,6 @@ struct SupermarketListView: View {
                 if loadingData {
                     ActivityIndicatorView()
                 }
-
             }
             
             if !loadingData {
@@ -85,10 +84,14 @@ struct SupermarketListView: View {
             UINavigationBar.appearance().backgroundColor = .white
             self.updateHeaderCount()
         }
-        //.onDisappear(perform: { self.showFooterView = false })
+        .onDisappear {
+            if !self.itemsToRemove.isEmpty {
+                self.itemsToRemove.removeAll()
+            }
+            
+        }
         .navigationBarItems(
             trailing:
-            
             HStack(spacing: 24) {
                 Button(action: {
                     self.showFooterView = true
@@ -121,7 +124,7 @@ struct SupermarketListView: View {
                 .offset(y: -8)
 
             if showFooterView {
-                installFooterManagerView().animation(.default)
+                installFooterManagerView()
             } else {
                 NavigationLink(destination:
                     SupermarketSetupView(viewModel: SupermarketSetupViewModel(
@@ -136,13 +139,11 @@ struct SupermarketListView: View {
                         .foregroundColor(Color.white)
                         .cornerRadius(4)
                         .animation(.default)
-                        //.transition(.opacity)
-                        //.scaleEffect()
-
                 }
                 .padding()
             }
         }
+        
     }
     
     private func installFooterManagerView() -> some View {
@@ -163,7 +164,7 @@ struct SupermarketListView: View {
                 viewModel: SupermarketSetupViewModel(
                     cartID: self.viewModel.cart.id,
                     setupPresentationMode: .editing
-            ), ids: $itemsToRemove
+                ), ids: $itemsToRemove
                 
         )) {
             Text("Editar")
@@ -174,17 +175,7 @@ struct SupermarketListView: View {
             //.disabled(self.itemsToRemove.count == 1 ? false : true)
         }
     }
-    
-    func newSupermarketIfNeeded() -> SupermarketItem {
-        if self.itemsToRemove.count == 1 {
-            let item = self.supermarketService.fetchSupermarketItem(for: self.viewModel.cart.id, with: itemsToRemove[0])
-            return item
-        }
-        
-        return SupermarketItem()
-    }
-    
-    
+
     func remove(ids: [UUID]) {
         _ = supermarketService
             .performDeleteItems(for: viewModel.cart.id, with: ids)
@@ -192,7 +183,6 @@ struct SupermarketListView: View {
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { _ in
                 self.updateHeaderCount()
-                print("Did update bags! ")
             })
         
     }
