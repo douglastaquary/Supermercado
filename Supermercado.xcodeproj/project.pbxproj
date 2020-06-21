@@ -135,7 +135,7 @@
 		4EC350C62432E8E900245842 /* Supermercado.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Supermercado.entitlements; sourceTree = "<group>"; };
 		4EC350C82432E8EC00245842 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		4ED2F5EE247084C900ECDA88 /* Decimal+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Decimal+Extensions.swift"; sourceTree = "<group>"; };
-		4EF0703B24312BE0006F94B9 /* Supermercado.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Supermercado.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4EF0703B24312BE0006F94B9 /* Bag.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bag.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EF0703E24312BE0006F94B9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4EF0704024312BE0006F94B9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		4EF0704424312BE1006F94B9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -350,7 +350,7 @@
 		4EF0703C24312BE0006F94B9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4EF0703B24312BE0006F94B9 /* Supermercado.app */,
+				4EF0703B24312BE0006F94B9 /* Bag.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -424,7 +424,7 @@
 				4E9B6DAD243F9D9F002297E8 /* ASCollectionView */,
 			);
 			productName = Supermercado;
-			productReference = 4EF0703B24312BE0006F94B9 /* Supermercado.app */;
+			productReference = 4EF0703B24312BE0006F94B9 /* Bag.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -691,7 +691,7 @@
 				);
 				MARKETING_VERSION = 1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.douglastaquary.mercado;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Bag;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -715,7 +715,7 @@
 				);
 				MARKETING_VERSION = 1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.douglastaquary.mercado;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Bag;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
