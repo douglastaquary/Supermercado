@@ -7,55 +7,6 @@
 //
 
 import SwiftUI
-import ASCollectionView
-
-struct CategoryCollectionView: View {
-    
-    var viewModel: [CartCategory] = []
-//
-//    init(viewModel: [CartCategory], tapCategory: ((CartCategory) -> Void)?) {
-//        self.viewModel = viewModel
-//        self.tapCategory = tapCategory
-//        UITableView.appearance().separatorColor = .clear
-//    }
-
-    var body: some View {
-        ZStack(alignment: .leading) {
-            ASCollectionView(
-                data: self.viewModel,
-                dataID: \.self
-            ) { category, index in
-                Button(action: {
-                    //self.tapCategory?(category)
-                }, label: {
-                    CategoryGridView(
-                        category: category
-                    )
-                })
-                .buttonStyle(PlainButtonStyle())
-            }
-            .contentInsets(.init(top: 24, left: 0, bottom: 24, right: 0))
-            .layout {
-                .grid(layoutMode: .adaptive(withMinItemSize: 112),
-                      itemSpacing: 24,
-                      lineSpacing: 60,
-                      itemSize: .absolute(100))
-            }
-
-        }
-        .onAppear {
-            UITableView.appearance().separatorColor = .clear
-        }
-        .foregroundColor(Color.tertiarySystemBackground)
-    }
-}
-
-struct CategoryCollectionView_Previews: PreviewProvider {
-        
-    static var previews: some View {
-        CategoryCollectionView(viewModel: [])
-    }
-}
 
 struct CategoryGridView: View {
     var category: CartCategory

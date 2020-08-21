@@ -8,8 +8,6 @@
 
 import SwiftUI
 import Combine
-import ASCollectionView
-
 
 struct AddCartView: View {
     
@@ -21,7 +19,9 @@ struct AddCartView: View {
     @State var showAddCartView = false
     
     @State var iconName: IconName = .undefined
-
+    
+    private var gridItemLayout = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
+    
     init() {
         UINavigationBar.appearance().backgroundColor = UIColor.systemBackground
     }
@@ -34,61 +34,53 @@ struct AddCartView: View {
                     cartTextField()
                     SectionTextView(title: "Escolha a categoria")
                     ZStack(alignment: .leading) {
-                        ASCollectionView(
-                            data: viewModel.categories,
-                            dataID: \.self
-                        ) { category, index in
-                            
-                            ZStack {
-                                Button(action: {
-                                    self.iconName = category.iconName
-                                    self.viewModel.categorySelected(on: category)
-                                }, label: {
-                                    VStack(alignment: .center) {
-                                        ZStack {
-                                            if category.isSelected {
-                                                Circle()
-                                                    .stroke(Color("buttonAction"), lineWidth: 1)
-                                                
-                                            } else {
-                                                Circle()
-                                                    .foregroundColor(Color.secondarySystemBackground)
-                                            }
-
-                                            HStack {
-                                                Image(category.iconName.rawValue)
-                                                    .resizable()
-                                                    .renderingMode(.template)
-                                                    .foregroundColor(Color("buttonAction"))
-                                                    .frame(width: 42, height: 42)
-                                            }
-                                        }
-                                        .onTapGesture {
-                                            haptic(.warning)
+                        ScrollView {
+                            LazyVGrid(columns: gridItemLayout, spacing: 16) {
+                                ForEach(viewModel.categories, id: \.self) { category in
+                                    ZStack {
+                                        Button(action: {
+                                            self.iconName = category.iconName
                                             self.viewModel.categorySelected(on: category)
-                                        }
-                                        .frame(width: Metrics.circleOverlayHeight, height: Metrics.circleOverlayHeight, alignment: .center)
-                                        Text(category.categotyTitle)
-                                            .foregroundColor(Color.primary)
-                                            .font(Font.system(size: 14))
-                                            .lineLimit(nil)
-                                            .multilineTextAlignment(.center)
-                                            .frame(height: 42)
+                                        }, label: {
+                                            VStack(alignment: .center) {
+                                                ZStack {
+                                                    if category.isSelected {
+                                                        Circle()
+                                                            .stroke(Color("buttonAction"), lineWidth: 1)
+                                                        
+                                                    } else {
+                                                        Circle()
+                                                            .foregroundColor(Color.secondarySystemBackground)
+                                                    }
+                                                    
+                                                    HStack {
+                                                        Image(category.iconName.rawValue)
+                                                            .resizable()
+                                                            .renderingMode(.template)
+                                                            .foregroundColor(Color("buttonAction"))
+                                                            .frame(width: 42, height: 42)
+                                                    }
+                                                }
+                                                .onTapGesture {
+                                                    haptic(.warning)
+                                                    self.viewModel.categorySelected(on: category)
+                                                }
+                                                .frame(width: Metrics.circleOverlayHeight, height: Metrics.circleOverlayHeight, alignment: .center)
+                                                Text(category.categotyTitle)
+                                                    .foregroundColor(Color.primary)
+                                                    .font(Font.system(size: 14))
+                                                    .lineLimit(nil)
+                                                    .multilineTextAlignment(.center)
+                                                    .frame(height: 42)
+                                            }
+                                        }).buttonStyle(PlainButtonStyle())
                                     }
-                                }).buttonStyle(PlainButtonStyle())
+                                }
                             }
                         }
-                        .contentInsets(.init(top: 24, left: 0, bottom: 24, right: 0))
-                        .layout {
-                            .grid(layoutMode: .adaptive(withMinItemSize: 112),
-                                  itemSpacing: 24,
-                                  lineSpacing: 60,
-                                  itemSize: .absolute(100))
-                        }
-
                     }
                     .foregroundColor(Color.tertiarySystemBackground)
-
+                    
                     Button(action: {
                         self.supermarketService.addNewCart(cart: self.viewModel.cart) { result in
                             switch result {
@@ -99,7 +91,7 @@ struct AddCartView: View {
                                 print("\(error.localizedDescription)")
                             }
                         }
-
+                        
                     }, label: {
                         Text("Salvar")
                             .frame(maxWidth: .infinity)
@@ -115,10 +107,10 @@ struct AddCartView: View {
             }
             .navigationBarItems(
                 leading: Button(action: {
-                        withAnimation {
-                            self.presentationMode.wrappedValue.dismiss()
-                        }
+                    withAnimation {
+                        self.presentationMode.wrappedValue.dismiss()
                     }
+                }
                 ){
                     Text("Cancelar")
                         .foregroundColor(Color("buttonAction"))
@@ -127,12 +119,12 @@ struct AddCartView: View {
                     Button(action: {
                         self.viewModel.cart.name = ""
                     }
-                ) {
-                    Text("Limpar")
-                        .foregroundColor(Color("buttonAction"))
-                }
+                    ) {
+                        Text("Limpar")
+                            .foregroundColor(Color("buttonAction"))
+                    }
             )
-                .navigationBarTitle(Text("Criar lista"), displayMode: .inline)
+            .navigationBarTitle(Text("Criar lista"), displayMode: .inline)
         }
         .accentColor(.black)
     }

@@ -7,12 +7,11 @@
 //
 
 import SwiftUI
-import ASCollectionView
 
 struct CartListView: View {
     @EnvironmentObject var supermarketService: SupermarketService
     @ObservedObject var viewModel: CartListViewModel = CartListViewModel()
-
+    
     @State var showAddCartView = false
     @State var showOptions = false
     @State var loadingData = false
@@ -23,7 +22,9 @@ struct CartListView: View {
     @State private var showFooterView: Bool = false
     @State private var cartIdsToRemove: [UUID] = []
     @State var carts: [Cart] = []
-
+    
+    private var gridItemLayout = [GridItem(.flexible()), GridItem(.flexible())]
+    
     var body: some View {
         ZStack {
             Color.systemBackground.edgesIgnoringSafeArea([.all])
@@ -31,43 +32,37 @@ struct CartListView: View {
                 if self.supermarketService.carts.isEmpty {
                     EmptyStateView()
                 } else {
-                    ASCollectionView(
-                        data: self.supermarketService.carts,
-                        dataID: \.self
-                    ) { cart, _ in
-                        CardGridView(
-                            cart: cart,
-                            actionTappedCard: { item in
-                                if self.showFooterView {
-                                    let items = self.cartIdsToRemove.filter { $0 == item.id }
-                                    if items.isEmpty {
-                                        self.cartIdsToRemove.append(item.id)
-                                    } else {
-                                        self.cartIdsToRemove.removeAll(where: { $0 == item.id })
-                                    }
-                                }
-                            },
-                            showEditMode: self.$showFooterView
-                        )
-                        .environmentObject(self.supermarketService)
+                    ScrollView {
+                        LazyVGrid(columns: gridItemLayout, spacing: 16) {
+                            ForEach(self.supermarketService.carts, id: \.self) { cart in
+                                CardGridView(
+                                    cart: cart,
+                                    actionTappedCard: { item in
+                                        if self.showFooterView {
+                                            let items = self.cartIdsToRemove.filter { $0 == item.id }
+                                            if items.isEmpty {
+                                                self.cartIdsToRemove.append(item.id)
+                                            } else {
+                                                self.cartIdsToRemove.removeAll(where: { $0 == item.id })
+                                            }
+                                        }
+                                    },
+                                    showEditMode: self.$showFooterView
+                                )
+                                .environmentObject(self.supermarketService)
+                            }
+                        }
+                        .padding(.top, 16)
                     }
-                    .contentInsets(.init(top: 20, left: 0, bottom: 20, right: 0))
-                    .layout {
-                        .grid(layoutMode: .adaptive(withMinItemSize: 175),
-                              itemSpacing: 2,
-                              lineSpacing: 8,
-                            itemSize: .absolute(198))
-                    }
-
                 }
-
+                
                 installFooterViewIfNeeded()
             }
             
             if loadingData {
                 ActivityIndicatorView()
             }
-
+            
         }
         .onAppear {
             UINavigationBar.appearance().backgroundColor = .white
@@ -80,10 +75,10 @@ struct CartListView: View {
                     .foregroundColor(.label)
                     .rotationEffect(.degrees(showFooterView ? 90 : 0))
                     .animation(.default)
-                })
-                .frame(width: 28, height: 28)
-
-            )
+            })
+            .frame(width: 28, height: 28)
+            
+        )
         .navigationBarTitle(Text("Minhas listas"), displayMode: .inline)
         .accentColor(.black)
         .navigationBarColor(.systemBackground)
@@ -111,7 +106,7 @@ struct CartListView: View {
                 .foregroundColor(.secondarySystemBackground)
                 .frame(height: 1)
                 .offset(y: -8)
-
+            
             if showFooterView {
                 installFooterManagerView().animation(.easeOut)
             } else {
@@ -150,7 +145,7 @@ struct CartListView: View {
 struct CartListView_Previews: PreviewProvider {
     static var previews: some View {
         CartListView().environment(\.colorScheme, .dark)
-  
+        
     }
 }
 

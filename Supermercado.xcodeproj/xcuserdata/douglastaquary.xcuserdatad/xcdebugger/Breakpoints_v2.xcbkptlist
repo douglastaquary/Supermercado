@@ -37,69 +37,6 @@
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "DA7E6F1C-1F24-4B16-9F4F-5C6215E30551"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Supermercado/Features/Views/CategoryCollectionView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "29"
-            endingLineNumber = "29"
-            landmarkName = "body"
-            landmarkType = "24">
-            <Locations>
-               <Location
-                  uuid = "DA7E6F1C-1F24-4B16-9F4F-5C6215E30551 - 7019aa9d939ed9a2"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Supermercado.CartCategory, ASCollectionView.CellContext) -&gt; &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.buttonStyle&lt;A where A1: SwiftUI.PrimitiveButtonStyle&gt;(A1) -&gt; some&gt;&gt;.0 in closure #1 () -&gt; ASCollectionView.ASCollectionView&lt;Swift.Int&gt; in Supermercado.CategoryCollectionView.body.getter : some"
-                  moduleName = "Supermercado"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/douglastaquary/Documents/Projects/Github/Supermercado/Supermercado/Features/Views/CategoryCollectionView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "30"
-                  endingLineNumber = "30"
-                  offsetFromSymbolStart = "452">
-               </Location>
-               <Location
-                  uuid = "DA7E6F1C-1F24-4B16-9F4F-5C6215E30551 - 2a32b4872d22bb"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; () in closure #1 (Supermercado.CartCategory, ASCollectionView.CellContext) -&gt; &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.buttonStyle&lt;A where A1: SwiftUI.PrimitiveButtonStyle&gt;(A1) -&gt; some&gt;&gt;.0 in closure #1 () -&gt; ASCollectionView.ASCollectionView&lt;Swift.Int&gt; in Supermercado.CategoryCollectionView.body.getter : some"
-                  moduleName = "Supermercado"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/douglastaquary/Documents/Projects/Github/Supermercado/Supermercado/Features/Views/CategoryCollectionView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "30"
-                  endingLineNumber = "30"
-                  offsetFromSymbolStart = "4">
-               </Location>
-               <Location
-                  uuid = "DA7E6F1C-1F24-4B16-9F4F-5C6215E30551 - ba4fd258037873f2"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #2 () -&gt; Supermercado.CategoryGridView in closure #1 (Supermercado.CartCategory, ASCollectionView.CellContext) -&gt; &lt;&lt;opaque return type of (extension in SwiftUI):SwiftUI.View.buttonStyle&lt;A where A1: SwiftUI.PrimitiveButtonStyle&gt;(A1) -&gt; some&gt;&gt;.0 in closure #1 () -&gt; ASCollectionView.ASCollectionView&lt;Swift.Int&gt; in Supermercado.CategoryCollectionView.body.getter : some"
-                  moduleName = "Supermercado"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/douglastaquary/Documents/Projects/Github/Supermercado/Supermercado/Features/Views/CategoryCollectionView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "32"
-                  endingLineNumber = "32"
-                  offsetFromSymbolStart = "120">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.SymbolicBreakpoint">
          <BreakpointContent
             uuid = "032D83AF-5DC4-40AB-89A3-DEBA48B48789"

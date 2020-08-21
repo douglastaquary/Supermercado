@@ -41,7 +41,6 @@
 		4E9B6DA0243E2298002297E8 /* NavigationBarModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9B6D9F243E2298002297E8 /* NavigationBarModifier.swift */; };
 		4E9B6DA2243E2C18002297E8 /* CategoryCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9B6DA1243E2C18002297E8 /* CategoryCollectionView.swift */; };
 		4E9B6DA7243E8ECA002297E8 /* CardGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9B6DA6243E8ECA002297E8 /* CardGridView.swift */; };
-		4E9B6DAE243F9D9F002297E8 /* ASCollectionView in Frameworks */ = {isa = PBXBuildFile; productRef = 4E9B6DAD243F9D9F002297E8 /* ASCollectionView */; };
 		4E9B6DB2243FC364002297E8 /* Cart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9B6DB1243FC364002297E8 /* Cart.swift */; };
 		4E9B6DB4243FE1FC002297E8 /* InformationHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9B6DB3243FE1FC002297E8 /* InformationHeaderView.swift */; };
 		4E9B6DB6243FF037002297E8 /* SupermarketListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9B6DB5243FF037002297E8 /* SupermarketListView.swift */; };
@@ -154,7 +153,6 @@
 				4EC350C92432E8EC00245842 /* CloudKit.framework in Frameworks */,
 				4EC350C32432E89D00245842 /* LLVSCloudKit in Frameworks */,
 				4EC350C52432E89D00245842 /* LLVS in Frameworks */,
-				4E9B6DAE243F9D9F002297E8 /* ASCollectionView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,7 +419,6 @@
 			packageProductDependencies = (
 				4EC350C22432E89D00245842 /* LLVSCloudKit */,
 				4EC350C42432E89D00245842 /* LLVS */,
-				4E9B6DAD243F9D9F002297E8 /* ASCollectionView */,
 			);
 			productName = Supermercado;
 			productReference = 4EF0703B24312BE0006F94B9 /* Supermercado.app */;
@@ -453,7 +450,6 @@
 			mainGroup = 4EF0703224312BE0006F94B9;
 			packageReferences = (
 				4EC350C12432E89D00245842 /* XCRemoteSwiftPackageReference "LLVS" */,
-				4E9B6DAC243F9D9F002297E8 /* XCRemoteSwiftPackageReference "ASCollectionView" */,
 			);
 			productRefGroup = 4EF0703C24312BE0006F94B9 /* Products */;
 			projectDirPath = "";
@@ -745,14 +741,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		4E9B6DAC243F9D9F002297E8 /* XCRemoteSwiftPackageReference "ASCollectionView" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/apptekstudios/ASCollectionView";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.5.0;
-			};
-		};
 		4EC350C12432E89D00245842 /* XCRemoteSwiftPackageReference "LLVS" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mentalfaculty/LLVS.git";
@@ -764,11 +752,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		4E9B6DAD243F9D9F002297E8 /* ASCollectionView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4E9B6DAC243F9D9F002297E8 /* XCRemoteSwiftPackageReference "ASCollectionView" */;
-			productName = ASCollectionView;
-		};
 		4EC350C22432E89D00245842 /* LLVSCloudKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4EC350C12432E89D00245842 /* XCRemoteSwiftPackageReference "LLVS" */;
