@@ -9,9 +9,6 @@
 import Foundation
 import SwiftUI
 import Combine
-import LLVS
-import LLVSCloudKit
-import CloudKit
 
 class SupermarketListViewModel: ObservableObject {
     var objectWillChange = PassthroughSubject<Void, Never>()

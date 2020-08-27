@@ -11,16 +11,11 @@ import Combine
 
 struct AddCartView: View {
     
+    @ObservedObject private var viewModel = NewCartViewModel()
     @EnvironmentObject var supermarketService: SupermarketService
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @ObservedObject private var viewModel = NewCartViewModel()
-    
     @State var tapCategory: ((String) -> Void)?
     @State var showAddCartView = false
-    
-    @State var iconName: IconName = .undefined
-    
-    private var gridItemLayout = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
     
     init() {
         UINavigationBar.appearance().backgroundColor = UIColor.systemBackground
@@ -33,53 +28,7 @@ struct AddCartView: View {
                     Spacer()
                     cartTextField()
                     SectionTextView(title: "Escolha a categoria")
-                    ZStack(alignment: .leading) {
-                        ScrollView {
-                            LazyVGrid(columns: gridItemLayout, spacing: 16) {
-                                ForEach(viewModel.categories, id: \.self) { category in
-                                    ZStack {
-                                        Button(action: {
-                                            self.iconName = category.iconName
-                                            self.viewModel.categorySelected(on: category)
-                                        }, label: {
-                                            VStack(alignment: .center) {
-                                                ZStack {
-                                                    if category.isSelected {
-                                                        Circle()
-                                                            .stroke(Color("buttonAction"), lineWidth: 1)
-                                                        
-                                                    } else {
-                                                        Circle()
-                                                            .foregroundColor(Color.secondarySystemBackground)
-                                                    }
-                                                    
-                                                    HStack {
-                                                        Image(category.iconName.rawValue)
-                                                            .resizable()
-                                                            .renderingMode(.template)
-                                                            .foregroundColor(Color("buttonAction"))
-                                                            .frame(width: 42, height: 42)
-                                                    }
-                                                }
-                                                .onTapGesture {
-                                                    haptic(.warning)
-                                                    self.viewModel.categorySelected(on: category)
-                                                }
-                                                .frame(width: Metrics.circleOverlayHeight, height: Metrics.circleOverlayHeight, alignment: .center)
-                                                Text(category.categotyTitle)
-                                                    .foregroundColor(Color.primary)
-                                                    .font(Font.system(size: 14))
-                                                    .lineLimit(nil)
-                                                    .multilineTextAlignment(.center)
-                                                    .frame(height: 42)
-                                            }
-                                        }).buttonStyle(PlainButtonStyle())
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    .foregroundColor(Color.tertiarySystemBackground)
+                    CategoryCollectionView(categories: $viewModel.categories)
                     
                     Button(action: {
                         self.supermarketService.addNewCart(cart: self.viewModel.cart) { result in
@@ -155,3 +104,67 @@ struct AddCartView_Previews: PreviewProvider {
 }
 
 
+struct CategoryCollectionView: View {
+    
+    @Binding var categories: [CartCategory]
+    @State var categorySelected: ((CartCategory) -> Void)?
+    @State var iconName: IconName = .undefined
+    fileprivate var gridItemLayout = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
+    
+    var body: some View {
+        ZStack(alignment: .leading) {
+            ScrollView {
+                LazyVGrid(columns: gridItemLayout, spacing: 16) {
+                    ForEach(categories, id: \.self) { category in
+                        ZStack {
+                            Button(action: {
+                                iconName = category.iconName
+                                categorySelected?(category)
+                            }, label: {
+                                VStack(alignment: .center) {
+                                    ZStack {
+                                        if category.isSelected {
+                                            Circle()
+                                                .stroke(Color("buttonAction"), lineWidth: 1)
+                                            
+                                        } else {
+                                            Circle()
+                                                .foregroundColor(Color.secondarySystemBackground)
+                                        }
+                                        
+                                        HStack {
+                                            Image(category.iconName.rawValue)
+                                                .resizable()
+                                                .renderingMode(.template)
+                                                .foregroundColor(Color("buttonAction"))
+                                                .frame(width: 42, height: 42)
+                                        }
+                                    }
+                                    .onTapGesture {
+                                        haptic(.warning)
+                                        categorySelected?(category)
+                                    }
+                                    .frame(width: Metrics.circleOverlayHeight, height: Metrics.circleOverlayHeight, alignment: .center)
+                                    Text(category.categotyTitle)
+                                        .foregroundColor(Color.primary)
+                                        .font(Font.system(size: 14))
+                                        .lineLimit(nil)
+                                        .multilineTextAlignment(.center)
+                                        .frame(height: 42)
+                                }
+                            }).buttonStyle(PlainButtonStyle())
+                        }
+                    }
+                }
+            }
+        }
+        .foregroundColor(Color.tertiarySystemBackground)
+    }
+}
+
+
+struct CategoryCollectionView_Previews: PreviewProvider {
+    static var previews: some View {
+        CategoryCollectionView(categories: .constant([]))
+    }
+}

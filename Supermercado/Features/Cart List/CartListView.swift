@@ -9,7 +9,6 @@
 import SwiftUI
 
 struct CartListView: View {
-    @EnvironmentObject var supermarketService: SupermarketService
     @ObservedObject var viewModel: CartListViewModel = CartListViewModel()
     
     @State var showAddCartView = false

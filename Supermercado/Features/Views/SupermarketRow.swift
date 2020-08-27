@@ -9,7 +9,6 @@
 import SwiftUI
 
 struct SupermarketRow: View {
-    @EnvironmentObject var supermarketService: SupermarketService
     
     var supermarketItem: SupermarketItem
     var cartID: Cart.ID

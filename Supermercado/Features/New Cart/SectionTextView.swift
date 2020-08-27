@@ -9,10 +9,8 @@
 import SwiftUI
 
 struct SectionTextView: View {
-    
-    var title: String
-    
-        var body: some View {
+    @State var title: String
+    var body: some View {
         ZStack {
             VStack(alignment: .leading) {
                 Text(title)

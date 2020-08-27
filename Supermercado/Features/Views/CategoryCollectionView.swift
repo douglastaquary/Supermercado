@@ -1,5 +1,5 @@
 //
-//  CategoryCollectionView.swift
+//  CategoryGridView.swift
 //  Supermercado
 //
 //  Created by Douglas Taquary on 08/04/20.
@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Backend
 
 struct CategoryGridView: View {
     var category: CartCategory

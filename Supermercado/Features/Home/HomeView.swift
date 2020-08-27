@@ -9,8 +9,6 @@
 import SwiftUI
 
 struct HomeView: View {
-    @EnvironmentObject var supermarketService: SupermarketService
-
     var body: some View {
         NavigationView {
             ZStack {
@@ -31,7 +29,7 @@ struct HomeView: View {
     private func list() -> some View {
         return ScrollView {
             NavigationLink(destination:
-                CartListView().environmentObject(self.supermarketService)
+                CartListView()
             ) {
                 HomeCardListView()
                 

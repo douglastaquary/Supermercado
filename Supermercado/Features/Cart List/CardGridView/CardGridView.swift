@@ -7,10 +7,9 @@
 //
 
 import SwiftUI
+import Backend
 
 struct CardGridView: View {
-    @EnvironmentObject var supermarketService: SupermarketService
-    
     var cart: Cart
     @State var actionTappedCard: (Cart) -> Void
     @Binding var showEditMode: Bool
@@ -27,7 +26,7 @@ struct CardGridView: View {
                 NavigationLink(destination:
                     SupermarketListView(
                         viewModel: SupermarketListViewModel(cart: cart)
-                    ).environmentObject(self.supermarketService)
+                    )
                 ) {
                     CardView(
                         cart: cart,
