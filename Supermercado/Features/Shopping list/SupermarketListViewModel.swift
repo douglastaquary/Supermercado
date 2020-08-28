@@ -13,19 +13,19 @@ import Combine
 class SupermarketListViewModel: ObservableObject {
     var objectWillChange = PassthroughSubject<Void, Never>()
 
-    let service = SupermarketService.shared
+    let service = UserCollection.shared
     
     @Published var idsToRemove: [UUID] = []
     @Published var loadingData: Bool = false
     private var cancellableSet: Set<AnyCancellable> = []
     
-    var cart: Cart
+    @State var cart: Cart
     @Published var sections: [ListSection] = []
     
     init(cart: Cart) {
         self.cart = cart
         
-        _ = service
+        service
             .updateSections(to: cart.id)
             .subscribe(on: DispatchQueue.global(qos: .userInitiated))
             .receive(on: DispatchQueue.main)
@@ -78,37 +78,6 @@ class SupermarketListViewModel: ObservableObject {
         }
         
         return sections
-    }
-
-    // MARK: - CRUD
-    
-    func addItem(for id: Cart.ID, with content: SupermarketItem) {
-        var item = service.cart(withID: id)
-        item.items.append(content)
-        service.sync()
-    }
-
-    func updateItem(for id: Cart.ID, with content: SupermarketItem) {
-        var item = service.cart(withID: id)
-        item.items.removeAll(where: { $0.id == content.id})
-        service.sync()
-    }
-    
-    func deleteItem(for id: Cart.ID, with content: SupermarketItem) {
-        var supermarket = service.cart(withID: id)
-        supermarket.items.removeAll(where: { $0.id == content.id})
-        service.sync()
-    }
-    
-    func supermarket(withID id: Cart.ID) -> Cart {
-        return service.carts.first(where:
-            { $0.id == id }
-        ) ?? Cart(name: "", iconName: .undefined)
-    }
-    
-    func fetchItem(for id: Cart.ID, with uuid: UUID) -> SupermarketItem {
-        let cart = service.cart(withID: id)
-        return cart.items.first(where: { $0.id == uuid }) ?? SupermarketItem()
     }
 
 }

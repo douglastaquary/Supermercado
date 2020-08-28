@@ -10,9 +10,10 @@ import SwiftUI
 import Combine
 
 struct SupermarketSetupView: View {
+    @EnvironmentObject var collection: UserCollection
+
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var supermarketService: SupermarketService
     @ObservedObject var viewModel: SupermarketSetupViewModel
 
     @State private var modalPresented: Bool = false
@@ -108,9 +109,9 @@ struct SupermarketSetupView: View {
                     Button(action: {
                         self.setPngDataRecord()
                         self.presentationMode.wrappedValue.dismiss()
-                        self.supermarketService.addItem(
-                                for: self.viewModel.cartID,
-                                with: self.viewModel.supermarketItem
+                        UserCollection.shared.addItem(
+                            for: self.viewModel.cartID,
+                            with: self.viewModel.supermarketItem
                         )
                         haptic(.success)
                     }, label: {
@@ -358,7 +359,7 @@ struct SupermarketSetupView: View {
 
 struct SupermarketSetupView_Previews: PreviewProvider {
     static var previews: some View {
-        SupermarketSetupView(viewModel: SupermarketSetupViewModel(cartID: UUID(), supermarketItem: SupermarketItem()))//.environment(\.colorScheme, .dark)
+        SupermarketSetupView(viewModel: SupermarketSetupViewModel(cartID: 0, supermarketItem: SupermarketItem()))//.environment(\.colorScheme, .dark)
     }
 }
 

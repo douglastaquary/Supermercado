@@ -20,12 +20,12 @@ class NewCartViewModel: ObservableObject {
     @Published var cartMessage = "Ex: Compras para o escritório"
 
     @Published var categories: [CartCategory] = [
-        CartCategory(id: 0, iconName: .shopping, categotyTitle: "Compras\ndo mês"),
-        CartCategory(id: 1, iconName: .fastShopping, categotyTitle: "Compras\nrápidas"),
-        CartCategory(id: 2, iconName: .beef, categotyTitle: "Carnes"),
-        CartCategory(id: 3, iconName: .party, categotyTitle: "Festa"),
-        CartCategory(id: 4, iconName: .vegetables, categotyTitle: "Fitness"),
-        CartCategory(id: 5, iconName: .pet, categotyTitle: "Pet"),
+        CartCategory(iconName: .shopping, categotyTitle: "Compras\ndo mês"),
+        CartCategory(iconName: .fastShopping, categotyTitle: "Compras\nrápidas"),
+        CartCategory(iconName: .beef, categotyTitle: "Carnes"),
+        CartCategory(iconName: .party, categotyTitle: "Festa"),
+        CartCategory(iconName: .vegetables, categotyTitle: "Fitness"),
+        CartCategory(iconName: .pet, categotyTitle: "Pet"),
     ]
     private var cancellableSet: Set<AnyCancellable> = []
     

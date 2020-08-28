@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import Backend
 
 struct CategoryGridView: View {
     var category: CartCategory

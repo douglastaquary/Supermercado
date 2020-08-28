@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct SupermarketListView: View {
-    @EnvironmentObject var supermarketService: SupermarketService
+    //private var collection = UserCollection.shared
     @ObservedObject var viewModel: SupermarketListViewModel
     
     @State private var editMode = EditMode.inactive
@@ -19,7 +19,7 @@ struct SupermarketListView: View {
     @State private var showFooterView: Bool = false
     @State private var headerItemsCount: Int = 0
     
-    @State private var itemsToRemove: [UUID] = []
+    @State private var itemsToRemove: [Int] = []
 
     var body: some View {
         VStack {
@@ -39,7 +39,7 @@ struct SupermarketListView: View {
                                 countItems: $headerItemsCount,//self.supermarketService.listItemCount(to: viewModel.cart.id),
                                 imageName: self.viewModel.cart.iconName.rawValue
                             )
-                            ForEach(supermarketService.performSections(to: viewModel.cart.id)) { section in
+                            ForEach(UserCollection.shared.performSections(to: viewModel.cart.id)) { section in
                                 TitleHeader(title: section.name)
                                 ForEach(section.items) { item in
                                     SupermarketRow(
@@ -151,20 +151,18 @@ struct SupermarketListView: View {
     }
     
     
-    func remove(ids: [UUID]) {
-        _ = supermarketService
-            .performDeleteItems(for: viewModel.cart.id, with: ids)
+    func remove(ids: [Int]) {
+        _ = UserCollection.shared.performDeleteItems(for: viewModel.cart.id, with: ids)
             .subscribe(on: DispatchQueue.global(qos: .userInitiated))
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { _ in
                 self.updateHeaderCount()
-                print("Did update supermarkets! ")
             })
         
     }
     
     private func updateHeaderCount() {
-       self.headerItemsCount = self.supermarketService.listItemCount(to: self.viewModel.cart.id)
+        self.headerItemsCount = UserCollection.shared.listItemCount(to: self.viewModel.cart.id)
     }
 
 }

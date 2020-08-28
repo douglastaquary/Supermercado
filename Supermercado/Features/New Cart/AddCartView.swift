@@ -12,7 +12,6 @@ import Combine
 struct AddCartView: View {
     
     @ObservedObject private var viewModel = NewCartViewModel()
-    @EnvironmentObject var supermarketService: SupermarketService
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State var tapCategory: ((String) -> Void)?
     @State var showAddCartView = false
@@ -28,10 +27,12 @@ struct AddCartView: View {
                     Spacer()
                     cartTextField()
                     SectionTextView(title: "Escolha a categoria")
-                    CategoryCollectionView(categories: $viewModel.categories)
+                    CategoryCollectionView(categories: $viewModel.categories, categorySelected: { cartegory in
+                        self.viewModel.categorySelected(on: cartegory)
+                    })
                     
                     Button(action: {
-                        self.supermarketService.addNewCart(cart: self.viewModel.cart) { result in
+                        UserCollection.shared.addNewCart(cart: self.viewModel.cart) { result in
                             switch result {
                             case .success(_):
                                 self.presentationMode.wrappedValue.dismiss()

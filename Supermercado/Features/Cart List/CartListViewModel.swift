@@ -11,18 +11,10 @@ import Foundation
 
 class CartListViewModel: ObservableObject {
     var objectWillChange = PassthroughSubject<Void, Never>()
-    
-    let service = SupermarketService.shared
-
     // input
-    @Published var idsToRemove: [UUID] = []
-    
+    @Published var idsToRemove: [Int] = []
     // output
-    var carts: [Cart] = [] {
-        willSet {
-            self.objectWillChange.send()
-        }
-    }
+    @Published var carts: [Cart] = []
     
     private var cancellableSet: Set<AnyCancellable> = []
     
@@ -42,14 +34,12 @@ class CartListViewModel: ObservableObject {
     
     
     func deletCarts(to ids: [UUID]) {
-        _ = service
+        _ = UserCollection.shared
             .deleteCarts(to: self.idsToRemove)
             .subscribe(on: DispatchQueue.global(qos: .userInitiated))
             .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] newCarts in
-                self?.carts.removeAll()
-                self?.carts = newCarts ?? []
-            })
+            .assign(to: \.carts, on: self)
+            .store(in: &cancellableSet)
         
     }
     

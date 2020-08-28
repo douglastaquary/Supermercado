@@ -12,10 +12,6 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    lazy var supermarketService: SupermarketService = {
-        SupermarketService()
-    }()
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         UIApplication.shared.registerForRemoteNotifications()
         return true
@@ -26,11 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        let preSyncVersion = supermarketService.storeCoordinator.currentVersion
-        supermarketService.sync { _ in
-            let result: UIBackgroundFetchResult = self.supermarketService.storeCoordinator.currentVersion == preSyncVersion ? .noData : .newData
-            completionHandler(result)
-        }
+
     }
 
 }

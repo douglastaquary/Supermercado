@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct CartListView: View {
+    //@EnvironmentObject var collection: UserCollection   
     @ObservedObject var viewModel: CartListViewModel = CartListViewModel()
     
     @State var showAddCartView = false
@@ -19,7 +20,7 @@ struct CartListView: View {
     @State var loadingdata = false
     @State var cartToRemove: Cart?
     @State private var showFooterView: Bool = false
-    @State private var cartIdsToRemove: [UUID] = []
+    @State private var cartIdsToRemove: [Int] = []
     @State var carts: [Cart] = []
     
     private var gridItemLayout = [GridItem(.flexible()), GridItem(.flexible())]
@@ -28,12 +29,12 @@ struct CartListView: View {
         ZStack {
             Color.systemBackground.edgesIgnoringSafeArea([.all])
             VStack {
-                if self.supermarketService.carts.isEmpty {
+                if UserCollection.shared.carts.isEmpty {
                     EmptyStateView()
                 } else {
                     ScrollView {
                         LazyVGrid(columns: gridItemLayout, spacing: 16) {
-                            ForEach(self.supermarketService.carts, id: \.self) { cart in
+                            ForEach(UserCollection.shared.carts, id: \.self) { cart in
                                 CardGridView(
                                     cart: cart,
                                     actionTappedCard: { item in
@@ -48,7 +49,6 @@ struct CartListView: View {
                                     },
                                     showEditMode: self.$showFooterView
                                 )
-                                .environmentObject(self.supermarketService)
                             }
                         }
                         .padding(.top, 16)
@@ -85,18 +85,11 @@ struct CartListView: View {
     }
     
     private func fetchCarts() {
-        self.viewModel.carts = self.supermarketService.carts
+        self.viewModel.carts = UserCollection.shared.carts
     }
     
-    func deletCarts(to ids: [UUID]) {
-        _ = supermarketService
-            .deleteCarts(to: ids)
-            .subscribe(on: DispatchQueue.global(qos: .userInitiated))
-            .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { _ in
-                print("\nUpdated Carts 🎉")
-            })
-        
+    func deletCarts(to ids: [Int]) {
+        UserCollection.shared.deleteCarts(to: ids)
     }
     
     private func installFooterViewIfNeeded() -> some View {
@@ -120,7 +113,7 @@ struct CartListView: View {
                         .cornerRadius(4)
                 })
                 .sheet(isPresented: $showAddCartView) {
-                    AddCartView().environmentObject(self.supermarketService)
+                    AddCartView()
                 }
                 .padding()
             }

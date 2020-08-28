@@ -10,11 +10,10 @@ import SwiftUI
 
 struct CardView: View {
     
-    var cart: Cart
-    
+    @State var cart: Cart
     @State var didTapped: Bool = false
     @Binding var showEditMode: Bool
-    @State var actionTappedCard: (Cart) -> Void
+    @State var actionTappedCard: ((Cart) -> Void)?
     
     var body: some View {
         ZStack {
@@ -37,7 +36,7 @@ struct CardView: View {
                 .padding(.top, -140)
                 .onTapGesture {
                     self.didTapped.toggle()
-                    self.actionTappedCard(self.cart)
+                    self.actionTappedCard?(self.cart)
                 }
             }
             
@@ -71,8 +70,7 @@ struct CardView_Previews: PreviewProvider {
     static var previews: some View {
         CardView(
             cart: Cart(name: "Churrasco do\nBeto", iconName: .party),
-            showEditMode: .constant(true),
-            actionTappedCard: { _ in }
+            showEditMode: .constant(true)
         )
     }
 }

@@ -23,7 +23,7 @@ class SupermarketSetupViewModel: ObservableObject {
     var value: Double {
         (Double(self.howMuchText) ?? 0.0) / 100
     }
-    @Published var cartID: Cart.ID
+    @Published var cartID: Int
     @Published var supermarketItem: SupermarketItem
     // output
     @Published var supermarketMessage = "0 a 60"
@@ -121,23 +121,10 @@ class SupermarketSetupViewModel: ObservableObject {
     }
     
 
-    init(cartID: UUID, supermarketItem: SupermarketItem) {
+    init(cartID: Int, supermarketItem: SupermarketItem) {
         self.cartID = cartID
         self.supermarketItem = supermarketItem
-        
-//        isSupermarketNameCountValidPublisher
-//            .receive(on: RunLoop.main)
-//            .map { inputCount in
-//                "\(inputCount) a 60"
-//            }
-//            .assign(to: \.supermarketMessage, on: self)
-//            .store(in: &cancellableSet)
-        
-//        isHowMuchTextValidPublisher
-//            .receive(on: RunLoop.main)
-//            .assign(to: \.howMuchText, on: self)
-//            .store(in: &cancellableSet)
-        
+
         readyToSubmit
             .receive(on: RunLoop.main)
             .assign(to: \.isValid, on: self)

@@ -11,7 +11,7 @@ import SwiftUI
 struct SupermarketRow: View {
     
     var supermarketItem: SupermarketItem
-    var cartID: Cart.ID
+    var cartID: Int
     var imageName = ""
     @State var didTapped: Bool = false
     @State var isDone: Bool = false
@@ -94,6 +94,11 @@ struct SupermarketRow: View {
 
 struct SupermarketRow_Previews: PreviewProvider {
     static var previews: some View {
-        SupermarketRow(supermarketItem: SupermarketItem(), cartID: UUID(), showEditMode: .constant(true), actionTapRow: {_ in })
+        SupermarketRow(
+            supermarketItem: SupermarketItem(),
+            cartID: 1234,
+            showEditMode: .constant(true),
+            actionTapRow: { _ in }
+        )
     }
 }
